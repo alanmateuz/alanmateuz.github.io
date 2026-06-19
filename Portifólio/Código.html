@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfólio — SEU NOME</title>
+
+  <!-- ============================================================
+       FONTE — troque pelo nome que quiser em fonts.google.com
+  ============================================================ -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       CORES — edite aqui para mudar o visual inteiro
+    ============================================================ */
+    :root {
+      --cor-fundo:       #f5f5f3;   /* fundo geral */
+      --cor-cartao:      #ffffff;   /* fundo dos cartões */
+      --cor-borda:       #e0e0e0;   /* bordas e divisores */
+      --cor-texto:       #1a1a1a;   /* texto principal */
+      --cor-muted:       #6b6b6b;   /* texto secundário */
+      --cor-destaque:    #2563eb;   /* azul — links e hover */
+      --fonte:           'Inter', sans-serif;
+      --raio:            10px;      /* arredondamento dos cartões */
+    }
+
+    /* ============================================================
+       RESET BÁSICO
+    ============================================================ */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--fonte);
+      background: var(--cor-fundo);
+      color: var(--cor-texto);
+      line-height: 1.6;
+    }
+
+    a { color: var(--cor-destaque); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ============================================================
+       NAVEGAÇÃO
+    ============================================================ */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2rem;
+      background: var(--cor-cartao);
+      border-bottom: 1px solid var(--cor-borda);
+    }
+
+    nav .logo {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--cor-texto);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav ul a {
+      font-size: 0.9rem;
+      color: var(--cor-muted);
+    }
+
+    nav ul a:hover { color: var(--cor-destaque); text-decoration: none; }
+
+    /* ============================================================
+       SEÇÃO HERO — apresentação
+    ============================================================ */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* Foto de perfil — coloque o caminho da sua foto em src abaixo */
+    .hero-foto {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--cor-borda);
+      margin-bottom: 1.5rem;
+
+      /* Remove esta linha quando tiver a foto real */
+      background: var(--cor-borda);
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      
+    }
+
+    .hero .subtitulo {
+      font-size: 1rem;
+      color: var(--cor-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero .bio {
+      font-size: 0.95rem;
+      color: var(--cor-muted);
+      max-width: 480px;
+      margin-bottom: 2rem;
+    }
+
+    /* Botões de contato/redes */
+    .hero-links {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.5rem 1.1rem;
+      border: 1px solid var(--cor-borda);
+      border-radius: var(--raio);
+      font-size: 0.875rem;
+      color: var(--cor-texto);
+      background: var(--cor-cartao);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn:hover {
+      border-color: var(--cor-destaque);
+      color: var(--cor-fundo);
+      text-decoration: none;
+      background: var(--cor-destaque);
+    }
+
+    .btn.primario {
+      background: var(--cor-destaque);
+      color: #fff;
+      border-color: var(--cor-destaque);
+    }
+
+    .btn.primario:hover { opacity: 0.88; }
+
+    /* ============================================================
+       DIVISOR
+    ============================================================ */
+    .divisor {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      border: none;
+      border-top: 1px solid var(--cor-borda);
+    }
+
+    /* ============================================================
+       SEÇÃO PROJETOS
+    ============================================================ */
+    .projetos {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .projetos h2 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--cor-muted);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+
+    /* Grade de cartões */
+    .grade {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    /* Cartão de projeto */
+    .cartao {
+      background: var(--cor-cartao);
+      border: 1px solid var(--cor-borda);
+      border-radius: var(--raio);
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .cartao:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+      transform: translateY(-2px);
+      border-color: var(--cor-destaque);
+    }
+
+    /* Área da imagem — troque a cor de fundo ou coloque uma <img> */
+    .cartao-imagem {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+      background: var(--cor-fundo); /* placeholder enquanto sem imagem */
+    }
+
+    .cartao-corpo {
+      padding: 1rem;
+    }
+
+    .cartao-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: var(--cor-fundo);
+      border: 1px solid var(--cor-borda);
+      color: var(--cor-muted);
+    }
+
+    .cartao-titulo {
+      font-size: 0.975rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .cartao-desc {
+      font-size: 0.85rem;
+      color: var(--cor-muted);
+      margin-bottom: 0.9rem;
+    }
+
+    .cartao-link {
+      font-size: 0.8rem;
+      color: var(--cor-destaque);
+    }
+
+    /* ============================================================
+       RODAPÉ
+    ============================================================ */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: var(--cor-muted);
+      border-top: 1px solid var(--cor-borda);
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVEGAÇÃO
+       Troque "Seu Nome" pelo seu nome real
+  ============================================================ -->
+  <nav>
+    <span class="logo">Portifólio de projetos acadêmicos</span>
+  </nav>
+
+
+  <!-- ============================================================
+       HERO — sua apresentação principal
+  ============================================================ -->
+  <section class="hero">
+
+    <!-- FOTO: troque "SUA_FOTO.jpg" pelo caminho ou URL da sua foto -->
+    <img
+      class="hero-foto"
+      src="base.jpeg"
+      alt="Foto de Alan Mateus"
+      onerror="this.style.display='none'"
+    />
+
+    <!-- NOME -->
+    <h1>Alan Mateus Queiroz</h1>
+
+    <!-- SUBTÍTULO: cargo ou área -->
+    <p class="subtitulo">Estudante de ADS · Dev IA em formação · Criar e Inovar</p>
+
+    <!-- BIO CURTA: 2-3 frases sobre você -->
+    <p class="bio">
+      Este é um portifólio para expor projetos interessantes que realizei durante a minha jornada acadêmica.
+    </p>
+
+    <!-- BOTÕES: edite os links href -->
+    <div class="hero-links" id="contato">
+      <a class="btn" href="mailto:alanmateusqueiroz@gmail.com">E-mail</a>
+      <a class="btn" href="https://linkedin.com/in/alanmateusqueiroz" target="_blank">LinkedIn</a>
+      <a class="btn" href="https://github.com/alanmateuz" target="_blank">GitHub</a>
+      <!-- Adicione mais botões aqui se quiser -->
+    </div>
+
+  </section>
+
+
+  <hr class="divisor" />
+
+
+  <!-- ============================================================
+       PROJETOS
+       Para adicionar um projeto, copie um bloco <article class="cartao">
+       e preencha as informações dentro dele.
+  ============================================================ -->
+  <section class="projetos" id="projetos">
+    <h2>Projetos</h2>
+
+    <div class="grade">
+
+      <!-- ── PROJETO 1 ─────────────────────────────────────── -->
+      <article class="cartao">
+        <!-- IMAGEM: troque o src pela imagem do projeto -->
+        <img class="cartao-imagem" src="Safra-pitch (1).png" alt="Safra" onerror="this.style.background='#e8e8e8'" />
+        <div class="cartao-corpo">
+          <!-- TAGS: tecnologias usadas -->
+          <div class="cartao-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Automatização</span>
+          </div>
+          <!-- TÍTULO DO PROJETO -->
+          <h3 class="cartao-titulo">Safra</h3>
+          <!-- DESCRIÇÃO CURTA -->
+          <p class="cartao-desc">Projeto desenvolvido e selecionado na 4 edição do O-HACKA-TA-ON</p>
+          <!-- LINK: GitHub ou site do projeto -->
+          <a class="cartao-link" href="projeto1.html">Ver projeto →</a>
+        </div>
+      </article>
+
+      <!-- ── PROJETO 2 ─────────────────────────────────────── -->
+      <article class="cartao">
+        <img class="cartao-imagem" src="BIM MOBILE.png" alt="Nome do projeto 2" onerror="this.style.background='#e8e8e8'" />
+        <div class="cartao-corpo">
+          <div class="cartao-tags">
+            <span class="tag">Pich</span>
+            <span class="tag">Revit</span>
+            <span class="tag">Canva</span>
+          </div>
+          <h3 class="cartao-titulo">BIM Mobile</h3>
+          <p class="cartao-desc">Pitch de seleção para Monitoria Huawei IFCE</p>
+          <a class="cartao-link" href="projeto2.html">Ver projeto →</a>
+        </div>
+      </article>
+
+      <!-- ── PROJETO 3 ─────────────────────────────────────── -->
+      <article class="cartao">
+        <img class="cartao-imagem" src="Restauramos sonhos!.jpg" alt="Nome do projeto 3" onerror="this.style.background='#e8e8e8'" />
+        <div class="cartao-corpo">
+          <div class="cartao-tags">
+            <span class="tag">Plano de negócios</span>
+          </div>
+          <h3 class="cartao-titulo">Reviva Construções</h3>
+          <p class="cartao-desc">Plano de negócios desenvolvido na disciplina de empreendedorismo no IFCE</p>
+          <a class="cartao-link" href="projeto3.html">Ver projeto →</a>
+        </div>
+      </article>
+
+      <!-- ── COPIE ESTE BLOCO PARA ADICIONAR MAIS PROJETOS ─── -->
+      <!--
+      <article class="cartao">
+        <img class="cartao-imagem" src="IMAGEM.jpg" alt="Nome" onerror="this.style.background='#e8e8e8'" />
+        <div class="cartao-corpo">
+          <div class="cartao-tags">
+            <span class="tag">TAG</span>
+          </div>
+          <h3 class="cartao-titulo">Título</h3>
+          <p class="cartao-desc">Descrição.</p>
+          <a class="cartao-link" href="#" target="_blank">Ver projeto →</a>
+        </div>
+      </article>
+      -->
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       RODAPÉ
+  ============================================================ -->
+  <footer>
+    Feito por Alan Mateus · Fortaleza, CE
+  </footer>
+
+</body>
+</html>
