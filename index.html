@@ -3,31 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfólio — SEU NOME</title>
+  <title>Portfólio — Alan Mateus</title>
 
-  <!-- ============================================================
-       FONTE — troque pelo nome que quiser em fonts.google.com
-  ============================================================ -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* ============================================================
-       CORES — edite aqui para mudar o visual inteiro
-    ============================================================ */
+
     :root {
-      --cor-fundo:       #f5f5f3;   /* fundo geral */
-      --cor-cartao:      #ffffff;   /* fundo dos cartões */
-      --cor-borda:       #e0e0e0;   /* bordas e divisores */
-      --cor-texto:       #1a1a1a;   /* texto principal */
-      --cor-muted:       #6b6b6b;   /* texto secundário */
-      --cor-destaque:    #2563eb;   /* azul — links e hover */
+      --cor-fundo:       #f5f5f3;   
+      --cor-cartao:      #ffffff;   
+      --cor-borda:       #e0e0e0;   
+      --cor-texto:       #1a1a1a;   
+      --cor-muted:       #6b6b6b;   
+      --cor-destaque:    #2563eb;   
       --fonte:           'Inter', sans-serif;
-      --raio:            10px;      /* arredondamento dos cartões */
+      --raio:            10px;      
     }
 
-    /* ============================================================
-       RESET BÁSICO
-    ============================================================ */
+    
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -40,9 +33,7 @@
     a { color: var(--cor-destaque); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* ============================================================
-       NAVEGAÇÃO
-    ============================================================ */
+  
     nav {
       display: flex;
       justify-content: space-between;
@@ -71,9 +62,7 @@
 
     nav ul a:hover { color: var(--cor-destaque); text-decoration: none; }
 
-    /* ============================================================
-       SEÇÃO HERO — apresentação
-    ============================================================ */
+ 
     .hero {
       display: flex;
       flex-direction: column;
@@ -84,7 +73,7 @@
       margin: 0 auto;
     }
 
-    /* Foto de perfil — coloque o caminho da sua foto em src abaixo */
+    
     .hero-foto {
       width: 150px;
       height: 150px;
@@ -93,7 +82,7 @@
       border: 3px solid var(--cor-borda);
       margin-bottom: 1.5rem;
 
-      /* Remove esta linha quando tiver a foto real */
+     
       background: var(--cor-borda);
     }
 
@@ -117,7 +106,7 @@
       margin-bottom: 2rem;
     }
 
-    /* Botões de contato/redes */
+   
     .hero-links {
       display: flex;
       gap: 0.75rem;
@@ -151,9 +140,7 @@
 
     .btn.primario:hover { opacity: 0.88; }
 
-    /* ============================================================
-       DIVISOR
-    ============================================================ */
+  
     .divisor {
       width: 100%;
       max-width: 800px;
@@ -181,14 +168,14 @@
       font-size: 0.8rem;
     }
 
-    /* Grade de cartões */
+   
     .grade {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1rem;
     }
 
-    /* Cartão de projeto */
+   
     .cartao {
       background: var(--cor-cartao);
       border: 1px solid var(--cor-borda);
@@ -203,13 +190,13 @@
       border-color: var(--cor-destaque);
     }
 
-    /* Área da imagem — troque a cor de fundo ou coloque uma <img> */
+   
     .cartao-imagem {
       width: 100%;
       height: 160px;
       object-fit: cover;
       display: block;
-      background: var(--cor-fundo); /* placeholder enquanto sem imagem */
+      background: var(--cor-fundo); 
     }
 
     .cartao-corpo {
@@ -266,7 +253,6 @@
 
   <!-- ============================================================
        NAVEGAÇÃO
-       Troque "Seu Nome" pelo seu nome real
   ============================================================ -->
   <nav>
     <span class="logo">Portifólio de projetos acadêmicos</span>
@@ -274,11 +260,10 @@
 
 
   <!-- ============================================================
-       HERO — sua apresentação principal
+       HERO
   ============================================================ -->
   <section class="hero">
 
-    <!-- FOTO: troque "SUA_FOTO.jpg" pelo caminho ou URL da sua foto -->
     <img
       class="hero-foto"
       src="foto.jpeg"
@@ -286,23 +271,23 @@
       onerror="this.style.display='none'"
     />
 
-    <!-- NOME -->
+    
     <h1>Alan Mateus Queiroz</h1>
 
-    <!-- SUBTÍTULO: cargo ou área -->
+    
     <p class="subtitulo">Estudante de ADS · Dev IA em formação · Criar e Inovar</p>
 
-    <!-- BIO CURTA: 2-3 frases sobre você -->
+    
     <p class="bio">
       Este é um portifólio para expor projetos interessantes que realizei durante a minha jornada acadêmica.
     </p>
 
-    <!-- BOTÕES: edite os links href -->
+    
     <div class="hero-links" id="contato">
       <a class="btn" href="mailto:alanmateusqueiroz@gmail.com">E-mail</a>
       <a class="btn" href="https://linkedin.com/in/alanmateusqueiroz" target="_blank">LinkedIn</a>
       <a class="btn" href="https://github.com/alanmateuz" target="_blank">GitHub</a>
-      <!-- Adicione mais botões aqui se quiser -->
+      
     </div>
 
   </section>
@@ -313,8 +298,6 @@
 
   <!-- ============================================================
        PROJETOS
-       Para adicionar um projeto, copie um bloco <article class="cartao">
-       e preencha as informações dentro dele.
   ============================================================ -->
   <section class="projetos" id="projetos">
     <h2>Projetos</h2>
@@ -323,19 +306,19 @@
 
       <!-- ── PROJETO 1 ─────────────────────────────────────── -->
       <article class="cartao">
-        <!-- IMAGEM: troque o src pela imagem do projeto -->
+        
         <img class="cartao-imagem" src="Safra-pitch (1).png" alt="Safra" onerror="this.style.background='#e8e8e8'" />
         <div class="cartao-corpo">
-          <!-- TAGS: tecnologias usadas -->
+          
           <div class="cartao-tags">
             <span class="tag">Python</span>
             <span class="tag">Automatização</span>
           </div>
-          <!-- TÍTULO DO PROJETO -->
+          
           <h3 class="cartao-titulo">Safra</h3>
-          <!-- DESCRIÇÃO CURTA -->
+          
           <p class="cartao-desc">Projeto desenvolvido e selecionado na 4ª edição do O-HACKA-TA-ON</p>
-          <!-- LINK: GitHub ou site do projeto -->
+          
           <a class="cartao-link" href="projeto1.html">Ver projeto →</a>
         </div>
       </article>
@@ -368,20 +351,7 @@
         </div>
       </article>
 
-      <!-- ── COPIE ESTE BLOCO PARA ADICIONAR MAIS PROJETOS ─── -->
-      <!--
-      <article class="cartao">
-        <img class="cartao-imagem" src="IMAGEM.jpg" alt="Nome" onerror="this.style.background='#e8e8e8'" />
-        <div class="cartao-corpo">
-          <div class="cartao-tags">
-            <span class="tag">TAG</span>
-          </div>
-          <h3 class="cartao-titulo">Título</h3>
-          <p class="cartao-desc">Descrição.</p>
-          <a class="cartao-link" href="#" target="_blank">Ver projeto →</a>
-        </div>
-      </article>
-      -->
+
 
     </div>
   </section>
