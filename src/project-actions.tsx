@@ -3,7 +3,7 @@ import {useEffect, useRef, useState} from 'react';
 export const prototypeLinks = {
  alui:'https://www.figma.com/proto/ZeNsOeWOFET5LWMfR5YyH0/Alui?page-id=0%3A1&node-id=1-13&p=f&viewport=-666%2C-351%2C0.58&t=AQnSTbWyQMpqOOsO-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A2',
  reuseWeb:'https://www.figma.com/proto/6uBMFvv39cWSeVa7tP3Wlk/ReUni?node-id=1-6&page-id=1%3A2&starting-point-node-id=1%3A6&t=uOS88tqX22zY3Xhk-1',
- reuseMobile:'https://www.figma.com/proto/6uBMFvv39cWSeVa7tP3Wlk/ReUni?node-id=128-9317&viewport=93%2C1352%2C0.17&t=AdyyPOkYgRF8wbxN-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=283%3A60485&page-id=1%3A3'
+ reuseMobile:'https://www.figma.com/proto/6uBMFvv39cWSeVa7tP3Wlk/ReUni?node-id=1-3&t=D99ocYFHTxDUHz3N-1'
 };
 export function ProjectActions({id,name}:{id:string;name:string}){
  const dialog=useRef<HTMLDialogElement>(null);const [slide,setSlide]=useState(0);const [open,setOpen]=useState(false);const total=id==='alui'?10:15;
