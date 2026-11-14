@@ -35,7 +35,7 @@
 [data-tema='claro'] {
   color-scheme: light;
   --fundo: #ffffff;
-  --folha: #f4f4f1;
+  --folha: #f4f4f5;            /* cinza neutro, sem puxar para o amarelo */
   --superficie: #ffffff;
   --superficie-2: #e9e9e5;
   --borda: #d9d9d4;
@@ -279,7 +279,7 @@ b, strong { font-weight: 400; }
 /* ---------- Toques de desenvolvedor, minimalistas ---------- */
 :root { --mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace; }
 /* Stack de cada projeto em fonte de código */
-.stack { margin-top: 12px; font-family: var(--mono); font-size: var(--t-legenda); color: var(--texto-2); }
+.stack { margin-top: 12px; font-size: var(--t-legenda); color: var(--texto-2); }
 .stack-rotulo { color: var(--cor-texto, var(--cor)); }
 [data-tema='claro'] .projeto { --cor-texto: color-mix(in oklab, var(--cor) 55%, #000); }
 /* Grade de pontos no topo, como papel milimetrado, sumindo nas bordas */
@@ -287,12 +287,12 @@ b, strong { font-weight: 400; }
 .hero::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background-image: radial-gradient(color-mix(in oklab, var(--texto) 18%, transparent) 1px, transparent 1.2px); background-size: 22px 22px;
   -webkit-mask-image: radial-gradient(ellipse 70% 80% at 65% 45%, #000 20%, transparent 75%); mask-image: radial-gradient(ellipse 70% 80% at 65% 45%, #000 20%, transparent 75%); }
-/* Luz suave que acompanha o mouse */
-.luz { position: fixed; inset: 0; z-index: 15; pointer-events: none; background: radial-gradient(520px circle at var(--mx, -999px) var(--my, -999px), rgba(255, 255, 255, .045), transparent 70%); }
-[data-tema='claro'] .luz { display: none; }
 .rodape-final { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
-.feito-com { font-family: var(--mono); }
+.feito-com { }
 .feito-com a { text-decoration: underline; text-underline-offset: 3px; }
 .feito-com a:hover { color: var(--texto); }
-@media (prefers-reduced-motion: reduce) { .luz { display: none; } }
-[data-parado='sim'] .luz, [data-contraste='sim'] .luz, [data-contraste='sim'] .hero::before { display: none; }
+[data-contraste='sim'] .hero::before { display: none; }
+
+/* Tema claro: sombra entre a abertura e a área dos projetos; cards brancos com sombra */
+[data-tema='claro'] .folha { box-shadow: 0 -10px 30px -12px rgba(20, 20, 30, .14); }
+[data-tema='claro'] .quadrado a { background: #fff; box-shadow: 0 1px 2px rgba(20, 20, 30, .06), 0 8px 24px -8px rgba(20, 20, 30, .16); }

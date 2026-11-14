@@ -157,14 +157,6 @@ export default function Home() {
  const [tema, setTema] = useSalvo<'escuro' | 'claro'>('tema', 'escuro', 'tema');
  useEffect(() => { document.querySelector('meta[name="theme-color"]')?.setAttribute('content', tema === 'escuro' ? '#1c1c1e' : '#ffffff'); }, [tema]);
  const [rolou, setRolou] = useState(false);
- // Luz suave que acompanha o mouse (só com mouse e quando há movimento)
- useEffect(() => {
-  const fino = matchMedia('(pointer: fine)').matches;
-  if (!fino) return;
-  const mover = (e: PointerEvent) => { document.documentElement.style.setProperty('--mx', `${e.clientX}px`); document.documentElement.style.setProperty('--my', `${e.clientY}px`); };
-  addEventListener('pointermove', mover, {passive: true});
-  return () => removeEventListener('pointermove', mover);
- }, []);
  useEffect(() => {
   const aoRolar = () => setRolou(window.scrollY > 700);
   aoRolar();
@@ -174,7 +166,6 @@ export default function Home() {
 
  return <>
   <a className="pular" href="#projetos">Pular para os projetos</a>
-  <div className="luz" aria-hidden="true"/>
   <header className="topo" id="topo">
    <PainelAcessibilidade/>
    <button type="button" className="botao-topo" onClick={() => setTema(tema === 'escuro' ? 'claro' : 'escuro')} aria-pressed={tema === 'claro'}
