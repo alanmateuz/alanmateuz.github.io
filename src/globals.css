@@ -491,3 +491,26 @@ b, strong { font-weight: 400; }
 }
 @media (prefers-reduced-motion: reduce) { .vitrine { transform: none; } }
 [data-parado='sim'] .vitrine { transform: none; }
+
+/* ---------- Acabamento: sem bordas, logos menores, espaçamento do cabeçalho do card ---------- */
+/* Telas de celular só com a própria tela (sem moldura preta nem contorno) */
+.midia-celular .midia-caixa, .fluxo .midia-caixa { padding: 0; background: transparent; border: 0; border-radius: 24px; box-shadow: 0 18px 40px -22px rgba(0, 0, 0, .55); }
+.midia-celular .midia-caixa img, .fluxo-tela { border-radius: 24px; }
+.midia[data-seq] .midia-caixa, .midia[data-seq].ativo .midia-caixa { outline: 0; }
+.vitrine .inclina { border: 0; }
+.vitrine-cel { border-width: 0 !important; border-radius: 26px; }
+/* Cards dos projetos só com a cor de fundo, sem contorno */
+.projeto-card, [data-tema='claro'] .projeto-card { border: 0; }
+.projeto-card .midia-caixa { border: 0; }
+/* Cabeçalho do card: título e stack à esquerda, logos alinhados e menores à direita */
+.projeto-cabeca { align-items: flex-start; gap: 20px 40px; }
+.projeto-cabeca .stack { margin-top: 10px; }
+.logos { gap: 32px; padding-top: 6px; }
+.logos img { height: 34px; opacity: .85; }
+.logos .logo-texto { height: 34px; }
+.projeto-card .projeto-texto { margin-top: 28px; gap: 16px; }
+.projeto-card .galeria { margin-top: 40px; gap: 24px; }
+@media (max-width: 640px) { .logos { gap: 24px; } .logos img, .logos .logo-texto { height: 26px; } }
+.email-contato { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 20px; }
+.email-endereco { width: 100%; font-size: var(--t-corpo); color: var(--texto-2); }
+.email-contato .botao-cheio .icone { transform: none; }

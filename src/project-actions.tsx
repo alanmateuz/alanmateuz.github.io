@@ -23,6 +23,8 @@ const caminhos: Record<string, ReactNode> = {
  foto: <><rect x="3" y="5" width="18" height="15" rx="2.5"/><circle cx="12" cy="12.5" r="3.5"/><path d="M8 5l1.5-2h5L16 5"/></>,
  fechar: <path d="M6 6l12 12M18 6 6 18"/>,
  pausa: <path d="M9 5v14M15 5v14"/>,
+ certo: <path d="m5 12.5 4.5 4.5L19 7"/>,
+ copiar: <><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></>,
  play: <path d="M8 5v14l11-7L8 5Z"/>,
 };
 export function Icone({nome, tamanho = 20}: {nome: string; tamanho?: number}) {
