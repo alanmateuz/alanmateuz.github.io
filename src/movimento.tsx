@@ -89,7 +89,13 @@ export function useSequencia(ref: React.RefObject<HTMLElement | null>, intervalo
   const itens = [...raiz.querySelectorAll<HTMLElement>('[data-seq]')];
   if (!itens.length) return;
   let i = -1, timer = 0, visivel = false;
+  let pausado = false;
+  // Pausa enquanto a pessoa está olhando de perto (mouse ou foco do teclado em cima)
+  const pausa = () => { pausado = true; }, segue = () => { pausado = false; };
+  raiz.addEventListener('pointerenter', pausa); raiz.addEventListener('pointerleave', segue);
+  raiz.addEventListener('focusin', pausa); raiz.addEventListener('focusout', segue);
   const passo = () => {
+   if (pausado) return;
    if (!visivel || !podeMover()) { itens.forEach((el) => el.classList.remove('ativo')); return; }
    itens.forEach((el) => el.classList.remove('ativo'));
    i = (i + 1) % itens.length;
@@ -105,7 +111,7 @@ export function useSequencia(ref: React.RefObject<HTMLElement | null>, intervalo
    else itens.forEach((el) => el.classList.remove('ativo'));
   }, {threshold: 0.35});
   io.observe(raiz);
-  return () => { io.disconnect(); clearInterval(timer); };
+  return () => { io.disconnect(); clearInterval(timer); raiz.removeEventListener('pointerenter', pausa); raiz.removeEventListener('pointerleave', segue); raiz.removeEventListener('focusin', pausa); raiz.removeEventListener('focusout', segue); };
  }, [ref, intervalo]);
 }
 

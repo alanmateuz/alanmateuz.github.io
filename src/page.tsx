@@ -208,7 +208,7 @@ export default function Home() {
        <li><Pilula href={CONTATOS.linkedin} icone="linkedin" externo>LinkedIn</Pilula></li>
       </ul></nav>
      </div>
-     <div className="hero-foto"><img className="foto-hero" src="./assets/alan-preta.webp" alt="Alan Mateus Queiroz sorrindo, de camisa preta e braços cruzados" width="1044" height="1194"/></div>
+     <a className="hero-seta" href="#projetos" aria-label="Ir para os projetos"><Icone nome="seta" tamanho={22}/></a>
     </div>
    </section>
 

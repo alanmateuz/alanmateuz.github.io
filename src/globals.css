@@ -399,3 +399,12 @@ b, strong { font-weight: 400; }
 [data-parado='sim'] .hero-texto, [data-parado='sim'] .hero-foto { transform: none; opacity: 1; }
 [data-parado='sim'] .toque { display: none; }
 [data-parado='sim'] .inclina, [data-parado='sim'] .inclina > img { transform: none; }
+
+/* Abertura sem foto: só tipografia, ocupando boa parte da primeira tela */
+.hero { min-height: min(78vh, 760px); display: flex; align-items: center; padding-bottom: 96px; }
+.hero-centro { width: 100%; }
+.hero-seta { display: grid; place-items: center; width: 48px; height: 48px; margin-top: 56px; border-radius: 50%; border: 1px solid var(--borda); color: var(--texto-2);
+  animation: surge .9s var(--suave) .8s both; transition: color .2s, border-color .2s; }
+.hero-seta .icone { transform: rotate(90deg); }
+.hero-seta:hover { color: var(--texto); border-color: var(--texto-3); }
+@media (max-width: 640px) { .hero { min-height: 70vh; padding-bottom: 72px; } }
