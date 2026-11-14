@@ -530,3 +530,4 @@ b, strong { font-weight: 400; }
 .prova ul { justify-content: flex-start; }
 .prova { padding-bottom: 96px; }
 .hero-texto { align-self: flex-start; margin-inline: 0; width: 100%; }
+.prova { text-align: center; } .prova ul { justify-content: center; }
