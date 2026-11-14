@@ -514,3 +514,5 @@ b, strong { font-weight: 400; }
 .email-contato { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 20px; }
 .email-endereco { width: 100%; font-size: var(--t-corpo); color: var(--texto-2); }
 .email-contato .botao-cheio .icone { transform: none; }
+/* 3D: só o card inclina; o conteúdo de dentro fica parado */
+.inclina > img, .inclina.inclinando > img { transform: none; transition: none; }
