@@ -274,3 +274,36 @@ figcaption { margin-top: 12px; font-size: var(--t-legenda); color: var(--texto-2
 /* Unidade: só títulos em negrito; todo o resto em peso normal */
 b, strong { font-weight: 400; }
 
+
+/* ---------- Faixa de formas ao lado do título de cada projeto ---------- */
+.projeto-cabeca { display: flex; align-items: center; gap: 32px; }
+.projeto-cabeca .titulo { flex: none; }
+.faixa-formas { --lado: 64px; flex: 1; min-width: 0; display: flex; height: var(--lado); overflow: hidden; margin-right: calc(-1 * var(--lateral)); }
+/* Cada peça gira dentro do próprio quadrado (não invade a vizinha) */
+.forma { flex: none; position: relative; width: var(--lado); height: var(--lado); overflow: hidden; }
+.forma::before { content: ''; position: absolute; inset: 0; background: color-mix(in oklab, var(--cor) 82%, var(--folha)); animation: engrenagem var(--duracao, 6s) cubic-bezier(.85, 0, .15, 1) infinite; animation-delay: var(--atraso, 0s); }
+/* Uma gira para um lado, a seguinte para o outro */
+.forma.anti::before { animation-name: engrenagem-anti; }
+/* Os quartos de círculo alternam o canto arredondado, como no desenho */
+.forma-a::before { border-top-left-radius: 100%; }
+.forma-b::before { border-bottom-left-radius: 100%; }
+/* Movimento robótico: giro rápido de 90°, pausa longa. Cada peça no seu tempo (atraso e duração próprios). */
+@keyframes engrenagem {
+  0%, 18% { transform: rotate(0deg); }
+  24%, 43% { transform: rotate(90deg); }
+  49%, 68% { transform: rotate(180deg); }
+  74%, 93% { transform: rotate(270deg); }
+  99%, 100% { transform: rotate(360deg); }
+}
+@keyframes engrenagem-anti {
+  0%, 18% { transform: rotate(0deg); }
+  24%, 43% { transform: rotate(-90deg); }
+  49%, 68% { transform: rotate(-180deg); }
+  74%, 93% { transform: rotate(-270deg); }
+  99%, 100% { transform: rotate(-360deg); }
+}
+[data-contraste='sim'] .forma::before { background: var(--texto); }
+@media (max-width: 640px) {
+  .projeto-cabeca { gap: 20px; }
+  .faixa-formas { --lado: 40px; }
+}

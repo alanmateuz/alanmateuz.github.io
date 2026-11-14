@@ -115,10 +115,21 @@ function FileiraProjetos() {
  </div>;
 }
 
+/* Faixa decorativa: quartos de círculo que giram cada um no seu tempo, alternando o sentido. Usa a cor do projeto. */
+function Faixa() {
+ return <div className="faixa-formas" aria-hidden="true">
+  {Array.from({length: 28}, (_, i) => <span key={i} className={`forma ${i % 2 ? 'forma-b anti' : 'forma-a'}`}
+   style={{['--atraso' as string]: `${((i * 7 + 3) % 13) * 0.42}s`, ['--duracao' as string]: `${5 + ((i * 5) % 4)}s`}}/>)}
+ </div>;
+}
+
 function DetalheProjeto({p}: {p: Projeto}) {
  return <section id={p.id} className="projeto" style={{['--cor' as string]: p.cor}} aria-labelledby={`${p.id}-titulo`}>
   <div className="container">
-   <h2 id={`${p.id}-titulo`} className="titulo">{p.name}</h2>
+   <div className="projeto-cabeca">
+    <h2 id={`${p.id}-titulo`} className="titulo">{p.name}</h2>
+    <Faixa/>
+   </div>
    <div className="projeto-texto">
     <p>{p.description}</p>
     <p>{p.role}</p>
