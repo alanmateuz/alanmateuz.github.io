@@ -219,10 +219,9 @@ export default function Home() {
    <section ref={abertura} className="hero" aria-labelledby="nome">
     <div className="container hero-centro">
      <div className="hero-texto">
-      <p className="hero-quem"><img src="./assets/alan-preta.webp" alt="" width="40" height="40"/><span>Alan Mateus Queiroz · Fortaleza, CE</span></p>
-      <h1 id="nome" className="hero-nome">{['Produtos', 'digitais', 'que', 'resolvem'].map((w, i) => <span key={w}>{i > 0 && ' '}<span className="palavra" style={{['--i' as string]: i}}>{w}</span></span>)}{' '}
-       <span className="palavra destaque" style={{['--i' as string]: 4}}>problemas reais.</span></h1>
-      <p className="hero-sub">Estudante de ADS na UNIFOR e bolsista pesquisador na M. Dias Branco. Uno desenvolvimento de software, IA aplicada e design de produto, do problema ao protótipo e ao piloto.</p>
+      <p className="hero-rotulo">Portfólio · 2026</p>
+      <h1 id="nome" className="hero-nome">{['Alan', 'Mateus', 'Queiroz'].map((w, i) => <span key={w}>{i > 0 && ' '}<span className="palavra" style={{['--i' as string]: i}}>{w}</span></span>)}</h1>
+      <p className="hero-sub">Estudo Análise e Desenvolvimento de Sistemas na UNIFOR e sou bolsista pesquisador na M. Dias Branco. Gosto de pegar um problema da sala de aula, do campus ou de uma empresa e transformar em algo que as pessoas usam de verdade, como o Safra, que saiu de um hackathon e virou piloto na M. Dias Branco.</p>
       <div className="hero-acoes">
        <a className="botao-cheio" href="#projetos">Ver projetos <Icone nome="seta" tamanho={18}/></a>
        <a className="botao-linha" href="#contato">Fale comigo <Icone nome="mail" tamanho={18}/></a>
@@ -238,7 +237,7 @@ export default function Home() {
       <Inclina className="vitrine-cel vitrine-cel-2"><img src="./assets/fluxo/r-home.webp" alt=""/></Inclina>
      </div>
      <div className="prova">
-      <p>Projetos com</p>
+      <p>Projetos para</p>
       <ul aria-label="Instituições e eventos">
        <li><img src="./assets/logo-mdb.png" alt="M. Dias Branco"/></li>
        <li><img src="./assets/logo-unifor.png" alt="Unifor"/></li>
@@ -246,11 +245,6 @@ export default function Home() {
        <li><svg className="logo-texto" viewBox="0 0 240 48" role="img" aria-label="Hacktudo, Festival de Cultura Digital"><text x="0" y="31" textLength="240" lengthAdjust="spacingAndGlyphs" className="logo-texto-1">HACKTUDO</text><text x="1" y="46" textLength="238" lengthAdjust="spacingAndGlyphs" className="logo-texto-2">FESTIVAL DE CULTURA DIGITAL</text></svg></li>
       </ul>
      </div>
-     <ul className="destaques">
-      <li><b>Safra</b><span>virou projeto piloto na M. Dias Branco</span></li>
-      <li><b>Pesquisa</b><span>bolsista pesquisador na M. Dias Branco</span></li>
-      <li><b>Hackathons</b><span>O-Hackathon, Hacktudo e GoHacks Talent</span></li>
-     </ul>
     </div>
    </section>
 

@@ -516,3 +516,17 @@ b, strong { font-weight: 400; }
 .email-contato .botao-cheio .icone { transform: none; }
 /* 3D: só o card inclina; o conteúdo de dentro fica parado */
 .inclina > img, .inclina.inclinando > img { transform: none; transition: none; }
+
+/* Abertura mais autoral: alinhada à esquerda, sem degradê nem selo; nome como título */
+.hero { text-align: left; }
+.hero-centro { align-items: stretch; }
+.hero-texto { align-items: flex-start; max-width: 760px; }
+.hero-rotulo { font-size: var(--t-legenda); color: var(--texto-3); animation: surge .9s var(--suave) both; }
+.hero-nome { margin-top: 18px; max-width: none; font-size: clamp(2.6rem, 6vw, 4.5rem); letter-spacing: -.035em; }
+.hero-sub { margin: 22px 0 0; max-width: 60ch; color: var(--texto-2); }
+.hero-acoes, .hero-redes { justify-content: flex-start; }
+.vitrine { margin-top: 72px; }
+.prova { text-align: left; }
+.prova ul { justify-content: flex-start; }
+.prova { padding-bottom: 96px; }
+.hero-texto { align-self: flex-start; margin-inline: 0; width: 100%; }
