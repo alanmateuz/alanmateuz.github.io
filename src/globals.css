@@ -354,10 +354,6 @@ b, strong { font-weight: 400; }
 .inclina.inclinando { transition: transform .12s linear, box-shadow .3s; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .6); }
 .inclina > img { transform: translate(var(--px, 0), var(--py, 0)) scale(1.04); transition: transform .6s var(--suave); }
 .inclina.inclinando > img { transition: transform .12s linear; }
-/* Reflexo de luz que acompanha o mouse por cima da imagem */
-.inclina::after { content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; opacity: 0; transition: opacity .4s;
-  background: radial-gradient(circle at var(--brilho-x, 50%) var(--brilho-y, 50%), rgba(255, 255, 255, .18), transparent 55%); }
-.inclina.inclinando::after { opacity: 1; }
 .midia-caixa, .quadrado-imagem { position: relative; }
 
 /* ---------- Telas em sequência: uma "funciona" de cada vez ---------- */
