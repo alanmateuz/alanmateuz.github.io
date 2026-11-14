@@ -52,8 +52,5 @@ export const projects:Projeto[] = [
     {titulo:'Identidade do campus',antes:'',depois:'Cores e ícones ligados à Unifor.',porque:'Aproxima a ideia da vida de quem estuda ali.'},
    ],
    telas:[{img:'reuse-home-crop',legenda:'Início (modo escuro)'},{img:'reuse-detail-crop',legenda:'Detalhes do anúncio'},{img:'reuse-third-crop',legenda:'Início (modo claro)'}],
-   resultado:'Protótipos navegáveis do app e da landing page, em modo claro e escuro.'}},
- {id:'bim',name:'BIM Mobile',client:'IFCE · seleção para Monitoria Huawei',category:'INOVAÇÃO · CONSTRUÇÃO',number:'05',headline:'Do modelo 3D ao canteiro de obras.',description:'Uma proposta para levar informações de modelos BIM ao celular e apoiar o acompanhamento de obras. O projeto conecta minha formação técnica em Edificações ao interesse em tecnologia e interfaces digitais.',role:'Pitch desenvolvido para a seleção de Monitoria Huawei no IFCE. Proposta conceitual de acesso mobile aos dados BIM.',tags:['Revit','BIM','Canva','Pitch'],image:'bim-slide-1',summary:'Uma ponte entre modelagem da construção e experiência mobile.',
-  cor:'#FF8A3D',capa:'tela',acoes:{pitch:15},
-  galeria:[{img:'bim-model',legenda:'Modelos e informações da obra',tipo:'tela'},{img:'bim-plan',legenda:'Planejamento e acompanhamento',tipo:'tela'},{img:'',legenda:'Apresentação do pitch',tipo:'foto',largo:true}],}
+   resultado:'Protótipos navegáveis do app e da landing page, em modo claro e escuro.'}}
 ];

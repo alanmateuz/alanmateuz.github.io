@@ -9,9 +9,12 @@ const caminhos: Record<string, ReactNode> = {
  linkedin: <><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></>,
  sol: <><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></>,
  lua: <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>,
- figma: <><path d="M9 3h3v6H9a3 3 0 0 1 0-6ZM12 3h3a3 3 0 0 1 0 6h-3V3ZM9 9h3v6H9a3 3 0 0 1 0-6Z"/><circle cx="15" cy="12" r="3"/><path d="M9 15h3v3a3 3 0 1 1-3-3Z"/></>,
- design: <><path d="m14 4 6 6-10 10H4v-6L14 4Z"/><path d="m11 7 6 6"/></>,
- pitch: <><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.8.6 1.1 1.3 1.1 2.2h5c0-.9.3-1.6 1.1-2.2A6 6 0 0 0 12 3Z"/></>,
+ figma: <><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5Z"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2Z"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0Z"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0Z"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5Z"/></>,
+ design: <><path d="M13 7 8.7 2.7a2.4 2.4 0 0 0-3.4 0L2.7 5.3a2.4 2.4 0 0 0 0 3.4L7 13"/><path d="m8 6 2-2M18 16l2-2"/><path d="m17 11 4.3 4.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L11 17"/><path d="M21.2 6.8a2.8 2.8 0 0 0-4-4L3.8 16.2a2 2 0 0 0-.5.8L2 21.4a.5.5 0 0 0 .6.6l4.4-1.3a2 2 0 0 0 .8-.5Z"/><path d="m15 5 4 4"/></>,
+ pitch: <><path d="M9.5 18.5h5M10.5 21.5h3"/><path d="M12 6.5a5 5 0 0 0-3 9c.6.5 1 1.2 1 2h4c0-.8.4-1.5 1-2a5 5 0 0 0-3-9Z"/><path d="M12 1.5V3M4.6 4.1l1.1 1.1M19.4 4.1l-1.1 1.1M2 11.5h1.5M20.5 11.5H22"/></>,
+ acess: <><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1.3"/><path d="M7 9.6l5 1 5-1M12 10.6v3.9l-2.4 4M12 14.5l2.4 4"/></>,
+ letra: <><path d="M4 19 9 5l5 14M5.8 14h6.4M15 19l3-8 3 8M15.8 16.6h4.4"/></>,
+ contraste: <><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18Z" fill="currentColor"/></>,
  app: <><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M11 18.5h2"/></>,
  web: <><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></>,
  seta: <path d="M5 12h14m-6-6 6 6-6 6"/>,
@@ -83,7 +86,7 @@ function Caso({nome, caso}: {nome: string; caso: CasoDesign}) {
 
 /* ---------- Botões "Ver ..." de cada projeto ---------- */
 function Acao({icone, rotulo, href, onClick}: {icone: string; rotulo: string; href?: string; onClick?: () => void}) {
- const dentro = <><span className="acao-icone"><Icone nome={icone} tamanho={30}/></span><span className="acao-rotulo">{rotulo}{href && <Icone nome="externo" tamanho={15}/>}</span></>;
+ const dentro = <><span className="acao-icone"><Icone nome={icone} tamanho={64}/></span><span className="acao-rotulo">{rotulo}</span></>;
  return href
   ? <a className="acao" href={href} target="_blank" rel="noopener noreferrer">{dentro}<SoLeitor> (abre em nova aba)</SoLeitor></a>
   : <button className="acao" type="button" onClick={onClick} aria-haspopup="dialog">{dentro}</button>;
