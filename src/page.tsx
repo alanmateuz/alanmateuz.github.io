@@ -104,7 +104,7 @@ function FileiraProjetos() {
    {projects.map((p) => <li key={p.id} className="quadrado" style={{['--cor' as string]: p.cor}}>
     <a href={`#${p.id}`}>
      <span className={`quadrado-imagem capa-${p.capa}`}><img src={`./assets/${p.image}.webp`} alt="" loading="lazy" decoding="async"/></span>
-     <span className="quadrado-nome">{p.name}</span>
+     <span className="quadrado-texto"><span className="quadrado-nome">{p.name}</span><span className="quadrado-resumo">{p.summary}</span></span>
     </a>
    </li>)}
   </ul>
@@ -118,7 +118,7 @@ function FileiraProjetos() {
 function DetalheProjeto({p}: {p: Projeto}) {
  return <section id={p.id} className="projeto" style={{['--cor' as string]: p.cor}} aria-labelledby={`${p.id}-titulo`}>
   <div className="container">
-   <h2 id={`${p.id}-titulo`} className="projeto-titulo">{p.name}</h2>
+   <h2 id={`${p.id}-titulo`} className="titulo">{p.name}</h2>
    <div className="projeto-texto">
     <p>{p.description}</p>
     <p>{p.role}</p>
@@ -178,7 +178,7 @@ export default function Home() {
     <div className="container hero-grade">
      <img className="foto-perfil" src="./assets/alan.webp" alt="Alan Mateus sorrindo, de camisa preta" width="140" height="140"/>
      <div className="hero-texto">
-      <h1 id="nome">Alan Mateus</h1>
+      <h1 id="nome" className="titulo">Alan Mateus</h1>
       <p className="hero-sub">Estudante de ADS na UNIFOR | Bolsista pesquisador na M. Dias Branco | Desenvolvimento de software e IA aplicada</p>
       <nav aria-label="Sobre e contatos"><ul className="pilulas">
        <li><Pilula href="#sobre" icone="user">Sobre</Pilula></li>
@@ -192,7 +192,7 @@ export default function Home() {
 
    <div className="folha">
     <section id="projetos" className="resumo" aria-labelledby="projetos-titulo">
-     <div className="container"><h2 id="projetos-titulo" className="titulo-secao">Projetos</h2></div>
+     <div className="container"><h2 id="projetos-titulo" className="titulo">Projetos</h2></div>
      <FileiraProjetos/>
     </section>
 
@@ -200,7 +200,7 @@ export default function Home() {
 
     <section id="sobre" className="sobre" aria-labelledby="sobre-titulo">
      <div className="container sobre-texto">
-      <h2 id="sobre-titulo" className="titulo-secao">Sobre</h2>
+      <h2 id="sobre-titulo" className="titulo">Sobre</h2>
       <p>Sou estudante de Análise e Desenvolvimento de Sistemas na UNIFOR e estou construindo minha carreira em tecnologia. Tenho interesse em desenvolvimento de software, automação de processos, inteligência artificial e produtos digitais. Minha trajetória combina estudos, pesquisa aplicada e colaboração em iniciativas de inovação.</p>
       <p>Atualmente, atuo como bolsista pesquisador na M. Dias Branco. Gosto de compreender desafios, aprender continuamente e contribuir para a criação de soluções úteis e bem estruturadas. Quero crescer na área de tecnologia e contribuir especialmente em desenvolvimento de software, automação, produtos digitais e inteligência artificial.</p>
      </div>
@@ -212,7 +212,7 @@ export default function Home() {
   <footer className="rodape" id="contato">
    <div className="container rodape-grade">
     <div>
-     <p className="rodape-chamada">Vamos conversar?</p>
+     <p className="titulo rodape-chamada">Vamos conversar?</p>
      <ul className="pilulas">
       <li><Pilula href={CONTATOS.email} icone="mail">Email</Pilula></li>
       <li><Pilula href={CONTATOS.linkedin} icone="linkedin" externo>LinkedIn</Pilula></li>
