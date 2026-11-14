@@ -176,7 +176,7 @@ export default function Home() {
   <main id="conteudo">
    <section className="hero" aria-labelledby="nome">
     <div className="container hero-grade">
-     <img className="foto-perfil" src="./assets/alan.webp" alt="Alan Mateus sorrindo, de camisa preta" width="140" height="140"/>
+     <img className="foto-hero" src="./assets/alan-recorte.webp" alt="Alan Mateus sorrindo, de camisa preta" width="1272" height="1083"/>
      <div className="hero-texto">
       <h1 id="nome" className="titulo">Alan Mateus</h1>
       <p className="hero-sub">Estudante de ADS na UNIFOR | Bolsista pesquisador na M. Dias Branco | Desenvolvimento de software e IA aplicada</p>

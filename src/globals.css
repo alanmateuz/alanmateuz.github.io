@@ -102,9 +102,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .a11y-restaurar { min-height: 44px; margin-top: 4px; border: 1.5px solid var(--borda); border-radius: 999px; background: transparent; font-size: var(--t-legenda); font-weight: 400; }
 
 /* ---------- Apresentação ---------- */
-.hero { background: var(--fundo); padding: 160px 0 120px; }
-.hero-grade { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 36px; }
-.foto-perfil { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; object-position: 50% 22%; background: #fff; }
+/* Foto recortada grande à esquerda, apoiada na borda de baixo; texto à direita */
+.hero { background: var(--fundo); padding-top: 96px; overflow: hidden; }
+.hero-grade { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; gap: 40px; min-height: 600px; }
+.foto-hero { width: 100%; max-width: 620px; height: auto; justify-self: center; margin-bottom: 0; }
+.hero-texto { align-self: center; padding-bottom: 72px; }
 
 .hero-sub { margin-top: 16px; max-width: 46ch; font-size: var(--t-corpo); line-height: 1.5; color: var(--texto-2); }
 .pilulas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
@@ -158,8 +160,9 @@ figcaption { margin-top: 12px; font-size: var(--t-legenda); color: var(--texto-2
   background: repeating-linear-gradient(-45deg, var(--superficie), var(--superficie) 12px, var(--superficie-2) 12px, var(--superficie-2) 13px); }
 
 /* Ver protótipo / Ver design / Ver pitch: ícone grande e rótulo, sem caixa (como no layout) */
-.acoes { display: flex; flex-wrap: wrap; justify-content: space-evenly; gap: 24px; margin-top: 72px; }
-.acao { flex: 0 1 220px; }
+/* Sempre lado a lado, também no celular */
+.acoes { display: flex; flex-wrap: nowrap; justify-content: space-evenly; gap: 16px; margin-top: 72px; }
+.acao { flex: 1 1 0; min-width: 0; max-width: 240px; }
 .acao { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 16px 8px; border: 0; border-radius: var(--raio-m); background: transparent; font-size: var(--t-corpo); font-weight: 400; text-align: center; }
 .acao-icone { display: grid; place-items: center; color: var(--texto); transition: transform .35s var(--mola), color .2s; }
 .acao-icone .icone { stroke-width: 1.6; }
@@ -238,17 +241,18 @@ figcaption { margin-top: 12px; font-size: var(--t-legenda); color: var(--texto-2
   .caso-decisoes { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
-  .hero { padding: 104px 0 88px; }
-  .hero-grade { grid-template-columns: 1fr; gap: 24px; }
-  .foto-perfil { width: 104px; height: 104px; }
+  .hero { padding-top: 88px; }
+  .hero-grade { grid-template-columns: 1fr; gap: 24px; min-height: 0; }
+  .hero-texto { order: 1; padding-bottom: 0; }
+  .foto-hero { order: 2; width: 82%; margin-top: 8px; }
   .galeria { gap: 16px; }
   .galeria-item { grid-column: 1 / -1; }
   .item-celular { grid-column: span 6; }
   .projeto { padding-top: 64px; }
   .largo .midia-foto .midia-caixa, .largo .reservado-caixa { aspect-ratio: 4 / 3; }
-  .acoes { gap: 8px; margin-top: 48px; }
-  .acao { font-size: var(--t-legenda); gap: 12px; }
-  .acao-icone .icone { width: 48px; height: 48px; }
+  .acoes { gap: 4px; margin-top: 48px; }
+  .acao { font-size: var(--t-legenda); gap: 10px; padding: 12px 2px; }
+  .acao-icone .icone { width: 44px; height: 44px; }
   .divisor { margin-top: 48px; }
   .janela { width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh; border-radius: 0; }
   .janela-corpo { padding: 0 20px 32px; }
