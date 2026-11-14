@@ -123,7 +123,12 @@ function DetalheProjeto({p}: {p: Projeto}) {
      <h2 id={`${p.id}-titulo`} className="titulo">{p.name}</h2>
      <p className="stack"><span className="stack-rotulo">stack</span> {p.tags.join(' · ')}</p>
     </div>
-    {p.logos && <ul className="logos" aria-label="Parceiros">{p.logos.map((l) => <li key={l.img}><img src={`./assets/${l.img}.png`} alt={l.nome}/></li>)}</ul>}
+    {p.logos && <ul className="logos" aria-label="Parceiros">{p.logos.map((l) => <li key={l.nome}>{l.texto
+     ? <svg className="logo-texto" viewBox="0 0 240 48" role="img" aria-label={l.nome}>
+       <text x="0" y="31" textLength="240" lengthAdjust="spacingAndGlyphs" className="logo-texto-1">{l.texto[0]}</text>
+       <text x="1" y="46" textLength="238" lengthAdjust="spacingAndGlyphs" className="logo-texto-2">{l.texto[1]}</text>
+      </svg>
+     : <img src={`./assets/${l.img}.png`} alt={l.nome}/>}</li>)}</ul>}
    </div>
    <div className="projeto-texto">
     <p>{p.description}</p>
@@ -138,11 +143,12 @@ function DetalheProjeto({p}: {p: Projeto}) {
 
 /* Fotos do "Sobre": as que já existem + espaços para as próximas */
 const FOTOS_SOBRE = [
- {img: 'foto-evento-1', legenda: 'Em evento de tecnologia'},
- {img: 'foto-mdb-equipe', legenda: 'Equipe no desafio da M. Dias Branco'},
- {img: 'foto-hackathon-mdb', legenda: 'Hackathon da M. Dias Branco'},
- {img: '', legenda: 'Foto em breve'},
- {img: '', legenda: 'Foto em breve'},
+ {img: 'sobre-conexao', legenda: 'Em evento de tecnologia e inovação'},
+ {img: 'sobre-mdb', legenda: 'Equipe 4Tech na M. Dias Branco'},
+ {img: 'sobre-gohacks', legenda: 'Crachá do GoHacks Talent, da gogroup'},
+ {img: 'sobre-certificado', legenda: 'Certificado do O-Hackathon'},
+ {img: 'sobre-unifor-hub', legenda: 'Participantes no Unifor Hub'},
+ {img: 'sobre-auditorio', legenda: 'Encerramento do O-Hackathon na Unifor'},
 ];
 
 function FaixaFotos() {

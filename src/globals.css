@@ -139,7 +139,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .fileira-setas button:not(:disabled):hover { background: var(--superficie-2); }
 
 /* ---------- Projeto ---------- */
-.projeto { padding-top: 88px; }
+.projeto { padding-top: 72px; }
 
 .projeto-texto { margin-top: 28px; display: grid; gap: 22px; }
 .projeto-texto p, .sobre-texto p { font-size: var(--t-corpo); line-height: 1.5; color: var(--texto); }
@@ -150,10 +150,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .item-celular { grid-column: span var(--colunas-celular, 3); }
 .galeria-item.largo { grid-column: 1 / -1; }
 .midia-caixa, .reservado-caixa { overflow: hidden; border-radius: var(--raio-m); border: 1px solid var(--borda); background: var(--superficie); }
-.midia-tela .midia-caixa { aspect-ratio: 16 / 10; }
+.midia-tela .midia-caixa { aspect-ratio: 16 / 9; }
+.midia-foto .midia-caixa { aspect-ratio: 4 / 3; }
+.midia-foto .midia-caixa img { object-position: center; }
 .midia-tela .midia-caixa img, .midia-foto .midia-caixa img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .largo .midia-foto .midia-caixa, .largo .reservado-caixa { aspect-ratio: 21 / 9; }
-.largo .midia-tela .midia-caixa { aspect-ratio: 16 / 8; }
+.largo .midia-tela .midia-caixa { aspect-ratio: auto; }
+.largo .midia-tela .midia-caixa img { height: auto; }
 .midia-celular .midia-caixa { aspect-ratio: 9 / 19.5; border-radius: 26px; background: var(--superficie-2); padding: 6px; }
 .midia-celular .midia-caixa img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 20px; }
 figcaption { margin-top: 12px; font-size: var(--t-legenda); color: var(--texto-2); }
@@ -162,16 +165,16 @@ figcaption { margin-top: 12px; font-size: var(--t-legenda); color: var(--texto-2
 
 /* Ver protótipo / Ver design / Ver pitch: ícone grande e rótulo, sem caixa (como no layout) */
 /* Sempre lado a lado, também no celular */
-.acoes { display: flex; flex-wrap: nowrap; justify-content: space-evenly; gap: 16px; margin-top: 72px; }
+.acoes { display: flex; flex-wrap: nowrap; justify-content: space-evenly; gap: 16px; margin-top: 40px; }
 .acao { flex: 1 1 0; min-width: 0; max-width: 240px; }
-.acao { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 16px 8px; border: 0; border-radius: var(--raio-m); background: transparent; font-size: var(--t-corpo); font-weight: 400; text-align: center; }
+.acao { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 12px 8px; border: 0; border-radius: var(--raio-m); background: transparent; font-size: var(--t-corpo); font-weight: 400; text-align: center; }
 .acao-icone { display: grid; place-items: center; color: var(--texto); transition: transform .35s var(--mola), color .2s; }
-.acao-icone .icone { stroke-width: 1.6; }
+.acao-icone .icone { stroke-width: 1.6; width: 52px; height: 52px; }
 .acao:hover .acao-icone { transform: translateY(-4px); color: var(--cor); }
 [data-tema='claro'] .acao:hover .acao-icone { color: color-mix(in oklab, var(--cor) 55%, #000); }
 [data-contraste='sim'] .acao:hover .acao-icone { color: var(--texto); }
 .acao:active .acao-icone { transform: scale(.95); }
-.divisor { margin: 72px 0 0; border: 0; height: 2px; background: var(--texto); opacity: .7; }
+.divisor { margin: 48px 0 0; border: 0; height: 1px; background: var(--borda); }
 
 /* ---------- Sobre ---------- */
 .sobre { padding: 88px 0 120px; }
@@ -180,8 +183,8 @@ figcaption { margin-top: 12px; font-size: var(--t-legenda); color: var(--texto-2
 .faixa { margin-top: 64px; }
 .faixa-trilho { overflow: hidden; }
 .faixa-lista { display: flex; gap: 20px; width: max-content; animation: desliza 45s linear infinite; }
-.faixa-lista li { width: clamp(260px, 28vw, 380px); aspect-ratio: 16 / 10; border-radius: var(--raio-m); overflow: hidden; background: var(--superficie); }
-.faixa-lista img { width: 100%; height: 100%; object-fit: cover; }
+.faixa-lista li { height: clamp(200px, 20vw, 280px); width: auto; border-radius: var(--raio-m); overflow: hidden; background: var(--superficie); }
+.faixa-lista img { width: auto; height: 100%; }
 .faixa-lista .reservado-caixa { width: 100%; height: 100%; aspect-ratio: auto; border-radius: var(--raio-m); }
 .faixa:hover .faixa-lista, .faixa.pausada .faixa-lista { animation-play-state: paused; }
 @keyframes desliza { to { transform: translateX(calc(-50% - 10px)); } }
@@ -254,7 +257,7 @@ figcaption { margin-top: 12px; font-size: var(--t-legenda); color: var(--texto-2
   .acoes { gap: 4px; margin-top: 48px; }
   .acao { font-size: var(--t-legenda); gap: 10px; padding: 12px 2px; }
   .acao-icone .icone { width: 44px; height: 44px; }
-  .divisor { margin-top: 48px; }
+  .divisor { margin-top: 36px; }
   .janela { width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh; border-radius: 0; }
   .janela-corpo { padding: 0 20px 32px; }
   .rodape-grade { flex-direction: column; align-items: flex-start; }
@@ -282,16 +285,10 @@ b, strong { font-weight: 400; }
 .stack { margin-top: 12px; font-size: var(--t-legenda); color: var(--texto-2); }
 .stack-rotulo { color: var(--cor-texto, var(--cor)); }
 [data-tema='claro'] .projeto { --cor-texto: color-mix(in oklab, var(--cor) 55%, #000); }
-/* Grade de pontos no topo, como papel milimetrado, sumindo nas bordas */
-.hero { position: relative; isolation: isolate; }
-.hero::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background-image: radial-gradient(color-mix(in oklab, var(--texto) 25%, transparent) 1.15px, transparent 1.4px); background-size: 22px 22px;
-  -webkit-mask-image: radial-gradient(ellipse 80% 90% at 65% 45%, #000 35%, transparent 85%); mask-image: radial-gradient(ellipse 80% 90% at 65% 45%, #000 35%, transparent 85%); }
 .rodape-final { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
 .feito-com { }
 .feito-com a { text-decoration: underline; text-underline-offset: 3px; }
 .feito-com a:hover { color: var(--texto); }
-[data-contraste='sim'] .hero::before { display: none; }
 
 /* Tema claro: sombra entre a abertura e a área dos projetos; cards brancos com sombra */
 [data-tema='claro'] .folha { box-shadow: 0 -10px 30px -12px rgba(20, 20, 30, .14); }
@@ -303,3 +300,13 @@ b, strong { font-weight: 400; }
 .logos img { height: 52px; width: auto; opacity: .92; }
 [data-tema='claro'] .logos img { filter: invert(1); opacity: .85; }
 @media (max-width: 640px) { .logos { gap: 28px; } .logos img { height: 38px; } }
+
+/* Telas de celular sempre do mesmo tamanho: 4 por linha */
+.galeria .item-celular { grid-column: span 3; }
+@media (max-width: 900px) { .galeria .item-celular { grid-column: span 6; } }
+
+/* Logo redesenhado em texto (Hacktudo): a linha de baixo ocupa a mesma largura da de cima */
+.logo-texto { display: block; height: 52px; width: auto; fill: var(--texto); font-family: 'Montserrat', var(--fonte); }
+.logo-texto-1 { font-size: 36px; font-weight: 800; }
+.logo-texto-2 { font-size: 11px; font-weight: 600; }
+@media (max-width: 640px) { .logo-texto { height: 40px; } }
