@@ -404,3 +404,90 @@ b, strong { font-weight: 400; }
 .hero-seta .icone { transform: rotate(90deg); }
 .hero-seta:hover { color: var(--texto); border-color: var(--texto-3); }
 @media (max-width: 640px) { .hero { min-height: 70vh; padding-bottom: 72px; } }
+
+/* ---------- Celular que toca o fluxo real ---------- */
+.fluxo .midia-caixa { aspect-ratio: 9 / 19.5; padding: 6px; }
+.fluxo-tela { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 20px; background: #fff; }
+.fluxo-tela .passo { position: absolute; left: 0; top: 0; width: 100%; height: auto; border-radius: 0; will-change: transform; }
+.fluxo-tela .passo:first-child { position: relative; }
+.fluxo .toque { animation: none !important; }
+
+/* =========================================================
+   Rodada: abertura com proposta de valor, barra fixa, vitrine,
+   prova social e cards com o tom de cada projeto
+   ========================================================= */
+/* Barra fixa com vidro fosco (padrão das páginas da Apple) */
+.topo { position: fixed; inset: 0 0 auto 0; z-index: 40; display: flex; align-items: center; gap: 4px; height: 56px; padding: 0 max(var(--margem), calc((100vw - var(--largura)) / 2)); transition: background .3s, border-color .3s; border-bottom: 1px solid transparent; }
+.topo-rolou { background: color-mix(in oklab, var(--fundo) 78%, transparent); -webkit-backdrop-filter: saturate(1.6) blur(18px); backdrop-filter: saturate(1.6) blur(18px); border-bottom-color: var(--borda); }
+.topo-nome { margin-right: auto; font-weight: 600; font-size: var(--t-legenda); letter-spacing: -.01em; }
+.topo-links { display: flex; gap: 4px; margin-right: 8px; }
+.topo-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; border-radius: 999px; color: var(--texto-2); font-size: var(--t-legenda); transition: color .2s, background .2s; }
+.topo-links a:hover { color: var(--texto); background: var(--superficie-2); }
+.topo .botao-topo { width: 44px; height: 44px; }
+.a11y-painel { top: 52px; }
+@media (max-width: 640px) { .topo-links { display: none; } }
+
+/* Abertura */
+.hero { min-height: 0; display: block; padding: 136px 0 0; overflow: hidden; }
+.hero-quem { display: inline-flex; align-items: center; gap: 10px; padding: 4px 14px 4px 4px; border: 1px solid var(--borda); border-radius: 999px; color: var(--texto-2); font-size: var(--t-legenda); animation: surge .9s var(--suave) both; }
+.hero-quem img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; object-position: 50% 15%; background: #fff; }
+.hero-nome { margin-top: 28px; max-width: 16ch; font-size: clamp(2.6rem, 6.4vw, 4.75rem); line-height: 1.04; letter-spacing: -.04em; }
+.hero-nome .destaque { background: linear-gradient(100deg, #6fa0ff 0%, #b27cff 45%, #ff8a4c 100%); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: .06em; }
+[data-tema='claro'] .hero-nome .destaque { background-image: linear-gradient(100deg, #2456d6 0%, #7a3fd6 45%, #d1561a 100%); }
+[data-contraste='sim'] .hero-nome .destaque { background: none; color: var(--texto); }
+.hero-sub { margin-top: 22px; max-width: 58ch; }
+.hero-acoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; animation: surge .9s var(--suave) .65s both; }
+.botao-cheio, .botao-linha { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 999px; font-size: var(--t-corpo); transition: transform .25s var(--suave), background .2s, color .2s; }
+.botao-cheio { background: var(--texto); color: var(--fundo); }
+.botao-cheio:hover { transform: translateY(-2px); }
+.botao-cheio .icone { transform: rotate(90deg); }
+.botao-linha { border: 1.5px solid var(--borda); color: var(--texto); }
+.botao-linha:hover { border-color: var(--texto-3); background: var(--superficie); }
+.hero-redes { display: flex; justify-content: center; gap: 8px; margin-top: 16px; animation: surge .9s var(--suave) .75s both; }
+.hero-redes a { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; color: var(--texto-2); }
+.hero-redes a:hover { color: var(--texto); background: var(--superficie-2); }
+.hero-seta { display: none; }
+
+/* Vitrine: os três projetos em leque, entrando de baixo */
+.vitrine { position: relative; width: 100%; max-width: 980px; height: clamp(300px, 42vw, 470px); margin: 64px auto 0; transform: translateY(calc(var(--rolagem, 0) * -60px)); }
+.vitrine .inclina { position: absolute; overflow: hidden; border: 1px solid var(--borda); box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .7); background: #fff; }
+.vitrine .inclina > img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.vitrine-tela { left: 50%; top: 40px; width: 72%; aspect-ratio: 16 / 9; margin-left: -36%; border-radius: 18px; animation: sobe 1.2s var(--suave) .5s both; }
+.vitrine-cel { width: 21%; aspect-ratio: 9 / 19.5; border-radius: 28px; border-width: 5px !important; border-color: #1b1b1d !important; }
+.vitrine-cel-1 { left: 2%; top: 110px; rotate: -6deg; animation: sobe 1.2s var(--suave) .7s both; }
+.vitrine-cel-2 { right: 2%; top: 90px; rotate: 6deg; animation: sobe 1.2s var(--suave) .85s both; }
+
+/* Prova social e destaques */
+.prova { margin-top: 72px; width: 100%; padding-top: 40px; border-top: 1px solid var(--borda); }
+.prova p { font-size: var(--t-legenda); color: var(--texto-3); }
+.prova ul { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 28px 56px; margin-top: 20px; }
+.prova img { height: 40px; width: auto; opacity: .8; }
+.prova .logo-texto { height: 40px; opacity: .8; }
+[data-tema='claro'] .prova img { filter: invert(1); }
+.destaques { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; margin: 48px 0 0; padding-bottom: 96px; text-align: left; }
+.destaques li { padding: 22px 24px; border: 1px solid var(--borda); border-radius: var(--raio-m); background: var(--superficie); }
+.destaques b { display: block; font-size: var(--t-corpo); font-weight: 600; }
+.destaques span { display: block; margin-top: 4px; font-size: var(--t-legenda); color: var(--texto-2); }
+
+/* Cards dos projetos com um leve tom da cor do app */
+.projeto-card { background: color-mix(in oklab, var(--cor) 9%, #141416); border-color: color-mix(in oklab, var(--cor) 28%, var(--borda)); }
+[data-tema='claro'] .projeto-card { background: color-mix(in oklab, var(--cor) 5%, #fff); border-color: color-mix(in oklab, var(--cor) 22%, var(--borda)); }
+[data-contraste='sim'] .projeto-card { background: var(--superficie); border-color: var(--borda); }
+.projeto-card .midia-caixa { border-color: color-mix(in oklab, var(--cor) 20%, var(--borda)); }
+
+@media (max-width: 900px) {
+  .destaques { grid-template-columns: 1fr; }
+  .vitrine-cel { width: 26%; }
+}
+@media (max-width: 640px) {
+  .hero { padding-top: 104px; }
+  .hero-texto { order: 0; }
+  .vitrine { height: 260px; margin-top: 48px; }
+  .vitrine-tela { width: 86%; margin-left: -43%; top: 30px; }
+  .vitrine-cel { width: 28%; top: 120px !important; }
+  .prova ul { gap: 20px 32px; }
+  .prova img, .prova .logo-texto { height: 30px; }
+  .destaques { padding-bottom: 72px; }
+}
+@media (prefers-reduced-motion: reduce) { .vitrine { transform: none; } }
+[data-parado='sim'] .vitrine { transform: none; }

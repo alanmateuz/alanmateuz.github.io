@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import {projects, type ItemGaleria, type Projeto} from './projects';
 import {AcoesProjeto, Icone, SoLeitor} from './project-actions';
-import {Inclina, usePilha, useSequencia, useRevela, useAberturaRolagem} from './movimento';
+import {Inclina, usePilha, useRevela, useAberturaRolagem, TelaFluxo, useTocaFluxos} from './movimento';
 
 const CONTATOS = {
  github: 'https://github.com/alanmateuz',
@@ -93,9 +93,9 @@ function Imagem({item, nome}: {item: ItemGaleria; nome: string}) {
 function Galeria({p}: {p: Projeto}) {
  const celulares = p.galeria.filter((g) => g.tipo === 'celular').length;
  const ref = useRef<HTMLDivElement>(null);
- useSequencia(ref);
+ useTocaFluxos(ref);
  return <div ref={ref} className="galeria" style={{['--colunas-celular' as string]: celulares >= 4 ? 3 : celulares === 3 ? 4 : 6}}>
-  {p.galeria.map((g, i) => <div key={i} style={{['--i' as string]: i}} className={`galeria-item revela ${g.largo ? 'largo' : ''} item-${g.tipo}`}><Imagem item={g} nome={p.name}/></div>)}
+  {p.galeria.map((g, i) => <div key={i} style={{['--i' as string]: i}} className={`galeria-item revela ${g.largo ? 'largo' : ''} item-${g.tipo}`}>{g.fluxo ? <TelaFluxo passos={g.fluxo} legenda={g.legenda} nome={p.name}/> : <Imagem item={g} nome={p.name}/>}</div>)}
  </div>;
 }
 
@@ -179,7 +179,7 @@ export default function Home() {
  useRevela();
  useAberturaRolagem(abertura);
  useEffect(() => {
-  const aoRolar = () => setRolou(window.scrollY > 700);
+  const aoRolar = () => setRolou(window.scrollY > 40);
   aoRolar();
   window.addEventListener('scroll', aoRolar, {passive: true});
   return () => window.removeEventListener('scroll', aoRolar);
@@ -187,7 +187,11 @@ export default function Home() {
 
  return <>
   <a className="pular" href="#projetos">Pular para os projetos</a>
-  <header className="topo" id="topo">
+  <header className={`topo ${rolou ? 'topo-rolou' : ''}`} id="topo">
+   <a href="#conteudo" className="topo-nome">Alan Mateus Queiroz</a>
+   <nav aria-label="Seções" className="topo-links">
+    <a href="#projetos">Projetos</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a>
+   </nav>
    <PainelAcessibilidade/>
    <button type="button" className="botao-topo" onClick={() => setTema(tema === 'escuro' ? 'claro' : 'escuro')} aria-pressed={tema === 'claro'}
     aria-label={tema === 'escuro' ? 'Ativar modo claro' : 'Ativar modo escuro'} title={tema === 'escuro' ? 'Modo claro' : 'Modo escuro'}>
@@ -199,16 +203,38 @@ export default function Home() {
    <section ref={abertura} className="hero" aria-labelledby="nome">
     <div className="container hero-centro">
      <div className="hero-texto">
-      <h1 id="nome" className="hero-nome">{'Alan Mateus Queiroz'.split(' ').map((w, i) => <span key={w}>{i > 0 && ' '}<span className="palavra" style={{['--i' as string]: i}}>{w}</span></span>)}</h1>
-      <p className="hero-sub">Estudante de ADS na UNIFOR · Bolsista pesquisador na M. Dias Branco · Desenvolvimento de software e IA aplicada</p>
-      <nav aria-label="Sobre e contatos"><ul className="pilulas">
-       <li><Pilula href="#sobre" icone="user">Sobre</Pilula></li>
-       <li><Pilula href={CONTATOS.github} icone="github" externo>GitHub</Pilula></li>
-       <li><Pilula href={CONTATOS.email} icone="mail">Email</Pilula></li>
-       <li><Pilula href={CONTATOS.linkedin} icone="linkedin" externo>LinkedIn</Pilula></li>
-      </ul></nav>
+      <p className="hero-quem"><img src="./assets/alan-preta.webp" alt="" width="40" height="40"/><span>Alan Mateus Queiroz · Fortaleza, CE</span></p>
+      <h1 id="nome" className="hero-nome">{['Produtos', 'digitais', 'que', 'resolvem'].map((w, i) => <span key={w}>{i > 0 && ' '}<span className="palavra" style={{['--i' as string]: i}}>{w}</span></span>)}{' '}
+       <span className="palavra destaque" style={{['--i' as string]: 4}}>problemas reais.</span></h1>
+      <p className="hero-sub">Estudante de ADS na UNIFOR e bolsista pesquisador na M. Dias Branco. Uno desenvolvimento de software, IA aplicada e design de produto, do problema ao protótipo e ao piloto.</p>
+      <div className="hero-acoes">
+       <a className="botao-cheio" href="#projetos">Ver projetos <Icone nome="seta" tamanho={18}/></a>
+       <a className="botao-linha" href={CONTATOS.email}>Fale comigo <Icone nome="mail" tamanho={18}/></a>
+      </div>
+      <ul className="hero-redes" aria-label="Redes">
+       <li><a href={CONTATOS.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub (abre em nova aba)"><Icone nome="github" tamanho={22}/></a></li>
+       <li><a href={CONTATOS.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (abre em nova aba)"><Icone nome="linkedin" tamanho={22}/></a></li>
+      </ul>
      </div>
-     <a className="hero-seta" href="#projetos" aria-label="Ir para os projetos"><Icone nome="seta" tamanho={22}/></a>
+     <div className="vitrine" aria-hidden="true">
+      <Inclina className="vitrine-tela"><img src="./assets/safra-capa.webp" alt=""/></Inclina>
+      <Inclina className="vitrine-cel vitrine-cel-1"><img src="./assets/fluxo/s1-inicio.webp" alt=""/></Inclina>
+      <Inclina className="vitrine-cel vitrine-cel-2"><img src="./assets/fluxo/r-home.webp" alt=""/></Inclina>
+     </div>
+     <div className="prova">
+      <p>Projetos com</p>
+      <ul aria-label="Instituições e eventos">
+       <li><img src="./assets/logo-mdb.png" alt="M. Dias Branco"/></li>
+       <li><img src="./assets/logo-unifor.png" alt="Unifor"/></li>
+       <li><img src="./assets/logo-hackathon.png" alt="O-Hackathon M. Dias Branco"/></li>
+       <li><svg className="logo-texto" viewBox="0 0 240 48" role="img" aria-label="Hacktudo, Festival de Cultura Digital"><text x="0" y="31" textLength="240" lengthAdjust="spacingAndGlyphs" className="logo-texto-1">HACKTUDO</text><text x="1" y="46" textLength="238" lengthAdjust="spacingAndGlyphs" className="logo-texto-2">FESTIVAL DE CULTURA DIGITAL</text></svg></li>
+      </ul>
+     </div>
+     <ul className="destaques">
+      <li><b>Safra</b><span>virou projeto piloto na M. Dias Branco</span></li>
+      <li><b>Pesquisa</b><span>bolsista pesquisador na M. Dias Branco</span></li>
+      <li><b>Hackathons</b><span>O-Hackathon, Hacktudo e GoHacks Talent</span></li>
+     </ul>
     </div>
    </section>
 
@@ -252,6 +278,6 @@ export default function Home() {
     <span className="feito-com">Feito com React, TypeScript e Vite · <a href="https://github.com/alanmateuz/alanmateuz.github.io" target="_blank" rel="noopener noreferrer">ver o código<SoLeitor> (abre em nova aba)</SoLeitor></a></span></p>
   </footer>
 
-  <a href="#topo" className={`volta-topo ${rolou ? 'visivel' : ''}`} aria-label="Voltar ao topo" tabIndex={rolou ? 0 : -1}><Icone nome="cima" tamanho={20}/></a>
+  <a href="#topo" className={`volta-topo ${rolou && typeof window !== 'undefined' && window.scrollY > 900 ? 'visivel' : ''}`} aria-label="Voltar ao topo" tabIndex={rolou ? 0 : -1}><Icone nome="cima" tamanho={20}/></a>
  </>;
 }

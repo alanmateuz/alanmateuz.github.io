@@ -3,7 +3,9 @@ export type CasoDesign = {problema:string;processo:string[];decisoes:Decisao[];t
 /** Imagem da galeria. tipo 'tela' = print de computador; 'celular' = print de celular; 'foto' = foto de evento.
  *  img vazio = foto ainda não enviada (aparece um espaço reservado). */
 /** toques: pontos (em % da tela) onde o "dedo" toca, em ordem; rolar: a tela desliza como se rolasse. */
-export type ItemGaleria = {img:string;legenda:string;tipo:'tela'|'celular'|'foto';largo?:boolean;toques?:[number,number][];rolar?:boolean};
+/** Um passo do fluxo animado: tela, rolagem (desce até o fim) e toque (x,y em % da tela visível). */
+export type Passo = {img:string;rolar?:boolean;toque?:[number,number][]};
+export type ItemGaleria = {fluxo?:Passo[];img:string;legenda:string;tipo:'tela'|'celular'|'foto';largo?:boolean;toques?:[number,number][];rolar?:boolean};
 export type Acoes = {app?:string;prototipo?:{rotulo:string;url:string}[];design?:boolean;pitch?:number};
 /** Logos de parceiros (PNG branco, fundo transparente), mostrados ao lado do título. */
 /** img = PNG branco; ou texto = logo redesenhado em texto (nítido em qualquer tamanho). */
@@ -16,7 +18,11 @@ export const projects:Projeto[] = [
   galeria:[{img:'safra-capa',legenda:'O desafio: gestão integrada de treinamentos',tipo:'tela'},{img:'safra-como-funciona',legenda:'Como funciona',tipo:'tela'},{img:'foto-safra-unifor-hub',legenda:'Participantes no Unifor Hub',tipo:'foto',largo:true}],},
  {id:'alui',name:'Alui',client:'Hackatudo · equipe reThink',category:'EDUCAÇÃO · GAMIFICAÇÃO · IA',number:'02',headline:'O celular também pode ensinar.',description:'Uma plataforma educacional gamificada para transformar o celular em aliado da aula. Professores criam turmas e trilhas, geram questões com IA e acompanham resultados. Alunos aprendem com cartões, desafios e rankings.',role:'Projeto colaborativo desenvolvido no Hackatudo, com foco em uma relação mais consciente entre tecnologia e educação.',tags:['Java 17','Spring Boot','PostgreSQL','Figma'],image:'alui-slide-1',summary:'Plataforma gamificada que transforma o celular em aliado da sala de aula.',
   cor:'#FF7A2F',logos:[{texto:['HACKTUDO','FESTIVAL DE CULTURA DIGITAL'],nome:'Hacktudo, Festival de Cultura Digital'}],capa:'tela',acoes:{prototipo:[{rotulo:'Ver protótipo',url:'https://www.figma.com/proto/ZeNsOeWOFET5LWMfR5YyH0/Alui?page-id=0%3A1&node-id=1-13&p=f&viewport=-666%2C-351%2C0.58&t=AQnSTbWyQMpqOOsO-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A2'}],design:true,pitch:10},
-  galeria:[{img:'alui-inicio',toques:[[36,30],[60,62]],legenda:'Início do aluno',tipo:'celular'},{img:'alui-multipla',toques:[[50,41],[50,92]],legenda:'Questão de múltipla escolha',tipo:'celular'},{img:'alui-aberta',toques:[[50,47],[50,93]],legenda:'Pergunta aberta',tipo:'celular'},{img:'alui-duvida',toques:[[85,82],[50,90]],legenda:'Dúvida anônima',tipo:'celular'}],
+  galeria:[
+   {img:'fluxo/s1-inicio',legenda:'Entrar na aula ao vivo',tipo:'celular',fluxo:[{img:'s1-inicio',toque:[[34,30]]},{img:'a1-entrar',toque:[[50,93]]},{img:'a2-aguardando'}]},
+   {img:'fluxo/a4-multipla',legenda:'Responder e ver o resultado',tipo:'celular',fluxo:[{img:'a4-multipla',toque:[[50,42],[50,93]]},{img:'a5-certa'}]},
+   {img:'fluxo/a9-aberta',legenda:'Mandar uma dúvida anônima',tipo:'celular',fluxo:[{img:'a9-aberta',toque:[[71,8]]},{img:'a12c-duvida',toque:[[50,93]]}]},
+   {img:'fluxo/p3-gerar',legenda:'Professor gera a trilha com IA',tipo:'celular',fluxo:[{img:'p3-gerar',toque:[[50,93]]},{img:'p4-revisar',toque:[[50,93]]},{img:'p5-ao-vivo'}]}],
   design:{
    problema:'O celular costuma ser a maior distração da aula. O desafio era transformá-lo em aliado, para alunos e para professores.',
    processo:['Dois públicos, dois fluxos: o aluno aprende e o professor cria turmas, trilhas e acompanha métricas.','Marca com mascote (a arara) e paleta em que cada cor tem um significado: azul é o dia a dia, laranja é modo especial.','Protótipo navegável no Figma, com animações e modo claro e escuro.'],
@@ -29,7 +35,12 @@ export const projects:Projeto[] = [
    resultado:'56 telas em modo claro e escuro e um protótipo navegável com animações.'}},
  {id:'reuse',name:'ReUse',client:'Unifor',category:'UI/UX · ECONOMIA CIRCULAR',number:'03',headline:'Novas histórias para o que já existe.',description:'Uma proposta de re-commerce universitário que conecta estudantes da Unifor para comprar, vender e doar materiais, com interfaces mobile que aproximam a economia circular da vida no campus.',role:'Minha participação: UI/UX e prototipagem das jornadas de compra e venda, dos anúncios, das mensagens e dos indicadores de impacto.',tags:['Figma','Protótipo navegável'],image:'reuse-landing',summary:'App para estudantes da Unifor comprarem, venderem e doarem materiais.',
   cor:'#2F6BFF',logos:[{img:'logo-unifor',nome:'Unifor'}],capa:'tela',acoes:{prototipo:[{rotulo:'Ver protótipo',url:'https://www.figma.com/proto/6uBMFvv39cWSeVa7tP3Wlk/ReUni?node-id=1-3&t=D99ocYFHTxDUHz3N-1'},{rotulo:'Ver landing page',url:'https://www.figma.com/proto/6uBMFvv39cWSeVa7tP3Wlk/ReUni?node-id=1-6&page-id=1%3A2&starting-point-node-id=1%3A6&t=uOS88tqX22zY3Xhk-1'}],design:true},
-  galeria:[{img:'reuse-inicio',rolar:true,toques:[[33,72]],legenda:'Início: anúncios do seu curso',tipo:'celular'},{img:'reuse-anuncio',toques:[[28,93]],legenda:'Detalhes do anúncio',tipo:'celular'},{img:'reuse-revisao',rolar:true,toques:[[50,55]],legenda:'Revisão do anúncio',tipo:'celular'},{img:'reuse-compra',toques:[[50,87]],legenda:'Compra concluída',tipo:'celular'},{img:'reuse-landing',toques:[[16,68]],legenda:'Landing page',tipo:'tela',largo:true}],
+  galeria:[
+   {img:'fluxo/r-home',legenda:'Encontrar um material do curso',tipo:'celular',fluxo:[{img:'r-home',toque:[[17,69]]},{img:'r-anuncio',rolar:true}]},
+   {img:'fluxo/r-anuncio',legenda:'Conversar com quem vende',tipo:'celular',fluxo:[{img:'r-anuncio',toque:[[72,92]]},{img:'r-mensagens',rolar:true}]},
+   {img:'fluxo/r-pagamento',legenda:'Pagar e combinar a entrega',tipo:'celular',fluxo:[{img:'r-pagamento',rolar:true,toque:[[50,86]]},{img:'r-concluida'}]},
+   {img:'fluxo/r-revisao',legenda:'Anunciar um material',tipo:'celular',fluxo:[{img:'r-revisao',rolar:true,toque:[[50,89]]}]},
+   {img:'reuse-landing',legenda:'Landing page',tipo:'tela',largo:true}],
   design:{
    problema:'Materiais de estudo em bom estado ficam parados enquanto outros estudantes do mesmo campus precisam deles.',
    processo:['Jornadas de compra, venda e doação entre estudantes.','Card de anúncio pensado a partir da pergunta "o que preciso saber aqui?".','Identidade ligada à Unifor e protótipos navegáveis da landing page e do app.'],
