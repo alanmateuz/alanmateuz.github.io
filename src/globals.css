@@ -104,9 +104,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* ---------- Apresentação ---------- */
 /* Foto recortada grande à esquerda, apoiada na borda de baixo; texto à direita */
 .hero { background: var(--fundo); padding-top: 96px; overflow: hidden; }
-.hero-grade { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; gap: 40px; min-height: 600px; }
-.foto-hero { width: 100%; max-width: 620px; height: auto; justify-self: center; margin-bottom: 0; }
-.hero-texto { align-self: center; padding-bottom: 72px; }
+.hero-grade { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; gap: 40px; }
+/* A foto acompanha a altura da tela, para "Projetos" aparecer logo na primeira tela */
+.foto-hero { width: auto; max-width: 100%; height: min(70vh, 660px); object-fit: contain; object-position: bottom; justify-self: center; margin-bottom: 0; }
+.hero-texto { align-self: center; padding-bottom: 80px; }
 
 .hero-sub { margin-top: 16px; max-width: 46ch; font-size: var(--t-corpo); line-height: 1.5; color: var(--texto-2); }
 .pilulas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
@@ -116,7 +117,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 /* ---------- Folha dos projetos ---------- */
 .folha { background: var(--folha); border-radius: var(--raio-g) var(--raio-g) 0 0; margin-top: -28px; position: relative; }
-.resumo { padding: 64px 0 24px; }
+.resumo { padding: 48px 0 24px; }
 
 /* Quadradinhos que rolam para o lado */
 .fileira { margin-top: 28px; }
@@ -244,7 +245,7 @@ figcaption { margin-top: 12px; font-size: var(--t-legenda); color: var(--texto-2
   .hero { padding-top: 88px; }
   .hero-grade { grid-template-columns: 1fr; gap: 24px; min-height: 0; }
   .hero-texto { order: 1; padding-bottom: 0; }
-  .foto-hero { order: 2; width: 82%; margin-top: 8px; }
+  .foto-hero { order: 2; height: min(46vh, 380px); margin-top: 8px; }
   .galeria { gap: 16px; }
   .galeria-item { grid-column: 1 / -1; }
   .item-celular { grid-column: span 6; }
