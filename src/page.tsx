@@ -1,25 +1,183 @@
-'use client';
-import {useEffect,useRef,useState} from 'react';
-import {projects} from './projects';
-import {ProjectActions,SafraSlides} from './project-actions';
-const sections=[['inicio','Início'],...projects.map(p=>[p.id,p.name]),['grade','Grade de projetos'],['contatos','Contatos']];
-function Picture({name,alt,className='',eager=false}:{name:string;alt:string;className?:string;eager?:boolean}){return <img className={className} src={`./assets/${name}.webp`} alt={alt} loading={eager?'eager':'lazy'} decoding="async"/>}
-function Shot({name,alt,className='',href}:{name:string;alt:string;className?:string;href?:string}){return href?<a className={`shot ${className}`} href={href}><Picture name={name} alt={alt} eager/><span className="shot-label">{alt}</span></a>:<figure className={`shot ${className}`}><Picture name={name} alt={alt}/><figcaption>{alt}</figcaption></figure>}
-function Copy({id}:{id:string}){const p=projects.find(x=>x.id===id)!;const details=<><h3>{p.headline}</h3><p>{p.description}</p><p className="role">{p.role}</p><div className="tags">{p.tags.map(t=><span key={t}>{t}</span>)}</div><ProjectActions id={p.id} name={p.name} caso={p.design}/></>;return <div className="project-copy reveal"><p className="eyebrow">{p.number} / {p.category}</p><h2>{p.name}<span>{p.client}</span></h2>{p.id==='bim'&&<div className="bim-cover"><Shot name="bim-slide-1" alt="BIM Mobile — capa da apresentação"/></div>}{p.id==='alui'&&<div className="alui-cover"><Shot name="alui-slide-1" alt="Alui — o celular como aliado do aprendizado"/></div>}{(p.id==='alui'||p.id==='bim')?<div className={`${p.id}-details`}>{details}</div>:details}</div>}
-export default function Home(){const [active,setActive]=useState('inicio');const [scrolled,setScrolled]=useState(false);const hero=useRef<HTMLElement>(null);
-useEffect(()=>{let raf=0;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;const update=()=>{setScrolled(window.scrollY>90);let current='inicio';for(const [id] of sections){const e=document.getElementById(id);if(e&&e.getBoundingClientRect().top<window.innerHeight*.45)current=id;}setActive(current);if(!reduced)document.querySelectorAll<HTMLElement>('.parallax').forEach(el=>{const rect=el.getBoundingClientRect();const delta=Math.max(-20,Math.min(20,(window.innerHeight/2-rect.top)*.035));el.style.setProperty('--scroll',`${delta}px`);});raf=0;};const scroll=()=>{if(!raf)raf=requestAnimationFrame(update)};update();window.addEventListener('scroll',scroll,{passive:true});const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(e=>io.observe(e));return()=>{window.removeEventListener('scroll',scroll);cancelAnimationFrame(raf);io.disconnect()};},[]);
-return <><a className="skip" href="#provaizi">Pular para os projetos</a>
-<nav className={`floating-nav ${scrolled?'scrolled':''}`} aria-label="Navegação principal">{[[projects[0].id,'Ver projetos'],['grade','Grade de projetos'],['contatos','Contatos']].map(([id,label])=><a key={id} href={`#${id}`} className={active===id||(id===projects[0].id&&projects.some(p=>p.id===active))?'selected':''} aria-current={active===id?'location':undefined}>{label}</a>)}</nav>
-<nav className="progress" aria-label="Progresso da página">{sections.map(([id,label])=><a key={id} href={`#${id}`} aria-label={label} aria-current={active===id?'location':undefined} className={active===id?'active':''}><span>{label}</span><i/></a>)}</nav>
-<main><section id="inicio" ref={hero} className="hero" onPointerMove={e=>{if(e.pointerType==='mouse'&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){const r=e.currentTarget.getBoundingClientRect();hero.current?.style.setProperty('--mx',`${(e.clientX/r.width-.5)*16}px`);hero.current?.style.setProperty('--my',`${(e.clientY/r.height-.5)*12}px`)}}} onPointerLeave={()=>{hero.current?.style.setProperty('--mx','0px');hero.current?.style.setProperty('--my','0px')}}>
-<div className="hero-orbit"><Shot name="alui-3" alt="Conheça a Alui" className="hero-a phone" href="#alui"/><Shot name="safra-screen" alt="Conheça o Safra" className="hero-b" href="#safra"/><Shot name="reuse-web" alt="Conheça o ReUse" className="hero-c" href="#reuse"/><Shot name="bim-model" alt="Conheça o BIM Mobile" className="hero-d" href="#bim"/></div>
-<div className="hero-copy"><Picture name="alan" alt="Alan Mateus" className="portrait" eager/><h1>Alan<br/><span>Mateus</span><b>.</b></h1><p className="intro">Produto, tecnologia<br/>e design</p><p className="bio">Estudante de ADS na Unifor. Transformo problemas reais em soluções com IA, automação de dados e interfaces simples de usar, cuidando também da gestão do projeto.</p><ul className="areas" aria-label="Áreas de atuação"><li>IA aplicada</li><li>Automação e dados</li><li>Gestão de projetos</li><li>UI/UX mobile</li></ul></div>
-</section>
-<div className="section-divider"><span>TRABALHOS SELECIONADOS</span><span>2026</span></div>
-<section id="provaizi" className="project provaizi"><Copy id="provaizi"/><div className="provaizi-phones reveal parallax"><Shot name="provaizi-inicio" alt="Prova Izi — início" className="phone pz-one"/><Shot name="provaizi-editor" alt="Prova Izi — editor da prova" className="phone pz-two"/><Shot name="provaizi-adaptada" alt="Prova Izi — versão adaptada" className="phone pz-three"/></div></section>
-<section id="safra" className="project safra"><Copy id="safra"/><div className="safra-main reveal parallax"><Shot name="safra-screen" alt="Safra — visualização por plataforma"/><span className="image-note">Interface apresentada no desafio de inovação</span></div><SafraSlides/></section>
-<section id="alui" className="project alui"><Copy id="alui"/><div className="alui-stage reveal">{[{n:2,label:'boas-vindas'},{n:3,label:'próximas aulas'},{n:4,label:'ofensiva e metas'},{n:18,label:'questão de múltipla escolha'},{n:15,label:'métricas de aprendizado'}].map((screen,i)=><Shot key={screen.n} name={screen.n===15?'alui-metrics-crop':`alui-${screen.n}`} alt={`Alui — ${screen.label}`} className={`phone orbit-screen orbit-${i+1}`}/>)}</div></section>
-<section id="reuse" className="project reuse"><div className="reuse-phones reveal parallax"><Shot name="reuse-home-crop" alt="ReUse — início em modo escuro" className="phone phone-one"/><Shot name="reuse-detail-crop" alt="ReUse — detalhes de um anúncio" className="phone phone-two"/><Shot name="reuse-third-crop" alt="ReUse — início em modo claro" className="phone phone-three"/></div><Copy id="reuse"/><div className="reuse-web reveal"><Shot name="reuse-web" alt="ReUse — apresentação da plataforma"/></div></section>
-<section id="bim" className="project bim"><div className="bim-title"><Copy id="bim"/></div><div className="bim-images reveal parallax"><Shot name="bim-model" alt="BIM Mobile — modelos e informações da obra"/><Shot name="bim-plan" alt="BIM Mobile — planejamento e acompanhamento"/></div></section>
-<section id="grade" className="project-grid"><div className="grid-heading reveal"><p className="eyebrow">UM OUTRO JEITO DE EXPLORAR</p><h2>Todos os projetos<span>.</span></h2><p>Diferentes formas de resolver problemas.</p></div><div className="cards">{projects.map(p=><article key={p.id} className={`project-card card-${p.id} reveal`}><a href={`#${p.id}`} className="card-image" aria-label={`Ver projeto ${p.name}`}><Picture name={p.image} alt={`Prévia de ${p.name}`}/></a><div className="card-content"><span className="eyebrow">{p.category}</span><h3>{p.name}</h3><p>{p.summary}</p><a className="project-link" href={`#${p.id}`}>Ver projeto</a></div></article>)}</div></section>
-<section id="contatos" className="contact"><div className="contact-photo reveal"><Picture name="alan" alt="Retrato de Alan Mateus"/><span>FORTALEZA, CE</span></div><div className="contact-copy reveal"><p className="eyebrow">BOAS IDEIAS COMEÇAM COM UMA CONVERSA</p><h2>Vamos criar<br/>algo juntos<span>?</span></h2><div className="contact-links"><a href="mailto:alanmateusqueiroz@gmail.com">Email</a><a href="https://linkedin.com/in/alanmateusqueiroz" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://github.com/alanmateuz" target="_blank" rel="noopener noreferrer">GitHub</a></div><p>Estudante de Análise e Desenvolvimento de Sistemas na Unifor. Gosto de pegar um problema do dia a dia, da sala de aula, do campus ou de uma empresa, e chegar a uma solução que as pessoas usem de verdade: com dados, automação, IA e uma interface clara.</p></div></section></main><footer><a className="wordmark" href="#inicio">am<span>.</span></a><span>Alan Mateus · 2026</span><a href="#inicio">Voltar ao início</a></footer></>}
+import {useEffect, useState} from 'react';
+import {projects, type ItemGaleria, type Projeto} from './projects';
+import {AcoesProjeto, Icone, SoLeitor} from './project-actions';
+
+const CONTATOS = {
+ github: 'https://github.com/alanmateuz',
+ email: 'mailto:alanmateusqueiroz@gmail.com',
+ linkedin: 'https://linkedin.com/in/alanmateusqueiroz',
+};
+
+/* ---------- Tema claro/escuro (escolha fica salva neste navegador) ---------- */
+type Tema = 'escuro' | 'claro';
+function useTema() {
+ const [tema, setTema] = useState<Tema>(() => (document.documentElement.dataset.tema as Tema) || 'escuro');
+ useEffect(() => {
+  document.documentElement.dataset.tema = tema;
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', tema === 'escuro' ? '#161616' : '#f6f6f4');
+  try { localStorage.setItem('tema', tema); } catch { /* navegação privada */ }
+ }, [tema]);
+ return [tema, () => setTema((t) => (t === 'escuro' ? 'claro' : 'escuro'))] as const;
+}
+
+/* ---------- Pedaços ---------- */
+function Pilula({href, icone, children, externo}: {href: string; icone: string; children: string; externo?: boolean}) {
+ return <a className="pilula" href={href} {...(externo ? {target: '_blank', rel: 'noopener noreferrer'} : {})}>
+  {children}<Icone nome={icone} tamanho={18}/>{externo && <SoLeitor> (abre em nova aba)</SoLeitor>}
+ </a>;
+}
+
+function Imagem({item, nome}: {item: ItemGaleria; nome: string}) {
+ if (!item.img) {
+  // Foto ainda não enviada: espaço reservado, fácil de trocar depois
+  return <figure className={`midia midia-${item.tipo} reservado`}>
+   <div className="reservado-caixa" role="img" aria-label={`${item.legenda}: foto em breve`}><Icone nome="foto" tamanho={28}/><span>Foto em breve</span></div>
+   <figcaption>{item.legenda}</figcaption>
+  </figure>;
+ }
+ return <figure className={`midia midia-${item.tipo}`}>
+  <div className="midia-caixa"><img src={`./assets/${item.img}.webp`} alt={`${nome}: ${item.legenda}`} loading="lazy" decoding="async"/></div>
+  <figcaption>{item.legenda}</figcaption>
+ </figure>;
+}
+
+function Galeria({p}: {p: Projeto}) {
+ const celulares = p.galeria.filter((g) => g.tipo === 'celular').length;
+ return <div className="galeria" style={{['--colunas-celular' as string]: celulares >= 4 ? 3 : celulares === 3 ? 4 : 6}}>
+  {p.galeria.map((g, i) => <div key={i} className={`galeria-item ${g.largo ? 'largo' : ''} item-${g.tipo}`}><Imagem item={g} nome={p.name}/></div>)}
+ </div>;
+}
+
+function CartaoProjeto({p, destaque}: {p: Projeto; destaque?: boolean}) {
+ return <li className={`cartao ${destaque ? 'cartao-destaque' : ''}`} style={{['--cor' as string]: p.cor}}>
+  <a href={`#${p.id}`} className="cartao-link">
+   <div className={`cartao-imagem capa-${p.capa}`}><img src={`./assets/${p.image}.webp`} alt="" loading="lazy" decoding="async"/></div>
+   <div className="cartao-texto">
+    <span className="sobretitulo">{p.number} · {p.category}</span>
+    <h3>{p.name}</h3>
+    <p>{p.summary}</p>
+    <span className="cartao-ver" aria-hidden="true">Ver projeto <Icone nome="seta" tamanho={16}/></span>
+   </div>
+  </a>
+ </li>;
+}
+
+function DetalheProjeto({p, proximo}: {p: Projeto; proximo?: Projeto}) {
+ return <section id={p.id} className="projeto" style={{['--cor' as string]: p.cor}} aria-labelledby={`${p.id}-titulo`}>
+  <div className="container">
+   <header className="projeto-topo">
+    <p className="sobretitulo projeto-num">{p.number} · {p.category}</p>
+    <h2 id={`${p.id}-titulo`}>{p.name}</h2>
+    <p className="projeto-cliente">{p.client}</p>
+   </header>
+   <div className="projeto-texto">
+    <p className="projeto-chamada">{p.headline}</p>
+    <p>{p.description}</p>
+    <p className="projeto-papel">{p.role}</p>
+    <ul className="etiquetas" aria-label="Tecnologias e áreas">{p.tags.map((t) => <li key={t}>{t}</li>)}</ul>
+   </div>
+   <Galeria p={p}/>
+   <AcoesProjeto id={p.id} nome={p.name} acoes={p.acoes} caso={p.design}/>
+   {proximo && <a className="proximo" href={`#${proximo.id}`}><span>Próximo projeto: <b>{proximo.name}</b></span><span className="proximo-linha" aria-hidden="true"><Icone nome="seta" tamanho={22}/></span></a>}
+  </div>
+ </section>;
+}
+
+/* Fotos do "Sobre": as que já existem + espaços para as próximas */
+const FOTOS_SOBRE = [
+ {img: 'foto-evento-1', legenda: 'Em evento de tecnologia'},
+ {img: 'foto-mdb-equipe', legenda: 'Equipe no desafio da M. Dias Branco'},
+ {img: 'foto-hackathon-mdb', legenda: 'Hackathon da M. Dias Branco'},
+ {img: '', legenda: 'Foto em breve'},
+ {img: '', legenda: 'Foto em breve'},
+];
+
+function FaixaFotos() {
+ const [pausada, setPausada] = useState(false);
+ const lista = (copia: boolean) => FOTOS_SOBRE.map((f, i) => <li key={`${copia}-${i}`} aria-hidden={copia || undefined}>
+  {f.img ? <img src={`./assets/${f.img}.webp`} alt={copia ? '' : f.legenda} loading="lazy"/> : <div className="reservado-caixa"><Icone nome="foto" tamanho={26}/><span>Foto em breve</span></div>}
+ </li>);
+ return <div className={`faixa ${pausada ? 'pausada' : ''}`}>
+  <div className="faixa-trilho"><ul className="faixa-lista">{lista(false)}{lista(true)}</ul></div>
+  <button type="button" className="faixa-pausa" onClick={() => setPausada(!pausada)} aria-pressed={pausada}>
+   <Icone nome={pausada ? 'play' : 'pausa'} tamanho={16}/>{pausada ? 'Continuar fotos' : 'Pausar fotos'}
+  </button>
+ </div>;
+}
+
+export default function Home() {
+ const [tema, alternarTema] = useTema();
+ const [rolou, setRolou] = useState(false);
+ useEffect(() => {
+  const aoRolar = () => setRolou(window.scrollY > 700);
+  aoRolar();
+  window.addEventListener('scroll', aoRolar, {passive: true});
+  return () => window.removeEventListener('scroll', aoRolar);
+ }, []);
+
+ return <>
+  <a className="pular" href="#projetos">Pular para os projetos</a>
+  <header className="topo" id="topo">
+   <button type="button" className="botao-tema" onClick={alternarTema} aria-pressed={tema === 'claro'}
+    aria-label={tema === 'escuro' ? 'Ativar modo claro' : 'Ativar modo escuro'} title={tema === 'escuro' ? 'Modo claro' : 'Modo escuro'}>
+    <Icone nome={tema === 'escuro' ? 'sol' : 'lua'} tamanho={24}/>
+   </button>
+  </header>
+
+  <main id="conteudo">
+   <section className="hero container" aria-labelledby="nome">
+    <img className="foto-perfil" src="./assets/alan.webp" alt="Alan Mateus sorrindo, de camisa preta" width="140" height="140"/>
+    <div className="hero-texto">
+     <h1 id="nome">Alan Mateus</h1>
+     <p className="hero-sub">Estudante de ADS na UNIFOR <span aria-hidden="true">·</span> Bolsista pesquisador na M. Dias Branco <span aria-hidden="true">·</span> Desenvolvimento de software e IA aplicada</p>
+     <nav aria-label="Sobre e contatos"><ul className="pilulas">
+      <li><Pilula href="#sobre" icone="user">Sobre</Pilula></li>
+      <li><Pilula href={CONTATOS.github} icone="github" externo>GitHub</Pilula></li>
+      <li><Pilula href={CONTATOS.email} icone="mail">Email</Pilula></li>
+      <li><Pilula href={CONTATOS.linkedin} icone="linkedin" externo>LinkedIn</Pilula></li>
+     </ul></nav>
+    </div>
+   </section>
+
+   <div className="folha">
+    <section id="projetos" className="resumo container" aria-labelledby="projetos-titulo">
+     <h2 id="projetos-titulo" className="titulo-secao">Projetos</h2>
+     <ul className="cartoes">{projects.map((p, i) => <CartaoProjeto key={p.id} p={p} destaque={i === 0}/>)}</ul>
+    </section>
+
+    {projects.map((p, i) => <DetalheProjeto key={p.id} p={p} proximo={projects[i + 1]}/>)}
+
+    <section id="sobre" className="sobre" aria-labelledby="sobre-titulo">
+     <div className="container sobre-texto">
+      <h2 id="sobre-titulo" className="titulo-secao">Sobre</h2>
+      <p className="sobre-destaque">Sou estudante de Análise e Desenvolvimento de Sistemas na UNIFOR e estou construindo minha carreira em tecnologia.</p>
+      <p>Tenho interesse em desenvolvimento de software, automação de processos, inteligência artificial e produtos digitais. Minha trajetória combina estudos, pesquisa aplicada e colaboração em iniciativas de inovação.</p>
+      <p>Atualmente, atuo como bolsista pesquisador na M. Dias Branco. Gosto de compreender desafios, aprender continuamente e contribuir para a criação de soluções úteis e bem estruturadas. Quero crescer na área de tecnologia, especialmente em desenvolvimento de software, automação, produtos digitais e inteligência artificial.</p>
+     </div>
+     <FaixaFotos/>
+    </section>
+   </div>
+  </main>
+
+  <footer className="rodape" id="contato">
+   <div className="container rodape-grade">
+    <div>
+     <p className="rodape-chamada">Vamos conversar?</p>
+     <ul className="pilulas">
+      <li><Pilula href={CONTATOS.email} icone="mail">Email</Pilula></li>
+      <li><Pilula href={CONTATOS.linkedin} icone="linkedin" externo>LinkedIn</Pilula></li>
+      <li><Pilula href={CONTATOS.github} icone="github" externo>GitHub</Pilula></li>
+     </ul>
+    </div>
+    <nav aria-label="Atalhos" className="atalhos">
+     <a href="#topo"><Icone nome="cima" tamanho={18}/>Voltar ao topo</a>
+     <a href="#projetos">Projetos</a>
+     <a href="#sobre">Sobre</a>
+    </nav>
+   </div>
+   <p className="container rodape-final">Alan Mateus · Fortaleza, CE · 2026</p>
+  </footer>
+
+  <a href="#topo" className={`volta-topo ${rolou ? 'visivel' : ''}`} aria-label="Voltar ao topo" tabIndex={rolou ? 0 : -1}><Icone nome="cima" tamanho={20}/></a>
+ </>;
+}
