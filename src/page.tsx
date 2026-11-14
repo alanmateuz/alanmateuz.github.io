@@ -118,8 +118,13 @@ function FileiraProjetos() {
 function DetalheProjeto({p}: {p: Projeto}) {
  return <section id={p.id} className="projeto" style={{['--cor' as string]: p.cor}} aria-labelledby={`${p.id}-titulo`}>
   <div className="container">
-   <h2 id={`${p.id}-titulo`} className="titulo">{p.name}</h2>
-   <p className="stack"><span className="stack-rotulo">stack</span> {p.tags.join(' · ')}</p>
+   <div className="projeto-cabeca">
+    <div>
+     <h2 id={`${p.id}-titulo`} className="titulo">{p.name}</h2>
+     <p className="stack"><span className="stack-rotulo">stack</span> {p.tags.join(' · ')}</p>
+    </div>
+    {p.logos && <ul className="logos" aria-label="Parceiros">{p.logos.map((l) => <li key={l.img}><img src={`./assets/${l.img}.png`} alt={l.nome}/></li>)}</ul>}
+   </div>
    <div className="projeto-texto">
     <p>{p.description}</p>
     <p>{p.role}</p>

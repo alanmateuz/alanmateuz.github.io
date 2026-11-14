@@ -4,7 +4,9 @@ export type CasoDesign = {problema:string;processo:string[];decisoes:Decisao[];t
  *  img vazio = foto ainda não enviada (aparece um espaço reservado). */
 export type ItemGaleria = {img:string;legenda:string;tipo:'tela'|'celular'|'foto';largo?:boolean};
 export type Acoes = {app?:string;prototipo?:{rotulo:string;url:string}[];design?:boolean;pitch?:number};
-export type Projeto = {id:string;name:string;client:string;category:string;number:string;headline:string;description:string;role:string;tags:string[];image:string;summary:string;cor:string;capa:'tela'|'celular';galeria:ItemGaleria[];acoes:Acoes;design?:CasoDesign};
+/** Logos de parceiros (PNG branco, fundo transparente), mostrados ao lado do título. */
+export type Logo = {img:string;nome:string};
+export type Projeto = {logos?:Logo[];id:string;name:string;client:string;category:string;number:string;headline:string;description:string;role:string;tags:string[];image:string;summary:string;cor:string;capa:'tela'|'celular';galeria:ItemGaleria[];acoes:Acoes;design?:CasoDesign};
 
 export const projects:Projeto[] = [
  {id:'provaizi',name:'Prova Izi',client:'Projeto autoral · no ar',category:'IA · PRODUTO · ACESSIBILIDADE',number:'01',headline:'Prova pronta em minutos, para todos os alunos.',
@@ -25,7 +27,7 @@ export const projects:Projeto[] = [
    telas:[{img:'provaizi-inicio',legenda:'Início'},{img:'provaizi-criar',legenda:'Criar prova'},{img:'provaizi-editor',legenda:'Editor da prova'},{img:'provaizi-adaptada',legenda:'Versão adaptada'},{img:'provaizi-lote',legenda:'Várias provas de uma vez'},{img:'provaizi-banco',legenda:'Banco de questões'},{img:'provaizi-inicio-escuro',legenda:'Modo escuro'}],
    resultado:'O app está no ar em prova-izi.vercel.app, funciona offline e exporta para o Word. O maior aprendizado: a interface melhorou mais com as rodadas de feedback do que com a primeira ideia.'}},
  {id:'safra',name:'Safra',client:'M. Dias Branco',category:'AUTOMAÇÃO · DADOS · GESTÃO',number:'02',headline:'Dados que viram decisões.',description:'Uma plataforma para consolidar dados de treinamentos corporativos e simplificar a rotina da Educação Corporativa. Nascido em um desafio de inovação da M. Dias Branco, o Safra avançou para a implementação de um projeto piloto.',role:'Minha participação: coordenação de equipe, definição de prioridades, interface e implementação do piloto.',tags:['Power Apps','Power Automate','SharePoint'],image:'safra-slide-1',summary:'Plataforma que reúne os dados de treinamentos corporativos da M. Dias Branco.',
-  cor:'#4F86F7',capa:'tela',acoes:{pitch:15},
+  cor:'#4F86F7',logos:[{img:'logo-unifor',nome:'Unifor'},{img:'logo-hackathon',nome:'O-Hackathon M. Dias Branco'},{img:'logo-mdb',nome:'M. Dias Branco'}],capa:'tela',acoes:{pitch:15},
   galeria:[{img:'safra-summary',legenda:'Resumo geral',tipo:'tela'},{img:'safra-regional',legenda:'Visão por regional',tipo:'tela'},{img:'foto-mdb-equipe',legenda:'Fotos do evento',tipo:'foto',largo:true}],},
  {id:'alui',name:'Alui',client:'Hackatudo · equipe reThink',category:'EDUCAÇÃO · GAMIFICAÇÃO · IA',number:'03',headline:'O celular também pode ensinar.',description:'Uma plataforma educacional gamificada para transformar o celular em aliado da aula. Professores criam turmas e trilhas, geram questões com IA e acompanham resultados. Alunos aprendem com cartões, desafios e rankings.',role:'Projeto colaborativo desenvolvido no Hackatudo, com foco em uma relação mais consciente entre tecnologia e educação.',tags:['Java 17','Spring Boot','PostgreSQL','Figma'],image:'alui-slide-1',summary:'Plataforma gamificada que transforma o celular em aliado da sala de aula.',
   cor:'#FF7A2F',capa:'tela',acoes:{prototipo:[{rotulo:'Ver protótipo',url:'https://www.figma.com/proto/ZeNsOeWOFET5LWMfR5YyH0/Alui?page-id=0%3A1&node-id=1-13&p=f&viewport=-666%2C-351%2C0.58&t=AQnSTbWyQMpqOOsO-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A2'}],design:true,pitch:10},

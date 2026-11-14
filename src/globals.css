@@ -296,3 +296,10 @@ b, strong { font-weight: 400; }
 /* Tema claro: sombra entre a abertura e a área dos projetos; cards brancos com sombra */
 [data-tema='claro'] .folha { box-shadow: 0 -10px 30px -12px rgba(20, 20, 30, .14); }
 [data-tema='claro'] .quadrado a { background: #fff; box-shadow: 0 1px 2px rgba(20, 20, 30, .06), 0 8px 24px -8px rgba(20, 20, 30, .16); }
+
+/* Logos de parceiros ao lado do título do projeto */
+.projeto-cabeca { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px 48px; }
+.logos { display: flex; align-items: center; gap: 40px; }
+.logos img { height: 52px; width: auto; opacity: .92; }
+[data-tema='claro'] .logos img { filter: invert(1); opacity: .85; }
+@media (max-width: 640px) { .logos { gap: 28px; } .logos img { height: 38px; } }
