@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import {projects, type ItemGaleria, type Projeto} from './projects';
 import {AcoesProjeto, Icone, SoLeitor} from './project-actions';
+import {Inclina, usePilha, useSequencia, useRevela, useAberturaRolagem} from './movimento';
 
 const CONTATOS = {
  github: 'https://github.com/alanmateuz',
@@ -79,16 +80,22 @@ function Imagem({item, nome}: {item: ItemGaleria; nome: string}) {
    <figcaption>{item.legenda}</figcaption>
   </figure>;
  }
- return <figure className={`midia midia-${item.tipo}`}>
-  <div className="midia-caixa"><img src={`./assets/${item.img}.webp`} alt={`${nome}: ${item.legenda}`} loading="lazy" decoding="async"/></div>
+ const anima = Boolean(item.toques || item.rolar);
+ return <figure className={`midia midia-${item.tipo} ${item.rolar ? 'rola' : ''}`} {...(anima ? {'data-seq': ''} : {})}>
+  <Inclina className="midia-caixa">
+   <img src={`./assets/${item.img}.webp`} alt={`${nome}: ${item.legenda}`} loading="lazy" decoding="async"/>
+   {item.toques?.map(([x, y], i) => <span key={i} className="toque" aria-hidden="true" style={{left: `${x}%`, top: `${y}%`, ['--n' as string]: i}}/>)}
+  </Inclina>
   <figcaption>{item.legenda}</figcaption>
  </figure>;
 }
 
 function Galeria({p}: {p: Projeto}) {
  const celulares = p.galeria.filter((g) => g.tipo === 'celular').length;
- return <div className="galeria" style={{['--colunas-celular' as string]: celulares >= 4 ? 3 : celulares === 3 ? 4 : 6}}>
-  {p.galeria.map((g, i) => <div key={i} className={`galeria-item ${g.largo ? 'largo' : ''} item-${g.tipo}`}><Imagem item={g} nome={p.name}/></div>)}
+ const ref = useRef<HTMLDivElement>(null);
+ useSequencia(ref);
+ return <div ref={ref} className="galeria" style={{['--colunas-celular' as string]: celulares >= 4 ? 3 : celulares === 3 ? 4 : 6}}>
+  {p.galeria.map((g, i) => <div key={i} style={{['--i' as string]: i}} className={`galeria-item revela ${g.largo ? 'largo' : ''} item-${g.tipo}`}><Imagem item={g} nome={p.name}/></div>)}
  </div>;
 }
 
@@ -103,7 +110,7 @@ function FileiraProjetos() {
   <ul ref={trilho} className="fileira-trilho" onScroll={medir} tabIndex={0} aria-label="Lista de projetos. Role para o lado para ver todos.">
    {projects.map((p) => <li key={p.id} className="quadrado" style={{['--cor' as string]: p.cor}}>
     <a href={`#${p.id}`}>
-     <span className={`quadrado-imagem capa-${p.capa}`}><img src={`./assets/${p.image}.webp`} alt="" loading="lazy" decoding="async"/></span>
+     <Inclina className={`quadrado-imagem capa-${p.capa}`} forca={6}><img src={`./assets/${p.image}.webp`} alt="" loading="lazy" decoding="async"/></Inclina>
      <span className="quadrado-texto"><span className="quadrado-nome">{p.name}</span><span className="quadrado-resumo">{p.summary}</span></span>
     </a>
    </li>)}
@@ -115,9 +122,9 @@ function FileiraProjetos() {
  </div>;
 }
 
-function DetalheProjeto({p}: {p: Projeto}) {
- return <section id={p.id} className="projeto" style={{['--cor' as string]: p.cor}} aria-labelledby={`${p.id}-titulo`}>
-  <div className="container">
+function DetalheProjeto({p, i}: {p: Projeto; i: number}) {
+ return <section id={p.id} className="projeto" style={{['--cor' as string]: p.cor, zIndex: i + 1}} aria-labelledby={`${p.id}-titulo`}>
+  <div className="projeto-card">
    <div className="projeto-cabeca">
     <div>
      <h2 id={`${p.id}-titulo`} className="titulo">{p.name}</h2>
@@ -130,13 +137,12 @@ function DetalheProjeto({p}: {p: Projeto}) {
       </svg>
      : <img src={`./assets/${l.img}.png`} alt={l.nome}/>}</li>)}</ul>}
    </div>
-   <div className="projeto-texto">
+   <div className="projeto-texto revela">
     <p>{p.description}</p>
     <p>{p.role}</p>
    </div>
    <Galeria p={p}/>
    <AcoesProjeto id={p.id} nome={p.name} acoes={p.acoes} caso={p.design}/>
-   <hr className="divisor"/>
   </div>
  </section>;
 }
@@ -168,6 +174,10 @@ export default function Home() {
  const [tema, setTema] = useSalvo<'escuro' | 'claro'>('tema', 'escuro', 'tema');
  useEffect(() => { document.querySelector('meta[name="theme-color"]')?.setAttribute('content', tema === 'escuro' ? '#1c1c1e' : '#ffffff'); }, [tema]);
  const [rolou, setRolou] = useState(false);
+ const abertura = useRef<HTMLElement>(null);
+ usePilha('.projeto');
+ useRevela();
+ useAberturaRolagem(abertura);
  useEffect(() => {
   const aoRolar = () => setRolou(window.scrollY > 700);
   aoRolar();
@@ -186,12 +196,11 @@ export default function Home() {
   </header>
 
   <main id="conteudo">
-   <section className="hero" aria-labelledby="nome">
-    <div className="container hero-grade">
-     <img className="foto-hero" src="./assets/alan-preta.webp" alt="Alan Mateus Queiroz sorrindo, de camisa preta e braços cruzados" width="1044" height="1194"/>
+   <section ref={abertura} className="hero" aria-labelledby="nome">
+    <div className="container hero-centro">
      <div className="hero-texto">
-      <h1 id="nome" className="titulo">Alan Mateus Queiroz</h1>
-      <p className="hero-sub">Estudante de ADS na UNIFOR | Bolsista pesquisador na M. Dias Branco | Desenvolvimento de software e IA aplicada</p>
+      <h1 id="nome" className="hero-nome">{'Alan Mateus Queiroz'.split(' ').map((w, i) => <span key={w}>{i > 0 && ' '}<span className="palavra" style={{['--i' as string]: i}}>{w}</span></span>)}</h1>
+      <p className="hero-sub">Estudante de ADS na UNIFOR · Bolsista pesquisador na M. Dias Branco · Desenvolvimento de software e IA aplicada</p>
       <nav aria-label="Sobre e contatos"><ul className="pilulas">
        <li><Pilula href="#sobre" icone="user">Sobre</Pilula></li>
        <li><Pilula href={CONTATOS.github} icone="github" externo>GitHub</Pilula></li>
@@ -199,6 +208,7 @@ export default function Home() {
        <li><Pilula href={CONTATOS.linkedin} icone="linkedin" externo>LinkedIn</Pilula></li>
       </ul></nav>
      </div>
+     <div className="hero-foto"><img className="foto-hero" src="./assets/alan-preta.webp" alt="Alan Mateus Queiroz sorrindo, de camisa preta e braços cruzados" width="1044" height="1194"/></div>
     </div>
    </section>
 
@@ -208,10 +218,10 @@ export default function Home() {
      <FileiraProjetos/>
     </section>
 
-    {projects.map((p) => <DetalheProjeto key={p.id} p={p}/>)}
+    <div className="pilha">{projects.map((p, i) => <DetalheProjeto key={p.id} p={p} i={i}/>)}</div>
 
     <section id="sobre" className="sobre" aria-labelledby="sobre-titulo">
-     <div className="container sobre-texto">
+     <div className="container sobre-texto revela">
       <h2 id="sobre-titulo" className="titulo">Sobre</h2>
       <p>Sou estudante de Análise e Desenvolvimento de Sistemas na UNIFOR e estou construindo minha carreira em tecnologia. Tenho interesse em desenvolvimento de software, automação de processos, inteligência artificial e produtos digitais. Minha trajetória combina estudos, pesquisa aplicada e colaboração em iniciativas de inovação.</p>
       <p>Atualmente, atuo como bolsista pesquisador na M. Dias Branco. Gosto de compreender desafios, aprender continuamente e contribuir para a criação de soluções úteis e bem estruturadas. Quero crescer na área de tecnologia e contribuir especialmente em desenvolvimento de software, automação, produtos digitais e inteligência artificial.</p>
