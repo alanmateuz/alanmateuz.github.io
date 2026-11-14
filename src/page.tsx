@@ -115,21 +115,11 @@ function FileiraProjetos() {
  </div>;
 }
 
-/* Faixa decorativa: quartos de círculo que giram cada um no seu tempo, alternando o sentido. Usa a cor do projeto. */
-function Faixa() {
- return <div className="faixa-formas" aria-hidden="true">
-  {Array.from({length: 28}, (_, i) => <span key={i} className={`forma ${i % 2 ? 'forma-b anti' : 'forma-a'}`}
-   style={{['--atraso' as string]: `${((i * 7 + 3) % 13) * 0.42}s`, ['--duracao' as string]: `${5 + ((i * 5) % 4)}s`}}/>)}
- </div>;
-}
-
 function DetalheProjeto({p}: {p: Projeto}) {
  return <section id={p.id} className="projeto" style={{['--cor' as string]: p.cor}} aria-labelledby={`${p.id}-titulo`}>
   <div className="container">
-   <div className="projeto-cabeca">
-    <h2 id={`${p.id}-titulo`} className="titulo">{p.name}</h2>
-    <Faixa/>
-   </div>
+   <h2 id={`${p.id}-titulo`} className="titulo">{p.name}</h2>
+   <p className="stack"><span className="stack-rotulo">stack</span> {p.tags.join(' · ')}</p>
    <div className="projeto-texto">
     <p>{p.description}</p>
     <p>{p.role}</p>
@@ -167,6 +157,14 @@ export default function Home() {
  const [tema, setTema] = useSalvo<'escuro' | 'claro'>('tema', 'escuro', 'tema');
  useEffect(() => { document.querySelector('meta[name="theme-color"]')?.setAttribute('content', tema === 'escuro' ? '#1c1c1e' : '#ffffff'); }, [tema]);
  const [rolou, setRolou] = useState(false);
+ // Luz suave que acompanha o mouse (só com mouse e quando há movimento)
+ useEffect(() => {
+  const fino = matchMedia('(pointer: fine)').matches;
+  if (!fino) return;
+  const mover = (e: PointerEvent) => { document.documentElement.style.setProperty('--mx', `${e.clientX}px`); document.documentElement.style.setProperty('--my', `${e.clientY}px`); };
+  addEventListener('pointermove', mover, {passive: true});
+  return () => removeEventListener('pointermove', mover);
+ }, []);
  useEffect(() => {
   const aoRolar = () => setRolou(window.scrollY > 700);
   aoRolar();
@@ -176,6 +174,7 @@ export default function Home() {
 
  return <>
   <a className="pular" href="#projetos">Pular para os projetos</a>
+  <div className="luz" aria-hidden="true"/>
   <header className="topo" id="topo">
    <PainelAcessibilidade/>
    <button type="button" className="botao-topo" onClick={() => setTema(tema === 'escuro' ? 'claro' : 'escuro')} aria-pressed={tema === 'claro'}
@@ -237,7 +236,8 @@ export default function Home() {
      <a href="#contato">Contatos</a>
     </nav>
    </div>
-   <p className="container rodape-final">Alan Mateus Queiroz · Fortaleza, CE · 2026</p>
+   <p className="container rodape-final">Alan Mateus Queiroz · Fortaleza, CE · 2026
+    <span className="feito-com">Feito com React, TypeScript e Vite · <a href="https://github.com/alanmateuz/alanmateuz.github.io" target="_blank" rel="noopener noreferrer">ver o código<SoLeitor> (abre em nova aba)</SoLeitor></a></span></p>
   </footer>
 
   <a href="#topo" className={`volta-topo ${rolou ? 'visivel' : ''}`} aria-label="Voltar ao topo" tabIndex={rolou ? 0 : -1}><Icone nome="cima" tamanho={20}/></a>

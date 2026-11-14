@@ -275,35 +275,24 @@ figcaption { margin-top: 12px; font-size: var(--t-legenda); color: var(--texto-2
 b, strong { font-weight: 400; }
 
 
-/* ---------- Faixa de formas ao lado do título de cada projeto ---------- */
-.projeto-cabeca { display: flex; align-items: center; gap: 32px; }
-.projeto-cabeca .titulo { flex: none; }
-.faixa-formas { --lado: 64px; flex: 1; min-width: 0; display: flex; height: var(--lado); overflow: hidden; margin-right: calc(-1 * var(--lateral)); }
-/* Cada peça gira dentro do próprio quadrado (não invade a vizinha) */
-.forma { flex: none; position: relative; width: var(--lado); height: var(--lado); overflow: hidden; }
-.forma::before { content: ''; position: absolute; inset: 0; background: color-mix(in oklab, var(--cor) 82%, var(--folha)); animation: engrenagem var(--duracao, 6s) cubic-bezier(.85, 0, .15, 1) infinite; animation-delay: var(--atraso, 0s); }
-/* Uma gira para um lado, a seguinte para o outro */
-.forma.anti::before { animation-name: engrenagem-anti; }
-/* Os quartos de círculo alternam o canto arredondado, como no desenho */
-.forma-a::before { border-top-left-radius: 100%; }
-.forma-b::before { border-bottom-left-radius: 100%; }
-/* Movimento robótico: giro rápido de 90°, pausa longa. Cada peça no seu tempo (atraso e duração próprios). */
-@keyframes engrenagem {
-  0%, 18% { transform: rotate(0deg); }
-  24%, 43% { transform: rotate(90deg); }
-  49%, 68% { transform: rotate(180deg); }
-  74%, 93% { transform: rotate(270deg); }
-  99%, 100% { transform: rotate(360deg); }
-}
-@keyframes engrenagem-anti {
-  0%, 18% { transform: rotate(0deg); }
-  24%, 43% { transform: rotate(-90deg); }
-  49%, 68% { transform: rotate(-180deg); }
-  74%, 93% { transform: rotate(-270deg); }
-  99%, 100% { transform: rotate(-360deg); }
-}
-[data-contraste='sim'] .forma::before { background: var(--texto); }
-@media (max-width: 640px) {
-  .projeto-cabeca { gap: 20px; }
-  .faixa-formas { --lado: 40px; }
-}
+
+/* ---------- Toques de desenvolvedor, minimalistas ---------- */
+:root { --mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace; }
+/* Stack de cada projeto em fonte de código */
+.stack { margin-top: 12px; font-family: var(--mono); font-size: var(--t-legenda); color: var(--texto-2); }
+.stack-rotulo { color: var(--cor-texto, var(--cor)); }
+[data-tema='claro'] .projeto { --cor-texto: color-mix(in oklab, var(--cor) 55%, #000); }
+/* Grade de pontos no topo, como papel milimetrado, sumindo nas bordas */
+.hero { position: relative; isolation: isolate; }
+.hero::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: radial-gradient(color-mix(in oklab, var(--texto) 18%, transparent) 1px, transparent 1.2px); background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 80% at 65% 45%, #000 20%, transparent 75%); mask-image: radial-gradient(ellipse 70% 80% at 65% 45%, #000 20%, transparent 75%); }
+/* Luz suave que acompanha o mouse */
+.luz { position: fixed; inset: 0; z-index: 15; pointer-events: none; background: radial-gradient(520px circle at var(--mx, -999px) var(--my, -999px), rgba(255, 255, 255, .045), transparent 70%); }
+[data-tema='claro'] .luz { display: none; }
+.rodape-final { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+.feito-com { font-family: var(--mono); }
+.feito-com a { text-decoration: underline; text-underline-offset: 3px; }
+.feito-com a:hover { color: var(--texto); }
+@media (prefers-reduced-motion: reduce) { .luz { display: none; } }
+[data-parado='sim'] .luz, [data-contraste='sim'] .luz, [data-contraste='sim'] .hero::before { display: none; }
