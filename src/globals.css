@@ -154,7 +154,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .midia-foto .midia-caixa { aspect-ratio: 4 / 3; }
 .midia-foto .midia-caixa img { object-position: center; }
 .midia-tela .midia-caixa img, .midia-foto .midia-caixa img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-.largo .midia-foto .midia-caixa, .largo .reservado-caixa { aspect-ratio: 21 / 9; }
+.largo .midia-foto .midia-caixa, .largo .reservado-caixa { aspect-ratio: 16 / 9; }
 .largo .midia-tela .midia-caixa { aspect-ratio: auto; }
 .largo .midia-tela .midia-caixa img { height: auto; }
 .midia-celular .midia-caixa { aspect-ratio: 9 / 19.5; border-radius: 26px; background: var(--superficie-2); padding: 6px; }
