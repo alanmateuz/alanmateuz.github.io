@@ -146,25 +146,39 @@ function Galeria({p}: {p: Projeto}) {
 }
 
 /* Quadradinhos dos projetos, numa fileira que rola para o lado */
+/* Projetos em "coverflow": o card ativo fica de frente, os dos lados giram com a borda de fora indo para longe.
+   Todos dividem a mesma perspectiva, então a transição continua em 3D enquanto troca de card. */
 function FileiraProjetos() {
- const trilho = useRef<HTMLUListElement>(null);
- const [pontas, setPontas] = useState({inicio: true, fim: false});
- const medir = () => { const t = trilho.current; if (t) setPontas({inicio: t.scrollLeft < 4, fim: t.scrollLeft + t.clientWidth > t.scrollWidth - 4}); };
- useEffect(() => { medir(); addEventListener('resize', medir); return () => removeEventListener('resize', medir); }, []);
- const andar = (dir: number) => trilho.current?.scrollBy({left: dir * (trilho.current.clientWidth * 0.8), behavior: 'smooth'});
- return <div className="fileira">
-  <ul ref={trilho} className="fileira-trilho" onScroll={medir} tabIndex={0} aria-label="Lista de projetos. Role para o lado para ver todos.">
-   {projects.map((p) => <li key={p.id} className="quadrado" style={{['--cor' as string]: p.cor}}>
-    <a href={`#${p.id}`}>
-     <span className={`quadrado-imagem quadrado-marca marca-${p.id}`}><img src={`./assets/marca-${p.id}.webp`} alt="" loading="lazy" decoding="async"/></span>
-     <span className="quadrado-texto"><span className="quadrado-nome">{p.name}</span><span className="quadrado-resumo">{p.summary}</span></span>
-    </a>
-   </li>)}
+ // O Safra (projeto principal) fica no meio, com um projeto de cada lado
+ const base = [projects[1], projects[0], ...projects.slice(2)].filter(Boolean);
+ const lista = base;
+ const [ativo, setAtivo] = useState(Math.floor((lista.length - 1) / 2));
+ const ir = (i: number) => setAtivo(Math.max(0, Math.min(lista.length - 1, i)));
+ // Arrastar para o lado (dedo ou mouse) troca de card
+ const inicio = useRef<number | null>(null);
+ const soltar = (x: number) => { if (inicio.current === null) return; const dx = x - inicio.current; inicio.current = null; if (Math.abs(dx) > 40) ir(ativo + (dx < 0 ? 1 : -1)); };
+ return <div className="fileira fileira-curva">
+  <ul className="cf-palco" aria-label="Projetos. Use as setas para ver os outros." aria-roledescription="carrossel"
+   onPointerDown={(e) => { inicio.current = e.clientX; }} onPointerUp={(e) => soltar(e.clientX)} onPointerCancel={() => { inicio.current = null; }}
+   onKeyDown={(e) => { if (e.key === 'ArrowRight') { e.preventDefault(); ir(ativo + 1); } if (e.key === 'ArrowLeft') { e.preventDefault(); ir(ativo - 1); } }}>
+   {lista.map((p, n) => {
+    // Cada card fica na superfície de um cilindro: ângulo fixo entre vizinhos, então todos seguem a mesma curva
+    const o = n - ativo, a = Math.abs(o), ang = o * 34, rad = ang * Math.PI / 180, R = 1.72;
+    const x = R * Math.sin(rad), z = R * (Math.cos(rad) - 1); // em "larguras de card"
+    return <li key={p.id + n} className={`quadrado cf-card ${o === 0 ? 'cf-ativo' : o < 0 ? 'cf-esq' : 'cf-dir'}`} aria-hidden={a > 1 || undefined}
+     style={{['--cor' as string]: p.cor, zIndex: 10 - a, opacity: a > 1 ? 0 : 1, visibility: a > 1 ? "hidden" : undefined,
+      transform: `translateX(calc(var(--card) * ${x.toFixed(3)})) translateZ(calc(var(--card) * ${z.toFixed(3)})) rotateY(${ang}deg)`}}>
+     <a href={`#${p.id}`} tabIndex={a > 1 ? -1 : 0} onFocus={() => ir(n)} onClick={(e) => { if (o !== 0) { e.preventDefault(); ir(n); } }}>
+      <span className={`quadrado-imagem quadrado-marca marca-${p.id}`}><img src={`./assets/marca-${p.id}.webp`} alt="" loading="lazy" decoding="async"/></span>
+      <span className="quadrado-texto"><span className="quadrado-nome">{p.name}</span><span className="quadrado-resumo">{p.summary}</span></span>
+     </a>
+    </li>;
+   })}
   </ul>
-  {!(pontas.inicio && pontas.fim) && <div className="fileira-setas">
-   <button type="button" onClick={() => andar(-1)} disabled={pontas.inicio} aria-label="Projetos anteriores"><Icone nome="seta" tamanho={20}/></button>
-   <button type="button" onClick={() => andar(1)} disabled={pontas.fim} aria-label="Próximos projetos"><Icone nome="seta" tamanho={20}/></button>
-  </div>}
+  <div className="fileira-setas">
+   <button type="button" onClick={() => ir(ativo - 1)} disabled={ativo === 0} aria-label="Projeto anterior"><Icone nome="seta" tamanho={20}/></button>
+   <button type="button" onClick={() => ir(ativo + 1)} disabled={ativo === lista.length - 1} aria-label="Próximo projeto"><Icone nome="seta" tamanho={20}/></button>
+  </div>
  </div>;
 }
 
