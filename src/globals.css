@@ -869,3 +869,10 @@ b, strong { font-weight: 400; }
   .hero-acoes { justify-content: center; width: 100%; }
 }
 @media (max-width: 900px) { .hero-sub { text-align-last: left; } }
+/* Celular: texto alinhado à esquerda e com a mesma largura do nome; o bloco todo no centro */
+@media (max-width: 900px) {
+  .hero-texto { width: fit-content; max-width: 100%; margin-inline: auto; align-items: stretch; text-align: left; }
+  .hero-nome { white-space: nowrap; font-size: min(9.4vw, 3.25rem); text-align: left; }
+  .hero-sub { width: 0; min-width: 100%; max-width: none; margin-inline: 0; text-align: left; text-align-last: auto; hyphens: manual; -webkit-hyphens: manual; }
+  .hero-acoes { width: max-content; max-width: calc(100vw - 2 * var(--margem)); align-self: center; justify-content: center; }
+}
