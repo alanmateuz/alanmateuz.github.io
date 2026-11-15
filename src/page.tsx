@@ -79,7 +79,24 @@ function Pilula({href, icone, children, externo}: {href: string; icone: string; 
  </a>;
 }
 
+/* Página inteira (landing) que rola sozinha enquanto está na tela, independente dos celulares */
+function PaginaRolando({item, nome}: {item: ItemGaleria; nome: string}) {
+ const ref = useRef<HTMLElement>(null);
+ useEffect(() => {
+  const el = ref.current;
+  if (!el) return;
+  const io = new IntersectionObserver(([e]) => el.classList.toggle('ativo', e.isIntersecting), {threshold: 0.45});
+  io.observe(el);
+  return () => io.disconnect();
+ }, []);
+ return <figure ref={ref} className="midia midia-tela midia-pagina">
+  <div className="midia-caixa"><img src={`./assets/${item.img}.webp`} alt={`${nome}: ${item.legenda}`} loading="lazy" decoding="async"/></div>
+  <figcaption>{item.legenda}</figcaption>
+ </figure>;
+}
+
 function Imagem({item, nome}: {item: ItemGaleria; nome: string}) {
+ if (item.pagina && item.img) return <PaginaRolando item={item} nome={nome}/>;
  if (!item.img) {
   // Foto ainda não enviada: espaço reservado, fácil de trocar depois
   return <figure className={`midia midia-${item.tipo} reservado`}>
@@ -87,8 +104,8 @@ function Imagem({item, nome}: {item: ItemGaleria; nome: string}) {
    <figcaption>{item.legenda}</figcaption>
   </figure>;
  }
- const anima = Boolean(item.toques || item.rolar || item.pagina);
- return <figure className={`midia midia-${item.tipo} ${item.rolar ? 'rola' : ''} ${item.pagina ? 'midia-pagina' : ''}`} {...(anima ? {'data-seq': ''} : {})} {...(item.pagina ? {'data-dur': '11000'} : {})}>
+ const anima = Boolean(item.toques || item.rolar);
+ return <figure className={`midia midia-${item.tipo} ${item.rolar ? 'rola' : ''}`} {...(anima ? {'data-seq': ''} : {})}>
   <Inclina className="midia-caixa">
    <img src={`./assets/${item.img}.webp`} alt={`${nome}: ${item.legenda}`} loading="lazy" decoding="async"/>
    {item.toques?.map(([x, y], i) => <span key={i} className="toque" aria-hidden="true" style={{left: `${x}%`, top: `${y}%`, ['--n' as string]: i}}/>)}

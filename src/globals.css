@@ -940,3 +940,8 @@ b, strong { font-weight: 400; }
 .midia-tela.midia-pagina[data-seq].ativo .midia-caixa > img { animation: navega 11s cubic-bezier(.45, 0, .25, 1) both; }
 @media (prefers-reduced-motion: reduce) { .midia-tela.midia-pagina[data-seq].ativo .midia-caixa > img { animation: none; } }
 [data-parado='sim'] .midia-tela.midia-pagina[data-seq].ativo .midia-caixa > img { animation: none; }
+/* Landing: anima sozinha e em laço enquanto aparece na tela; sem pulinho (não faz parte da fila) */
+.midia-pagina .midia-caixa { transform: none !important; box-shadow: 0 24px 50px -24px rgba(0, 0, 0, .6); }
+.midia-tela.midia-pagina.ativo .midia-caixa > img { animation: navega 12s cubic-bezier(.45, 0, .25, 1) .4s infinite both; }
+@media (prefers-reduced-motion: reduce) { .midia-tela.midia-pagina.ativo .midia-caixa > img { animation: none; } }
+[data-parado='sim'] .midia-tela.midia-pagina.ativo .midia-caixa > img { animation: none; }
