@@ -531,3 +531,19 @@ b, strong { font-weight: 400; }
 .prova { padding-bottom: 96px; }
 .hero-texto { align-self: flex-start; margin-inline: 0; width: 100%; }
 .prova { text-align: center; } .prova ul { justify-content: center; }
+
+/* ---------- Cards com a cor viva de cada projeto (paleta da própria marca) ---------- */
+.projeto-card { color: var(--texto); }
+#safra .projeto-card, #reuse .projeto-card, #alui .projeto-card { --borda: rgba(255, 255, 255, .22); --superficie-2: rgba(255, 255, 255, .14); }
+/* Safra: azul-marinho da marca com dourado */
+#safra .projeto-card { background: #14296e; --texto: #ffffff; --texto-2: rgba(255, 255, 255, .84); --texto-3: rgba(255, 255, 255, .7); --cor-texto: #e8b85a; --cor: #e8b85a; }
+/* Alui: laranja vivo; texto escuro para manter o contraste (branco no laranja não passa no AA) */
+#alui .projeto-card { background: #ff7a1f; --texto: #141414; --texto-2: rgba(20, 20, 20, .82); --texto-3: rgba(20, 20, 20, .7); --cor-texto: #0d2fc4; --cor: #0d2fc4; --borda: rgba(0, 0, 0, .18); --superficie-2: rgba(0, 0, 0, .1); }
+#alui .projeto-card .logos img { filter: invert(1); }
+/* ReUse: azul vivo da Unifor */
+#reuse .projeto-card { background: #0a47ff; --texto: #ffffff; --texto-2: rgba(255, 255, 255, .86); --texto-3: rgba(255, 255, 255, .72); --cor-texto: #cfe0ff; --cor: #cfe0ff; }
+/* No tema claro as cores continuam vivas (o ID ganha das regras do tema); logos seguem a cor do texto do card */
+[data-tema='claro'] #safra .logos img, [data-tema='claro'] #reuse .logos img { filter: none; }
+[data-tema='claro'] #alui .logos img { filter: invert(1); }
+.projeto-card .stack-rotulo { color: var(--cor-texto); }
+[data-contraste='sim'] #safra .projeto-card, [data-contraste='sim'] #alui .projeto-card, [data-contraste='sim'] #reuse .projeto-card { background: var(--superficie); --texto: inherit; }
