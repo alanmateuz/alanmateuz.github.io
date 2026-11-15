@@ -71,19 +71,6 @@ function PainelAcessibilidade() {
 
 /* ---------- E-mail: copiar ou abrir no Gmail (mailto não funciona sem app de e-mail) ---------- */
 const EMAIL = CONTATOS.email.replace('mailto:', '');
-function EmailContato() {
- const [copiado, setCopiado] = useState(false);
- const copiar = async () => {
-  try { await navigator.clipboard.writeText(EMAIL); } catch { /* sem permissão: o texto continua visível para copiar */ }
-  setCopiado(true); setTimeout(() => setCopiado(false), 2200);
- };
- return <div className="email-contato">
-  <span className="email-endereco">{EMAIL}</span>
-  <button type="button" className="botao-cheio" onClick={copiar}>{copiado ? 'E-mail copiado' : 'Copiar e-mail'}<Icone nome={copiado ? 'certo' : 'copiar'} tamanho={18}/></button>
-  <a className="botao-linha" href={`https://mail.google.com/mail/?view=cm&to=${EMAIL}`} target="_blank" rel="noopener noreferrer">Escrever pelo Gmail<SoLeitor> (abre em nova aba)</SoLeitor></a>
-  <span className="sr-only" role="status">{copiado ? 'E-mail copiado para a área de transferência' : ''}</span>
- </div>;
-}
 
 /* ---------- Pedaços ---------- */
 function Pilula({href, icone, children, externo}: {href: string; icone: string; children: string; externo?: boolean}) {
@@ -377,15 +364,14 @@ export default function Home() {
    <div className="container rodape-grade">
     <div>
      <p className="titulo rodape-chamada">Vamos conversar?</p>
-     <EmailContato/>
      <ul className="pilulas">
+      <li><Pilula href={`https://mail.google.com/mail/?view=cm&to=${EMAIL}`} icone="mail" externo>E-mail</Pilula></li>
       <li><Pilula href={CONTATOS.linkedin} icone="linkedin" externo>LinkedIn</Pilula></li>
       <li><Pilula href={CONTATOS.github} icone="github" externo>GitHub</Pilula></li>
      </ul>
     </div>
    </div>
-   <p className="container rodape-final">Alan Mateus Queiroz · Fortaleza, CE · 2026
-    <span className="feito-com">Feito com React, TypeScript e Vite · <a href="https://github.com/alanmateuz/alanmateuz.github.io" target="_blank" rel="noopener noreferrer">ver o código<SoLeitor> (abre em nova aba)</SoLeitor></a></span></p>
+   <p className="container rodape-final">Alan Mateus Queiroz · Fortaleza, CE · 2026</p>
   </footer>
 
   <a href="#topo" className={`volta-topo ${rolou && typeof window !== 'undefined' && window.scrollY > 900 ? 'visivel' : ''}`} aria-label="Voltar ao topo" tabIndex={rolou ? 0 : -1}><Icone nome="cima" tamanho={20}/></a>

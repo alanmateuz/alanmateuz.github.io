@@ -902,3 +902,20 @@ b, strong { font-weight: 400; }
 .topo-nome { display: inline-flex; align-items: center; min-height: 44px; }
 /* Esteira para quando a abertura sai da tela (economiza bateria) */
 .hero.fora .esteira-capa { animation-play-state: paused; }
+
+/* Celulares animados: fica claro qual está tocando e onde o dedo toca */
+.galeria:has(.fluxo.ativo) .fluxo:not(.ativo) { opacity: .45; filter: saturate(.7); }
+.fluxo { transition: opacity .5s var(--suave), filter .5s var(--suave), transform .5s var(--suave); }
+.fluxo.ativo { transform: translateY(-8px); }
+.fluxo.ativo .midia-caixa { box-shadow: 0 28px 60px -24px rgba(0, 0, 0, .7); }
+.fluxo .toque { width: 44px; height: 44px; margin: -22px 0 0 -22px; background: rgba(20, 20, 30, .28); box-shadow: 0 0 0 3px rgba(255, 255, 255, .95), 0 0 0 6px rgba(20, 20, 30, .25), 0 8px 20px rgba(0, 0, 0, .35); }
+@media (prefers-reduced-motion: reduce) { .fluxo.ativo { transform: none; } }
+[data-parado='sim'] .galeria .fluxo { opacity: 1 !important; filter: none !important; transform: none !important; }
+
+/* Contato: respiro maior entre o título e os botões (múltiplo de 8) */
+.rodape-chamada { margin-bottom: 32px !important; }
+@media (max-width: 640px) { .rodape-chamada { margin-bottom: 24px !important; } }
+.galeria:has(.fluxo.ativo) .fluxo:not(.ativo) { opacity: 1; filter: none; }
+.galeria:has(.fluxo.ativo) .fluxo:not(.ativo) .midia-caixa { opacity: .5; filter: saturate(.7); }
+.fluxo .midia-caixa { transition: opacity .5s var(--suave), filter .5s var(--suave); }
+[data-parado='sim'] .galeria .fluxo .midia-caixa { opacity: 1 !important; filter: none !important; }
