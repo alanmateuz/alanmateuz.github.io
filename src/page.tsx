@@ -130,7 +130,7 @@ function FileiraProjetos() {
   <ul ref={trilho} className="fileira-trilho" onScroll={medir} tabIndex={0} aria-label="Lista de projetos. Role para o lado para ver todos.">
    {projects.map((p) => <li key={p.id} className="quadrado" style={{['--cor' as string]: p.cor}}>
     <a href={`#${p.id}`}>
-     <span className={`quadrado-imagem quadrado-marca marca-${p.id}`}><img src={`./assets/marca-${p.id}.webp`} alt="" loading="lazy" decoding="async"/>{p.id === 'reuse' && <span className="marca-nome" aria-hidden="true">ReUse</span>}</span>
+     <span className={`quadrado-imagem quadrado-marca marca-${p.id}`}><img src={`./assets/marca-${p.id}.webp`} alt="" loading="lazy" decoding="async"/></span>
      <span className="quadrado-texto"><span className="quadrado-nome">{p.name}</span><span className="quadrado-resumo">{p.summary}</span></span>
     </a>
    </li>)}
