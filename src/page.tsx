@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import {flushSync} from 'react-dom';
+import {somCarta} from './som';
 import {projects, type ItemGaleria, type Projeto} from './projects';
 import {AcoesProjeto, Caso, Icone, SoLeitor} from './project-actions';
 import {podeMover, Inclina, usePilha, useRevela, useAberturaRolagem, TelaFluxo, useTocaFluxos} from './movimento';
@@ -30,6 +31,7 @@ function PainelAcessibilidade() {
  const [espaco, setEspaco] = useSalvo<string>('a11y-espaco', 'nao', 'espaco');
  const [links, setLinks] = useSalvo<string>('a11y-links', 'nao', 'links');
  const [parado, setParado] = useSalvo<string>('a11y-parado', 'nao', 'parado');
+ const [sons, setSons] = useSalvo<string>('a11y-sons', 'sim', 'sons');
  const caixa = useRef<HTMLDivElement>(null);
  const botao = useRef<HTMLButtonElement>(null);
  useEffect(() => {
@@ -45,7 +47,7 @@ function PainelAcessibilidade() {
    <span><b>{rotulo}</b><small>{dica}</small></span><span className="a11y-chave" aria-hidden="true"/>
   </button>;
  const alternar = (v: string, f: (x: string) => void) => () => f(v === 'sim' ? 'nao' : 'sim');
- const restaurar = () => { setTexto('1'); setContraste('nao'); setLegivel('nao'); setEspaco('nao'); setLinks('nao'); setParado('nao'); };
+ const restaurar = () => { setTexto('1'); setContraste('nao'); setLegivel('nao'); setEspaco('nao'); setLinks('nao'); setParado('nao'); setSons('sim'); };
  return <div className="a11y">
   <button ref={botao} type="button" className="botao-topo" aria-expanded={aberto} aria-controls="painel-a11y" onClick={() => setAberto(!aberto)}>
    <Icone nome="acess" tamanho={24}/><SoLeitor>Acessibilidade</SoLeitor>
@@ -61,6 +63,7 @@ function PainelAcessibilidade() {
    <Opcao rotulo="Mais espaço no texto" dica="Linhas e letras mais afastadas" ligado={espaco === 'sim'} mudar={alternar(espaco, setEspaco)}/>
    <Opcao rotulo="Destacar links" dica="Sublinha tudo que é clicável" ligado={links === 'sim'} mudar={alternar(links, setLinks)}/>
    <Opcao rotulo="Parar animações" dica="Sem movimento na página" ligado={parado === 'sim'} mudar={alternar(parado, setParado)}/>
+   <Opcao rotulo="Sons" dica="Som curto quando o card do projeto vira" ligado={sons === 'sim'} mudar={() => setSons(sons === 'sim' ? 'nao' : 'sim')}/>
    <button type="button" className="a11y-restaurar" onClick={restaurar}>Restaurar padrão</button>
   </div>}
  </div>;
@@ -181,6 +184,7 @@ function DetalheProjeto({p, i}: {p: Projeto; i: number}) {
  };
  const virar2 = (v: boolean) => {
   if (v) setAberto(true);
+  somCarta();
   setVirado(v);
   // Depois do giro, o foco vai para o lado que ficou visível
   setTimeout(() => {
@@ -283,9 +287,12 @@ export default function Home() {
  useEffect(() => {
   const el = abertura.current?.querySelector('.hero-nome');
   if (!el) return;
-  const io = new IntersectionObserver(([e]) => setPassouAbertura(!e.isIntersecting && e.boundingClientRect.top < 0), {rootMargin: '-56px 0px 0px 0px'});
-  io.observe(el);
-  return () => io.disconnect();
+  // Mede a cada rolagem (devagar ou rápido): passou quando o nome some atrás da barra do topo
+  const medir = () => setPassouAbertura(el.getBoundingClientRect().bottom < 64);
+  medir();
+  addEventListener('scroll', medir, {passive: true});
+  addEventListener('resize', medir);
+  return () => { removeEventListener('scroll', medir); removeEventListener('resize', medir); };
  }, []);
  usePilha('.projeto');
  useRevela();
@@ -301,7 +308,7 @@ export default function Home() {
   <a className="pular" href="#projetos">Pular para os projetos</a>
   <header className={`topo ${rolou ? 'topo-rolou' : ''}`} id="topo">
    <a href="#conteudo" className={`topo-nome ${passouAbertura ? 'visivel' : ''}`} aria-hidden={!passouAbertura} tabIndex={passouAbertura ? 0 : -1}>Alan Mateus Queiroz</a>
-   <nav aria-label="Seções" className="topo-links">
+   <nav aria-label="Seções" className={`topo-links ${passouAbertura ? 'visivel' : ''}`} inert={!passouAbertura}>
     <a href="#sobre">Sobre</a><a href="#projetos">Projetos</a><a href="#contato">Contato</a>
    </nav>
    <PainelAcessibilidade/>

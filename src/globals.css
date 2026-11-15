@@ -812,3 +812,11 @@ b, strong { font-weight: 400; }
 }
 .projeto-verso { overflow: clip; overscroll-behavior: auto; }
 .sem-giro .projeto-frente, .sem-giro .projeto-verso { transition: none !important; }
+
+/* Links do topo somem na abertura (lá já tem "Ver projetos") e aparecem junto com o nome */
+.topo-links { opacity: 0; transform: translateY(-6px); transition: opacity .35s, transform .35s; pointer-events: none; }
+.topo-links.visivel { opacity: 1; transform: none; pointer-events: auto; }
+/* Abertura: grupo principal no centro, logos encostadas embaixo */
+.prova { padding-bottom: 0; margin-top: 0; align-self: end; }
+.hero { padding-bottom: 32px; }
+.hero-centro { row-gap: 24px; }
