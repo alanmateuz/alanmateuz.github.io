@@ -355,7 +355,8 @@ export default function Home() {
      <div className="hero-texto">
       <p className="hero-rotulo">Portfólio · 2026</p>
       <h1 id="nome" className="hero-nome">{['Alan', 'Mateus', 'Queiroz'].map((w, i) => <span key={w}>{i > 0 && ' '}<span className="palavra" style={{['--i' as string]: i}}>{w}</span></span>)}</h1>
-      <p className="hero-sub">Estudo Análise e Desenvolvimento de Sistemas na Unifor e sou bolsista pesquisador na M. Dias Branco. Trabalho entre o design e o código: entendo o problema, desenho a experiência e construo a solução. Foi assim com o Safra, que nasceu num hackathon e hoje está sendo implementado na M. Dias Branco.</p>
+      <p className="hero-sub">Sou estudante de Análise e Desenvolvimento de Sistemas na UNIFOR e estou construindo minha carreira em tecnologia. Tenho interesse em desenvolvimento de software, automação de processos, inteligência artificial e produtos digitais.</p>
+      <p className="hero-sub hero-sub-2">Minha trajetória combina estudos, pesquisa aplicada e colaboração em iniciativas de inovação.</p>
       <div className="hero-acoes">
        <a className="botao-cheio" href="#projetos">Ver projetos <Icone nome="seta" tamanho={18}/></a>
        <a className="botao-linha" href="#contato">Fale comigo <Icone nome="mail" tamanho={18}/></a>
