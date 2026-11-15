@@ -21,6 +21,20 @@ function useSalvo<T extends string>(chave: string, padrao: T, atributo: string) 
  return [valor, setValor] as const;
 }
 
+/* Tema: segue o do sistema (claro/escuro) até a pessoa escolher no botão; a escolha fica salva */
+function useTema() {
+ const [tema, setTemaEstado] = useState<'escuro' | 'claro'>(() => (document.documentElement.dataset.tema as 'escuro' | 'claro') || 'escuro');
+ useEffect(() => { document.documentElement.dataset.tema = tema; }, [tema]);
+ useEffect(() => {
+  const mq = matchMedia('(prefers-color-scheme: light)');
+  const mudou = () => { let manual = null; try { manual = localStorage.getItem('tema-manual'); } catch { /* sem armazenamento */ } if (!manual) setTemaEstado(mq.matches ? 'claro' : 'escuro'); };
+  mq.addEventListener('change', mudou);
+  return () => mq.removeEventListener('change', mudou);
+ }, []);
+ const escolher = (t: 'escuro' | 'claro') => { setTemaEstado(t); try { localStorage.setItem('tema-manual', t); } catch { /* navegação privada */ } };
+ return [tema, escolher] as const;
+}
+
 /* ---------- Painel de acessibilidade ---------- */
 const TAMANHOS = [['1', 'Normal'], ['2', 'Grande'], ['3', 'Maior']] as const;
 function PainelAcessibilidade() {
@@ -290,8 +304,8 @@ function FaixaFotos() {
 }
 
 export default function Home() {
- const [tema, setTema] = useSalvo<'escuro' | 'claro'>('tema', 'escuro', 'tema');
- useEffect(() => { document.querySelector('meta[name="theme-color"]')?.setAttribute('content', tema === 'escuro' ? '#1c1c1e' : '#ffffff'); }, [tema]);
+ const [tema, setTema] = useTema();
+ useEffect(() => { document.querySelector('meta[name="theme-color"]')?.setAttribute('content', tema === 'escuro' ? '#131313' : '#ffffff'); }, [tema]);
  const [rolou, setRolou] = useState(false);
  const abertura = useRef<HTMLElement>(null);
  // O nome no topo só aparece depois que a abertura sai da tela
