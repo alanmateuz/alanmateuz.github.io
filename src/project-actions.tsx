@@ -44,7 +44,13 @@ function useJanela() {
   document.body.style.overflow = 'hidden';
   return () => { document.body.style.overflow = antes; };
  }, [aberta]);
- return {ref, aberta, abrir: () => { ref.current?.showModal(); setAberta(true); }, fechar: () => { ref.current?.close(); setAberta(false); }, aoFechar: () => setAberta(false)};
+ // Ao fechar, o foco volta para o botão que abriu a janela
+ const origem = useRef<HTMLElement | null>(null);
+ const devolverFoco = () => { const o = origem.current; if (o && document.contains(o)) requestAnimationFrame(() => o.focus({preventScroll: true})); };
+ return {ref, aberta,
+  abrir: () => { origem.current = document.activeElement instanceof HTMLElement && document.activeElement !== document.body ? document.activeElement : null; ref.current?.showModal(); setAberta(true); },
+  fechar: () => { ref.current?.close(); setAberta(false); },
+  aoFechar: () => { setAberta(false); devolverFoco(); }};
 }
 
 function Janela({j, titulo, rotulo, children}: {j: ReturnType<typeof useJanela>; titulo: string; rotulo: string; children: ReactNode}) {

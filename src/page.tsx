@@ -288,7 +288,12 @@ export default function Home() {
   const el = abertura.current?.querySelector('.hero-nome');
   if (!el) return;
   // Mede a cada rolagem (devagar ou rápido): passou quando o nome some atrás da barra do topo
-  const medir = () => setPassouAbertura(el.getBoundingClientRect().bottom < 64);
+  const hero = abertura.current;
+  const medir = () => {
+   setPassouAbertura(el.getBoundingClientRect().bottom < 64);
+   // Fora da tela, a esteira de capas para de animar
+   if (hero) hero.classList.toggle('fora', hero.getBoundingClientRect().bottom < 0);
+  };
   medir();
   addEventListener('scroll', medir, {passive: true});
   addEventListener('resize', medir);

@@ -897,3 +897,8 @@ b, strong { font-weight: 400; }
 .marca-reuse { background: #004bf8; }
 .marca-reuse img { height: auto !important; width: 86% !important; max-width: 86%; }
 .marca-reuse img { width: 76% !important; max-width: 76%; }
+.marca-safra { background: #14296e; }
+/* Nome no topo com área de toque de 44 px */
+.topo-nome { display: inline-flex; align-items: center; min-height: 44px; }
+/* Esteira para quando a abertura sai da tela (economiza bateria) */
+.hero.fora .esteira-capa { animation-play-state: paused; }
