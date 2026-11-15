@@ -1,4 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
+import {flushSync} from 'react-dom';
 import {projects, type ItemGaleria, type Projeto} from './projects';
 import {AcoesProjeto, Caso, Icone, SoLeitor} from './project-actions';
 import {podeMover, Inclina, usePilha, useRevela, useAberturaRolagem, TelaFluxo, useTocaFluxos} from './movimento';
@@ -161,6 +162,7 @@ function DetalheProjeto({p, i}: {p: Projeto; i: number}) {
     if (Math.abs(depois - antes) > 2) el.animate([{height: antes + 'px'}, {height: depois + 'px'}], {duration: 520, easing: 'cubic-bezier(.32, .72, 0, 1)'});
    });
    if (novo === 'frente') setTimeout(() => setAberto(false), podeMover() ? 700 : 0);
+   requestAnimationFrame(() => dispatchEvent(new Event('scroll')));
   };
   const t = setTimeout(trocar, podeMover() ? 380 : 0);
   return () => clearTimeout(t);
@@ -187,6 +189,26 @@ function DetalheProjeto({p, i}: {p: Projeto; i: number}) {
   }, 60);
   if (v) frente.current?.closest('.projeto')?.scrollIntoView({behavior: podeMover() ? 'smooth' : 'auto', block: 'start'});
  };
+ // Depois de ler o design e seguir rolando: quando o próximo card cobre este, ele desvira sozinho,
+ // sem animação e sem mexer no que está na tela
+ useEffect(() => {
+  if (!virado) return;
+  const sec = frente.current?.closest('.projeto') as HTMLElement | null;
+  if (!sec) return;
+  const prox = sec.nextElementSibling as HTMLElement | null;
+  const checar = () => {
+   const coberto = prox ? prox.getBoundingClientRect().top < 60 : sec.getBoundingClientRect().bottom < 0;
+   if (!coberto) return;
+   const antes = sec.offsetHeight;
+   sec.classList.add('sem-giro');
+   flushSync(() => { setVirado(false); setLado('frente'); setAberto(false); });
+   const diferenca = antes - sec.offsetHeight;
+   if (diferenca > 0) scrollBy({top: -diferenca, behavior: 'instant'});
+   requestAnimationFrame(() => { sec.classList.remove('sem-giro'); dispatchEvent(new Event('scroll')); });
+  };
+  addEventListener('scroll', checar, {passive: true});
+  return () => removeEventListener('scroll', checar);
+ }, [virado]);
  useEffect(() => {
   if (!virado) return;
   const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') virar(false); };

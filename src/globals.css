@@ -715,7 +715,7 @@ b, strong { font-weight: 400; }
 /* Ver design: o card do projeto vira e mostra o estudo de caso no verso */
 .projeto-virador { position: relative; perspective: 2400px; }
 .projeto-frente, .projeto-verso { -webkit-backface-visibility: hidden; backface-visibility: hidden; transition: transform .9s cubic-bezier(.32, .72, 0, 1); }
-.projeto-verso { position: absolute; inset: 0; overflow-y: auto; transform: rotateY(-180deg); overscroll-behavior: contain;
+.projeto-verso { position: absolute; inset: 0; overflow-y: auto; transform: rotateY(-180deg);
   --texto-2: color-mix(in oklab, var(--texto) 86%, transparent); --texto-3: color-mix(in oklab, var(--texto) 72%, transparent); --borda: color-mix(in oklab, var(--texto) 28%, transparent); }
 .projeto-virador.virado .projeto-frente { transform: rotateY(180deg); }
 .projeto-virador.virado .projeto-verso { transform: rotateY(0deg); }
@@ -796,7 +796,6 @@ b, strong { font-weight: 400; }
 .esteira-capa { animation-name: esteira-v4; }
 
 /* Card virado deixa de grudar: a página rola normalmente pelo estudo de caso */
-.projeto.aberto { position: relative; top: 0 !important; }
 .projeto-virador { overflow: visible; }
 .projeto-frente, .projeto-verso { transition: transform 1s cubic-bezier(.32, .72, 0, 1); will-change: transform; }
 
@@ -811,3 +810,5 @@ b, strong { font-weight: 400; }
   .prova { margin-top: 8px; padding-top: 16px; }
   .prova img, .prova .logo-texto { height: 30px; }
 }
+.projeto-verso { overflow: clip; overscroll-behavior: auto; }
+.sem-giro .projeto-frente, .sem-giro .projeto-verso { transition: none !important; }
