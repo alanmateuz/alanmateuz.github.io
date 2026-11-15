@@ -75,7 +75,7 @@ function Slides({id, nome, total}: {id: string; nome: string; total: number}) {
 }
 
 /* ---------- Estudo de caso de design ---------- */
-function Caso({nome, caso}: {nome: string; caso: CasoDesign}) {
+export function Caso({nome, caso}: {nome: string; caso: CasoDesign}) {
  return <div className="caso">
   <section><h3>O problema</h3><p className="caso-problema">{caso.problema}</p></section>
   <section><h3>Processo</h3><ol className="caso-passos">{caso.processo.map((p, i) => <li key={i}><span aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><p>{p}</p></li>)}</ol></section>
@@ -87,22 +87,22 @@ function Caso({nome, caso}: {nome: string; caso: CasoDesign}) {
 }
 
 /* ---------- Botões "Ver ..." de cada projeto ---------- */
-function Acao({icone, rotulo, href, onClick}: {icone: string; rotulo: string; href?: string; onClick?: () => void}) {
+function Acao({icone, rotulo, href, onClick, abreJanela = true}: {icone: string; rotulo: string; href?: string; onClick?: () => void; abreJanela?: boolean}) {
  const dentro = <><span className="acao-icone"><Icone nome={icone} tamanho={64}/></span><span className="acao-rotulo">{rotulo}</span></>;
  return href
   ? <a className="acao" href={href} target="_blank" rel="noopener noreferrer">{dentro}<SoLeitor> (abre em nova aba)</SoLeitor></a>
-  : <button className="acao" type="button" onClick={onClick} aria-haspopup="dialog">{dentro}</button>;
+  : <button className="acao" type="button" onClick={onClick} data-acao={icone} {...(abreJanela ? {'aria-haspopup': 'dialog' as const} : {})}>{dentro}</button>;
 }
 
-export function AcoesProjeto({id, nome, acoes, caso}: {id: string; nome: string; acoes: Acoes; caso?: CasoDesign}) {
+export function AcoesProjeto({id, nome, acoes, caso, onDesign}: {id: string; nome: string; acoes: Acoes; caso?: CasoDesign; onDesign?: () => void}) {
  const design = useJanela();
  const pitch = useJanela();
  return <div className="acoes">
   {acoes.app && <Acao icone="app" rotulo="Abrir o app" href={acoes.app}/>}
   {acoes.prototipo?.map((p) => <Acao key={p.url} icone={/landing/i.test(p.rotulo) ? 'web' : 'figma'} rotulo={p.rotulo} href={p.url}/>)}
-  {acoes.design && caso && <Acao icone="design" rotulo="Ver design" onClick={design.abrir}/>}
+  {acoes.design && caso && <Acao icone="design" rotulo="Ver design" onClick={onDesign ?? design.abrir} abreJanela={!onDesign}/>}
   {acoes.pitch && <Acao icone="pitch" rotulo="Ver pitch" onClick={pitch.abrir}/>}
-  {caso && <Janela j={design} titulo={nome} rotulo="Estudo de caso · design"><Caso nome={nome} caso={caso}/></Janela>}
+  {caso && !onDesign && <Janela j={design} titulo={nome} rotulo="Estudo de caso · design"><Caso nome={nome} caso={caso}/></Janela>}
   {acoes.pitch && <Janela j={pitch} titulo={nome} rotulo="Pitch"><Slides id={id} nome={nome} total={acoes.pitch}/></Janela>}
  </div>;
 }

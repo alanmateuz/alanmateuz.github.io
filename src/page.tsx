@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import {projects, type ItemGaleria, type Projeto} from './projects';
-import {AcoesProjeto, Icone, SoLeitor} from './project-actions';
-import {Inclina, usePilha, useRevela, useAberturaRolagem, TelaFluxo, useTocaFluxos} from './movimento';
+import {AcoesProjeto, Caso, Icone, SoLeitor} from './project-actions';
+import {podeMover, Inclina, usePilha, useRevela, useAberturaRolagem, TelaFluxo, useTocaFluxos} from './movimento';
 
 const CONTATOS = {
  github: 'https://github.com/alanmateuz',
@@ -139,8 +139,29 @@ function FileiraProjetos() {
 }
 
 function DetalheProjeto({p, i}: {p: Projeto; i: number}) {
+ const [virado, setVirado] = useState(false);
+ // Na metade do giro, o lado visível passa a definir a altura do card (uma rolagem só, a da página)
+ const [lado, setLado] = useState<'frente' | 'verso'>('frente');
+ useEffect(() => { const t = setTimeout(() => setLado(virado ? 'verso' : 'frente'), podeMover() ? 420 : 0); return () => clearTimeout(t); }, [virado]);
+ const verso = useRef<HTMLDivElement>(null);
+ const frente = useRef<HTMLDivElement>(null);
+ const virar = (v: boolean) => {
+  setVirado(v);
+  // Depois do giro, o foco vai para o lado que ficou visível
+  setTimeout(() => {
+   if (v) verso.current?.querySelector<HTMLElement>('.verso-titulo')?.focus();
+   else frente.current?.querySelector<HTMLElement>('[data-acao="design"]')?.focus();
+  }, 60);
+  if (v) frente.current?.closest('.projeto')?.scrollIntoView({behavior: podeMover() ? 'smooth' : 'auto', block: 'start'});
+ };
+ useEffect(() => {
+  if (!virado) return;
+  const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') virar(false); };
+  addEventListener('keydown', esc); return () => removeEventListener('keydown', esc);
+ }, [virado]);
  return <section id={p.id} className="projeto" style={{['--cor' as string]: p.cor, zIndex: i + 1}} aria-labelledby={`${p.id}-titulo`}>
-  <div className="projeto-card">
+  <div className={`projeto-virador ${virado ? 'virado' : ''} lado-${lado}`}>
+  <div ref={frente} className="projeto-card projeto-frente" inert={virado}>
    <div className="projeto-cabeca">
     <div>
      <h2 id={`${p.id}-titulo`} className="titulo">{p.name}</h2>
@@ -158,7 +179,18 @@ function DetalheProjeto({p, i}: {p: Projeto; i: number}) {
     <p>{p.role}</p>
    </div>
    <Galeria p={p}/>
-   <AcoesProjeto id={p.id} nome={p.name} acoes={p.acoes} caso={p.design}/>
+   <AcoesProjeto id={p.id} nome={p.name} acoes={p.acoes} caso={p.design} onDesign={p.design ? () => virar(true) : undefined}/>
+  </div>
+  {p.design && <div ref={verso} className="projeto-card projeto-verso" inert={!virado} aria-hidden={!virado}>
+   <div className="verso-topo">
+    <div>
+     <p className="verso-rotulo">Estudo de caso · design</p>
+     <h3 className="titulo verso-titulo" tabIndex={-1}>{p.name}</h3>
+    </div>
+    <button type="button" className="verso-voltar" onClick={() => virar(false)}><Icone nome="seta" tamanho={18}/>Voltar ao projeto</button>
+   </div>
+   <Caso nome={p.name} caso={p.design}/>
+  </div>}
   </div>
  </section>;
 }
@@ -237,8 +269,9 @@ export default function Home() {
       </div>
      </div>
      <div className="vitrine" aria-hidden="true">
-      <div className="vitrine-palco">
-       <div className="vitrine-tela"><img src="./assets/safra-capa.webp" alt=""/></div>
+      <div className="esteira">
+       {['safra-capa', 'alui-slide-1', 'reuse-landing', 'safra-capa', 'alui-slide-1', 'reuse-landing'].map((img, i) =>
+        <div key={i} className="esteira-capa" style={{['--i' as string]: i}}><img src={`./assets/${img}.webp`} alt=""/></div>)}
       </div>
      </div>
      <div className="prova">
