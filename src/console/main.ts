@@ -101,11 +101,6 @@ const listaSaves: Save[] = projects.map((p, i) => {
 /* ---------- Interface ---------- */
 const ui = $<HTMLDivElement>('#interface');
 ui.innerHTML = `
- <div class="liga" id="liga">
-  <button type="button" class="liga-botao" id="b-ligar"><span class="liga-icone" aria-hidden="true"></span>Ligar</button>
-  <p class="liga-dica">Com som · setas, Enter e Esc</p>
-  <a class="liga-simples" href="../">Prefiro a versão simples</a>
- </div>
  <div class="veu" id="veu" aria-hidden="true"></div>
  <main id="tela" class="tela"></main>
  <footer class="barra" id="barra" hidden>
@@ -217,7 +212,6 @@ function voltar() {
 
 /* ---------- Teclado, mouse e toque ---------- */
 addEventListener('keydown', (e) => {
- if (estado === 'desligado') return;
  if (['ArrowDown', 'ArrowRight'].includes(e.key)) { e.preventDefault(); escolher(sel + 1); }
  else if (['ArrowUp', 'ArrowLeft'].includes(e.key)) { e.preventDefault(); escolher(sel - 1); }
  else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); confirmar(); }
@@ -240,16 +234,15 @@ const rotuloSom = () => { botaoSom.textContent = som.mudo ? 'Som: desligado' : '
 botaoSom.onclick = () => { som.alternarMudo(); rotuloSom(); };
 rotuloSom();
 
-/* ---------- Ligar ---------- */
-$<HTMLButtonElement>('#b-ligar').onclick = () => {
- som.ligar(); som.ambienteLigar();
- $('#liga').classList.add('saindo');
- setTimeout(() => $('#liga').remove(), 1000);
- $<HTMLElement>('#barra').hidden = false;
- estado = 'inicio'; montar();
- if (!semMovimento) tela.classList.add('entrando');
-};
-$<HTMLButtonElement>('#b-ligar').focus();
+/* ---------- Começa direto no menu ---------- */
+// O navegador só libera áudio depois de uma interação: o som começa no primeiro clique ou tecla
+let somIniciado = false;
+const iniciarSom = () => { if (somIniciado) return; somIniciado = true; som.ambienteLigar(); };
+addEventListener('pointerdown', iniciarSom, {once: true});
+addEventListener('keydown', iniciarSom, {once: true});
+$<HTMLElement>('#barra').hidden = false;
+estado = 'inicio'; montar();
+if (!semMovimento) tela.classList.add('entrando');
 
 /* ---------- Desenho ---------- */
 let estreita = false;
