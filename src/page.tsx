@@ -224,7 +224,7 @@ function DetalheProjeto({p, i}: {p: Projeto; i: number}) {
    <div className="projeto-cabeca">
     <div>
      <h2 id={`${p.id}-titulo`} className="titulo">{p.name}</h2>
-     <p className="stack"><span className="stack-rotulo">stack</span> {p.tags.join(' · ')}</p>
+     <p className="stack">{p.tags.join(' · ')}</p>
     </div>
     {p.logos && <ul className="logos" aria-label="Parceiros">{p.logos.map((l) => <li key={l.nome}>{l.texto
      ? <svg className="logo-texto" viewBox="0 0 240 48" role="img" aria-label={l.nome}>

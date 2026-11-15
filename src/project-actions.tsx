@@ -76,13 +76,20 @@ function Slides({id, nome, total}: {id: string; nome: string; total: number}) {
 
 /* ---------- Estudo de caso de design ---------- */
 export function Caso({nome, caso}: {nome: string; caso: CasoDesign}) {
+ const Etapa = ({n, titulo, children}: {n: number; titulo: string; children: ReactNode}) =>
+  <li className="etapa"><span className="etapa-num" aria-hidden="true">{n}</span><div className="etapa-corpo"><h4>{titulo}</h4>{children}</div></li>;
  return <div className="caso">
-  <section><h3>O problema</h3><p className="caso-problema">{caso.problema}</p></section>
-  <section><h3>Processo</h3><ol className="caso-passos">{caso.processo.map((p, i) => <li key={i}><span aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><p>{p}</p></li>)}</ol></section>
-  <section><h3>Decisões de design</h3><div className="caso-decisoes">{caso.decisoes.map((d) => <article key={d.titulo} className="decisao"><h4>{d.titulo}</h4>
-   {d.antes && <p><b className="antes">Antes</b>{d.antes}</p>}<p><b className="depois">{d.antes ? 'Depois' : 'Decisão'}</b>{d.depois}</p><p><b className="porque">Por quê</b>{d.porque}</p></article>)}</div></section>
-  <section><h3>Telas</h3><div className="caso-telas" tabIndex={0} role="region" aria-label={`Telas do ${nome}. Role para o lado para ver todas.`}>{caso.telas.map((t) => <figure key={t.img}><img src={`./assets/${t.img}.webp`} alt={`${nome}: ${t.legenda}`} loading="lazy"/><figcaption>{t.legenda}</figcaption></figure>)}</div></section>
-  <section><h3>Resultado</h3><p className="caso-resultado">{caso.resultado}</p></section>
+  <ol className="etapas">
+   <Etapa n={1} titulo="O problema"><p>{caso.problema}</p></Etapa>
+   <Etapa n={2} titulo="As dores que identifiquei"><ul className="dores">{caso.dores.map((d) => <li key={d}>{d}</li>)}</ul></Etapa>
+   <Etapa n={3} titulo="Para quem"><p>{caso.publico}</p></Etapa>
+   <Etapa n={4} titulo="A marca"><p>{caso.marca}</p>
+    <ul className="cores-marca">{caso.cores.map((c) => <li key={c.nome}><span className="amostra" style={{background: c.hex}} aria-hidden="true"/><span><b>{c.nome}</b>{c.uso}</span></li>)}</ul></Etapa>
+   <Etapa n={5} titulo="Decisões de design"><div className="decisoes">{caso.decisoes.map((d) => <div key={d.titulo} className="decisao"><h5>{d.titulo}</h5><p>{d.texto}</p></div>)}</div></Etapa>
+   <Etapa n={6} titulo="Protótipo no Figma"><p>{caso.prototipo}</p>
+    <div className="caso-telas" tabIndex={0} role="region" aria-label={`Telas do ${nome}. Role para o lado para ver todas.`}>{caso.telas.map((t) => <figure key={t.img}><img src={`./assets/${t.img}.webp`} alt={`${nome}: ${t.legenda}`} loading="lazy"/><figcaption>{t.legenda}</figcaption></figure>)}</div></Etapa>
+  </ol>
+  <p className="caso-fim"><b>Resultado</b>{caso.resultado}</p>
  </div>;
 }
 

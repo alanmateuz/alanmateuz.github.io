@@ -1,5 +1,5 @@
-export type Decisao = {titulo:string;antes:string;depois:string;porque:string};
-export type CasoDesign = {problema:string;processo:string[];decisoes:Decisao[];telas:{img:string;legenda:string}[];resultado:string};
+export type CorMarca = {hex:string;nome:string;uso:string};
+export type CasoDesign = {problema:string;dores:string[];publico:string;marca:string;cores:CorMarca[];decisoes:{titulo:string;texto:string}[];prototipo:string;telas:{img:string;legenda:string}[];resultado:string};
 /** Imagem da galeria. tipo 'tela' = print de computador; 'celular' = print de celular; 'foto' = foto de evento.
  *  img vazio = foto ainda não enviada (aparece um espaço reservado). */
 /** toques: pontos (em % da tela) onde o "dedo" toca, em ordem; rolar: a tela desliza como se rolasse. */
@@ -25,12 +25,17 @@ export const projects:Projeto[] = [
    {img:'fluxo/p3-gerar',legenda:'Professor gera a trilha com IA',tipo:'celular',fluxo:[{img:'p3-gerar',toque:[[50,93]]},{img:'p4-revisar',toque:[[50,93]]},{img:'p5-ao-vivo'}]}],
   design:{
    problema:'O celular costuma ser a maior distração da aula. O desafio era transformá-lo em aliado, para alunos e para professores.',
-   processo:['Dois públicos, dois fluxos: o aluno aprende e o professor cria turmas, trilhas e acompanha métricas.','Marca com mascote (a arara) e paleta em que cada cor tem um significado: azul é o dia a dia, laranja é modo especial.','Protótipo navegável no Figma, com animações e modo claro e escuro.'],
+   dores:['O aluno se distrai com o celular e perde o fio da aula.','O professor não sabe, na hora, quem entendeu e quem ficou para trás.','Quem é tímido não tira dúvida na frente da turma.','Preparar atividades novas toma tempo que o professor não tem.'],
+   publico:'Dois públicos bem diferentes: alunos do ensino médio, adolescentes que gostam de jogo, desafio e recompensa, e professores, adultos com muitas tarefas que precisam de clareza para trabalhar rápido. Por isso o app tem dois tons: lúdico para o aluno e sóbrio para o professor.',
+   marca:'O nome vem de "Tia Lui!", expressão nordestina para "se ligar". A mascote é uma arara azul: brasileira, colorida e falante, ela conversa com o aluno nas perguntas e nas conquistas. Cada cor tem um papel fixo, para a pessoa saber onde está só de olhar.',
+   cores:[{hex:'#1f4bff',nome:'Azul',uso:'O dia a dia: turmas, aulas e perfil.'},{hex:'#ff7a1f',nome:'Laranja',uso:'Modos especiais, como o modo foco e criar trilha.'},{hex:'linear-gradient(135deg, #ff7a1f, #ffc83d)',nome:'Degradê laranja e amarelo',uso:'Tudo que é feito com IA.'}],
    decisoes:[
-    {titulo:'Um tom para cada público',antes:'O lado do professor tão colorido quanto o do aluno.',depois:'Aluno lúdico e colorido; professor sóbrio e claro.',porque:'Um adulto com muitas tarefas precisa de foco, não de festa.'},
-    {titulo:'Modo foco com cara de modo',antes:'Só o título "Modo foco" em preto e um parágrafo.',depois:'Cor do modo, ícone e um controle de estado visível.',porque:'A pessoa precisa sentir que entrou num lugar diferente.'},
-    {titulo:'Barra de abas branca e flutuante',antes:'Testes com barra laranja e com efeito de vidro.',depois:'Barra branca, arredondada, com a aba ativa numa pílula na cor da marca.',porque:'Fica leve e não disputa atenção com o conteúdo.'},
+    {titulo:'Um tom para cada público',texto:'O aluno vê cores, a arara e pequenas comemorações. O professor vê telas limpas e diretas, porque precisa de foco e não de festa.'},
+    {titulo:'Modo foco com cara de modo',texto:'Ao entrar no modo foco, a tela muda de cor, ganha um ícone e um controle Focado/Desfocado. O aluno sente que entrou num lugar diferente.'},
+    {titulo:'Dúvida anônima',texto:'O aluno manda a pergunta sem o nome aparecer para a turma. Quem tem vergonha também participa.'},
+    {titulo:'Barra de abas leve',texto:'Branca, flutuante e arredondada, com a aba ativa numa pílula azul. Não disputa atenção com o conteúdo.'},
    ],
+   prototipo:'Protótipo navegável no Figma com 56 telas, modo claro e escuro e animações de toque: o botão afunda, as telas deslizam e a arara reage às respostas.',
    telas:[{img:'alui-inicio',legenda:'Início do aluno'},{img:'alui-multipla',legenda:'Múltipla escolha'},{img:'alui-aberta',legenda:'Pergunta aberta'},{img:'alui-duvida',legenda:'Dúvida anônima'},{img:'alui-metrics-crop',legenda:'Métricas do professor'}],
    resultado:'56 telas em modo claro e escuro e um protótipo navegável com animações.'}},
  {id:'reuse',name:'ReUse',client:'Unifor',category:'UI/UX · ECONOMIA CIRCULAR',number:'03',headline:'Novas histórias para o que já existe.',description:'Uma proposta de re-commerce universitário que conecta estudantes da Unifor para comprar, vender e doar materiais, com interfaces mobile que aproximam a economia circular da vida no campus.',role:'Minha participação: UI/UX e prototipagem das jornadas de compra e venda, dos anúncios, das mensagens e dos indicadores de impacto.',tags:['Figma','Protótipo navegável'],image:'reuse-landing',summary:'App para estudantes da Unifor comprarem, venderem e doarem materiais.',
@@ -43,12 +48,16 @@ export const projects:Projeto[] = [
    {img:'reuse-landing',legenda:'Landing page',tipo:'tela',largo:true}],
   design:{
    problema:'Materiais de estudo em bom estado ficam parados enquanto outros estudantes do mesmo campus precisam deles.',
-   processo:['Jornadas de compra, venda e doação entre estudantes.','Card de anúncio pensado a partir da pergunta "o que preciso saber aqui?".','Identidade ligada à Unifor e protótipos navegáveis da landing page e do app.'],
+   dores:['Material em bom estado fica parado em casa depois que a disciplina acaba.','Comprar tudo novo pesa no bolso de quem está começando o curso.','Vender em grupos de mensagem é bagunçado: o anúncio some no meio da conversa.'],
+   publico:'Estudantes da Unifor, que dividem o mesmo campus e muitas vezes as mesmas disciplinas. Quem vende e quem compra estão a poucos passos um do outro.',
+   marca:'ReUse vem de reutilizar: dar uma nova história para o que já existe. A identidade usa o azul e os ícones da Unifor, para o app parecer parte da vida no campus, e mostra o impacto de cada troca, em dinheiro economizado e lixo evitado.',
+   cores:[{hex:'#1f3cff',nome:'Azul Unifor',uso:'A marca e o nome de quem vende.'},{hex:'#e5322d',nome:'Vermelho',uso:'O preço e o desconto, para achar rápido.'},{hex:'#141414',nome:'Preto',uso:'O nome do produto.'}],
    decisoes:[
-    {titulo:'Hierarquia por cor no anúncio',antes:'',depois:'Quem vende em azul, preço em vermelho com o desconto à vista e o título do produto em preto.',porque:'O olho acha cada informação sem ler tudo.'},
-    {titulo:'Card que responde o essencial',antes:'',depois:'Foto, preço, nome do produto e quem vende, nessa ordem.',porque:'É o que decide uma compra entre colegas.'},
-    {titulo:'Identidade do campus',antes:'',depois:'Cores e ícones ligados à Unifor.',porque:'Aproxima a ideia da vida de quem estuda ali.'},
+    {titulo:'Hierarquia por cor no anúncio',texto:'Quem vende em azul, o preço em vermelho com o desconto à vista e o produto em preto. O olho acha cada informação sem ler tudo.'},
+    {titulo:'Card que responde o essencial',texto:'Foto, preço, nome do produto e quem vende, nessa ordem. É o que decide uma compra entre colegas.'},
+    {titulo:'Impacto à vista',texto:'O início mostra quanto a pessoa já economizou e quantos quilos de lixo foram evitados. A troca vira motivo de orgulho.'},
    ],
+   prototipo:'Protótipos navegáveis no Figma do app e da landing page, com as jornadas de anunciar, conversar, pagar e avaliar.',
    telas:[{img:'reuse-inicio',legenda:'Início'},{img:'reuse-anuncio',legenda:'Detalhes do anúncio'},{img:'reuse-revisao',legenda:'Revisão do anúncio'},{img:'reuse-compra',legenda:'Compra concluída'}],
    resultado:'Protótipos navegáveis do app e da landing page, em modo claro e escuro.'}}
 ];
