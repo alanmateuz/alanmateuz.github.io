@@ -653,3 +653,6 @@ b, strong { font-weight: 400; }
 .vitrine-tela { width: 98%; top: 10%; transform: perspective(1100px) rotateY(-25deg); }
 .vitrine-tela { width: 90%; }
 @media (max-width: 640px) { .rodape .pilulas li { width: min(100%, 320px); } .rodape .pilulas .pilula { width: 100%; } }
+.vitrine-tela { left: -8%; width: 98%; }
+.vitrine::after { inset: 0 auto 0 -12%; width: 30%; background: linear-gradient(90deg, var(--fundo) 0%, var(--fundo) 30%, color-mix(in oklab, var(--fundo) 60%, transparent) 65%, transparent 100%); }
+@media (max-width: 900px) { .vitrine-tela { left: -4%; width: 100%; } .vitrine::after { inset: 0 auto 0 -10%; width: 26%; } }
