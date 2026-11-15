@@ -951,3 +951,9 @@ b, strong { font-weight: 400; }
 .fluxo[data-seq]:focus, .midia-pagina:focus { outline: none; }
 .midia-tela.midia-pagina.ativo .midia-caixa > img { animation: navega 12s cubic-bezier(.45, 0, .25, 1) .4s 1 both; }
 .hero-sub-2 { margin-top: 12px !important; }
+
+/* Respiro entre as seções, maior em telas grandes (múltiplos de 8) */
+.sobre { padding-top: clamp(64px, 9vw, 160px); padding-bottom: clamp(48px, 7vw, 128px); }
+.resumo > .container:first-child { padding-top: clamp(56px, 8vw, 144px); }
+.fileira { margin-top: clamp(28px, 3vw, 48px); }
+.pilha { margin-top: clamp(48px, 6vw, 112px); }
