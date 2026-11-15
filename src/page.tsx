@@ -290,13 +290,24 @@ const FOTOS_SOBRE = [
  {img: 'sobre-auditorio', legenda: 'Encerramento do O-Hackathon na Unifor'},
 ];
 
+/* Fotos do Sobre: mesma esteira em perspectiva da abertura, espelhada (vem da esquerda e vai para a direita) */
 function FaixaFotos() {
  const [pausada, setPausada] = useState(false);
- const lista = (copia: boolean) => FOTOS_SOBRE.map((f, i) => <li key={`${copia}-${i}`} aria-hidden={copia || undefined}>
-  {f.img ? <img src={`./assets/${f.img}.webp`} alt={copia ? '' : f.legenda} loading="lazy"/> : <div className="reservado-caixa"><Icone nome="foto" tamanho={26}/><span>Foto em breve</span></div>}
- </li>);
- return <div className={`faixa ${pausada ? 'pausada' : ''}`}>
-  <div className="faixa-trilho"><ul className="faixa-lista">{lista(false)}{lista(true)}</ul></div>
+ const ref = useRef<HTMLDivElement>(null);
+ useEffect(() => {
+  const el = ref.current;
+  if (!el) return;
+  const io = new IntersectionObserver(([e]) => el.classList.toggle('fora', !e.isIntersecting));
+  io.observe(el);
+  return () => io.disconnect();
+ }, []);
+ const fotos = FOTOS_SOBRE.filter((f) => f.img);
+ return <div ref={ref} className={`faixa faixa-3d ${pausada ? 'pausada' : ''}`}>
+  <ul className="faixa-palco" aria-label="Fotos de eventos e equipes">
+   {fotos.map((f, i) => <li key={f.img} className="faixa-capa" style={{['--i' as string]: i, ['--n' as string]: fotos.length}}>
+    <img src={`./assets/${f.img}.webp`} alt={f.legenda} loading="lazy"/>
+   </li>)}
+  </ul>
   <button type="button" className="faixa-pausa" onClick={() => setPausada(!pausada)} aria-pressed={pausada}>
    <Icone nome={pausada ? 'play' : 'pausa'} tamanho={16}/>{pausada ? 'Continuar fotos' : 'Pausar fotos'}
   </button>

@@ -957,3 +957,31 @@ b, strong { font-weight: 400; }
 .resumo > .container:first-child { padding-top: clamp(56px, 8vw, 144px); }
 .fileira { margin-top: clamp(28px, 3vw, 48px); }
 .pilha { margin-top: clamp(48px, 6vw, 112px); }
+
+/* Fotos do Sobre: esteira espelhada da abertura (entra pela esquerda, some no fundo à direita) */
+@keyframes esteira-espelho {
+  0.000% { transform: translate3d(calc(var(--w) * -1.716), 0, calc(var(--w) * 1.246)) rotateY(36deg); opacity: 1; }
+  4.667% { transform: translate3d(calc(var(--w) * -0.858), 0, calc(var(--w) * 0.623)) rotateY(36deg); opacity: 1; }
+  16.667% { transform: translate3d(calc(var(--w) * -0.858), 0, calc(var(--w) * 0.623)) rotateY(36deg); opacity: 1; }
+  21.333% { transform: translate3d(calc(var(--w) * 0.000), 0, calc(var(--w) * 0.000)) rotateY(36deg); opacity: 1; }
+  33.333% { transform: translate3d(calc(var(--w) * 0.000), 0, calc(var(--w) * 0.000)) rotateY(36deg); opacity: 1; }
+  38.000% { transform: translate3d(calc(var(--w) * 0.858), 0, calc(var(--w) * -0.623)) rotateY(36deg); opacity: 1; }
+  50.000% { transform: translate3d(calc(var(--w) * 0.858), 0, calc(var(--w) * -0.623)) rotateY(36deg); opacity: 1; }
+  54.667% { transform: translate3d(calc(var(--w) * 1.716), 0, calc(var(--w) * -1.246)) rotateY(36deg); opacity: 0; }
+  66.667% { transform: translate3d(calc(var(--w) * 1.716), 0, calc(var(--w) * -1.246)) rotateY(36deg); opacity: 0; }
+  71.333% { transform: translate3d(calc(var(--w) * 2.574), 0, calc(var(--w) * -1.869)) rotateY(36deg); opacity: 0; }
+  83.333% { transform: translate3d(calc(var(--w) * 2.574), 0, calc(var(--w) * -1.869)) rotateY(36deg); opacity: 0; }
+  88.000% { transform: translate3d(calc(var(--w) * 3.432), 0, calc(var(--w) * -2.492)) rotateY(36deg); opacity: 0; }
+  100% { transform: translate3d(calc(var(--w) * 3.432), 0, calc(var(--w) * -2.492)) rotateY(36deg); opacity: 0; }
+}
+.faixa-3d { position: relative; }
+.faixa-palco { position: relative; list-style: none; margin: 0; padding: 0; height: clamp(260px, 28vw, 460px); perspective: 1400px; overflow: hidden; }
+.faixa-capa { --w: clamp(260px, 34vw, 600px); position: absolute; left: 14%; top: 50%; width: var(--w); aspect-ratio: 16 / 10; margin-top: calc(var(--w) * -.3125); border-radius: 12px; overflow: hidden; background: var(--superficie); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .7);
+  animation: esteira-espelho 27s cubic-bezier(.65, 0, .35, 1) infinite; animation-delay: calc(var(--i) * -4.5s); will-change: transform; }
+.faixa-capa img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.faixa-palco::after { content: ''; position: absolute; inset: 0 0 0 auto; width: 34%; pointer-events: none; z-index: 2; background: linear-gradient(270deg, var(--fundo) 0%, var(--fundo) 30%, color-mix(in oklab, var(--fundo) 55%, transparent) 65%, transparent 100%); }
+.faixa-3d.pausada .faixa-capa, .faixa-3d.fora .faixa-capa { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .faixa-capa { animation-play-state: paused; } }
+[data-parado='sim'] .faixa-capa { animation-play-state: paused; }
+@media (max-width: 900px) { .faixa-palco { height: 64vw; } .faixa-capa { --w: 66vw; left: 10%; } .faixa-palco::after { width: 26%; } .faixa-3d .faixa-pausa { display: flex; } }
+.faixa-palco { overflow: visible; overflow-x: clip; }
