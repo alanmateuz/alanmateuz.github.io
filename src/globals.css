@@ -945,3 +945,8 @@ b, strong { font-weight: 400; }
 .midia-tela.midia-pagina.ativo .midia-caixa > img { animation: navega 12s cubic-bezier(.45, 0, .25, 1) .4s infinite both; }
 @media (prefers-reduced-motion: reduce) { .midia-tela.midia-pagina.ativo .midia-caixa > img { animation: none; } }
 [data-parado='sim'] .midia-tela.midia-pagina.ativo .midia-caixa > img { animation: none; }
+/* Celulares e landing clicáveis: mãozinha e foco visível */
+.fluxo[data-seq], .midia-pagina { cursor: pointer; }
+.fluxo[data-seq]:focus-visible .midia-caixa, .midia-pagina:focus-visible .midia-caixa { outline: 3px solid var(--texto); outline-offset: 4px; }
+.fluxo[data-seq]:focus, .midia-pagina:focus { outline: none; }
+.midia-tela.midia-pagina.ativo .midia-caixa > img { animation: navega 12s cubic-bezier(.45, 0, .25, 1) .4s 1 both; }

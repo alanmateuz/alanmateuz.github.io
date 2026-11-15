@@ -87,9 +87,17 @@ function PaginaRolando({item, nome}: {item: ItemGaleria; nome: string}) {
   if (!el) return;
   const io = new IntersectionObserver(([e]) => el.classList.toggle('ativo', e.isIntersecting), {threshold: 0.45});
   io.observe(el);
-  return () => io.disconnect();
+  // Clique: começa a rolar na hora (pula a pausa do início)
+  const agora = () => {
+   if (!podeMover()) return;
+   el.classList.add('ativo');
+   requestAnimationFrame(() => el.querySelector('img')?.getAnimations().forEach((a) => { a.currentTime = 1000; a.play(); }));
+  };
+  const tecla = (e: KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); agora(); } };
+  el.addEventListener('click', agora); el.addEventListener('keydown', tecla);
+  return () => { io.disconnect(); el.removeEventListener('click', agora); el.removeEventListener('keydown', tecla); };
  }, []);
- return <figure ref={ref} className="midia midia-tela midia-pagina">
+ return <figure ref={ref} className="midia midia-tela midia-pagina" tabIndex={0} role="button" aria-label={`Rolar a ${item.legenda.toLowerCase()}`}>
   <div className="midia-caixa"><img src={`./assets/${item.img}.webp`} alt={`${nome}: ${item.legenda}`} loading="lazy" decoding="async"/></div>
   <figcaption>{item.legenda}</figcaption>
  </figure>;

@@ -215,7 +215,7 @@ export function TelaFluxo({passos, legenda, nome}: {passos: Passo[]; legenda: st
   };
   return () => { delete el.tocar; };
  }, [passos]);
- return <figure ref={fig} className="midia midia-celular fluxo" data-seq="">
+ return <figure ref={fig} className="midia midia-celular fluxo" data-seq="" tabIndex={0} role="button" aria-label={`Tocar animação: ${legenda}`}>
   <Inclina className="midia-caixa">
    <div className="fluxo-tela">
     {passos.map((p, i) => <img key={p.img + i} className="passo" src={`./assets/fluxo/${p.img}.webp`} loading="lazy" decoding="async"
@@ -233,15 +233,19 @@ export function useTocaFluxos(ref: React.RefObject<HTMLElement | null>) {
   const raiz = ref.current;
   if (!raiz) return;
   let ctrl: AbortController | null = null, pausado = false, visivel = false;
-  const rodar = async () => {
+  // inicio: de qual tela começar; forcar: toca essa primeira mesmo com o mouse em cima (veio de um clique)
+  const rodar = async (inicio = 0, forcar = false) => {
    ctrl?.abort();
    const meu = new AbortController(); ctrl = meu;
-   const itens = [...raiz.querySelectorAll<ElTocavel>('[data-seq]')];
-   if (!itens.length) return; // galeria sem telas animadas: nada a tocar (evita laço infinito)
+   const todos = [...raiz.querySelectorAll<ElTocavel>('[data-seq]')];
+   if (!todos.length) return; // galeria sem telas animadas: nada a tocar (evita laço infinito)
+   const itens = [...todos.slice(inicio), ...todos.slice(0, inicio)];
+   let primeiro = forcar;
    try {
     for (let volta = 0; ; volta++) {
      for (const el of itens) {
-      while (pausado || !podeMover()) await espera(400, meu.signal);
+      while (!primeiro && (pausado || !podeMover())) await espera(400, meu.signal);
+      primeiro = false;
       if (el.tocar) await el.tocar(meu.signal);
       else { el.classList.add('ativo'); try { await espera(Number(el.dataset.dur) || 2600, meu.signal); } finally { el.classList.remove('ativo'); } }
       await espera(350, meu.signal);
@@ -250,13 +254,24 @@ export function useTocaFluxos(ref: React.RefObject<HTMLElement | null>) {
    } catch { /* parou: saiu da tela ou desmontou */ }
   };
   const io = new IntersectionObserver(([e]) => {
-   if (e.isIntersecting && !visivel) { visivel = true; rodar(); }
+   if (e.isIntersecting && !visivel) { visivel = true; void rodar(); }
    else if (!e.isIntersecting && visivel) { visivel = false; ctrl?.abort(); }
   }, {threshold: 0, rootMargin: '0px 0px -20% 0px'}); // começa assim que a galeria entra na tela
   io.observe(raiz);
   const pausa = () => { pausado = true; }, segue = () => { pausado = false; };
+  // Clicar (ou Enter/Espaço) num celular: a fila pula para ele na hora
+  const pular = (alvo: EventTarget | null) => {
+   const el = (alvo as HTMLElement | null)?.closest<ElTocavel>('[data-seq]');
+   if (!el || !podeMover()) return;
+   const todos = [...raiz.querySelectorAll<ElTocavel>('[data-seq]')];
+   visivel = true;
+   rodar(todos.indexOf(el), true);
+  };
+  const aoClicar = (e: MouseEvent) => pular(e.target);
+  const aoTeclar = (e: KeyboardEvent) => { if ((e.key === 'Enter' || e.key === ' ') && (e.target as HTMLElement).matches('[data-seq]')) { e.preventDefault(); pular(e.target); } };
+  raiz.addEventListener('click', aoClicar); raiz.addEventListener('keydown', aoTeclar);
   raiz.addEventListener('pointerenter', pausa); raiz.addEventListener('pointerleave', segue);
   raiz.addEventListener('focusin', pausa); raiz.addEventListener('focusout', segue);
-  return () => { io.disconnect(); ctrl?.abort(); raiz.removeEventListener('pointerenter', pausa); raiz.removeEventListener('pointerleave', segue); raiz.removeEventListener('focusin', pausa); raiz.removeEventListener('focusout', segue); };
+  return () => { raiz.removeEventListener('click', aoClicar); raiz.removeEventListener('keydown', aoTeclar); io.disconnect(); ctrl?.abort(); raiz.removeEventListener('pointerenter', pausa); raiz.removeEventListener('pointerleave', segue); raiz.removeEventListener('focusin', pausa); raiz.removeEventListener('focusout', segue); };
  }, [ref]);
 }
