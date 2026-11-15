@@ -628,3 +628,28 @@ b, strong { font-weight: 400; }
   .vitrine-cel { top: 14%; width: 20%; border-radius: 16px; }
 }
 [data-tema='claro'] .vitrine-tela, [data-tema='claro'] .vitrine-cel { box-shadow: 0 30px 60px -30px rgba(20,20,30,.35); }
+
+/* Abertura v4: só a tela do Safra, maior e com perspectiva forte */
+.vitrine { height: clamp(320px, 34vw, 460px); }
+.vitrine-tela { left: 0; top: 8%; width: 108%; transform-origin: 0 50%; transform: perspective(900px) rotateY(-30deg); border-radius: 18px; }
+.vitrine::after { inset: 0 auto 0 -14%; width: 56%; }
+@media (max-width: 900px) { .vitrine { height: 60vw; } .vitrine-tela { top: 4%; width: 100%; } }
+
+/* Contato: tudo centralizado e botões do mesmo tamanho */
+.rodape-grade { justify-content: center; text-align: center; }
+.rodape-grade > div { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; width: 100%; }
+.rodape-chamada, .email-endereco { width: 100%; margin: 0; }
+.email-endereco { margin-bottom: 12px; }
+.email-contato { display: contents; }
+.rodape .pilulas { display: flex; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.rodape .botao-cheio, .rodape .botao-linha, .rodape .pilula { width: 220px; min-height: 52px; padding: 0 20px; justify-content: center; font-size: var(--t-corpo); border-radius: 999px; }
+.rodape .pilula { border: 1.5px solid var(--borda); }
+.rodape .pilula:hover { background: var(--superficie); color: var(--texto); border-color: var(--texto-3); }
+.rodape-final { justify-content: center; text-align: center; }
+@media (max-width: 640px) {
+  .rodape .pilulas { width: 100%; flex-direction: column; align-items: center; }
+  .rodape .botao-cheio, .rodape .botao-linha, .rodape .pilula { width: min(100%, 320px); }
+}
+.vitrine-tela { width: 98%; top: 10%; transform: perspective(1100px) rotateY(-25deg); }
+.vitrine-tela { width: 90%; }
+@media (max-width: 640px) { .rodape .pilulas li { width: min(100%, 320px); } .rodape .pilulas .pilula { width: 100%; } }

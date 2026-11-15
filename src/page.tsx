@@ -215,7 +215,7 @@ export default function Home() {
   <header className={`topo ${rolou ? 'topo-rolou' : ''}`} id="topo">
    <a href="#conteudo" className={`topo-nome ${passouAbertura ? 'visivel' : ''}`} aria-hidden={!passouAbertura} tabIndex={passouAbertura ? 0 : -1}>Alan Mateus Queiroz</a>
    <nav aria-label="Seções" className="topo-links">
-    <a href="#projetos">Projetos</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a>
+    <a href="#sobre">Sobre</a><a href="#projetos">Projetos</a><a href="#contato">Contato</a>
    </nav>
    <PainelAcessibilidade/>
    <button type="button" className="botao-topo" onClick={() => setTema(tema === 'escuro' ? 'claro' : 'escuro')} aria-pressed={tema === 'claro'}
@@ -243,7 +243,6 @@ export default function Home() {
      <div className="vitrine" aria-hidden="true">
       <div className="vitrine-palco">
        <div className="vitrine-tela"><img src="./assets/safra-capa.webp" alt=""/></div>
-       <div className="vitrine-cel"><img src="./assets/fluxo/r-home.webp" alt=""/></div>
       </div>
      </div>
      <div className="prova">
@@ -259,13 +258,6 @@ export default function Home() {
    </section>
 
    <div className="folha">
-    <section id="projetos" className="resumo" aria-labelledby="projetos-titulo">
-     <div className="container"><h2 id="projetos-titulo" className="titulo">Projetos</h2></div>
-     <FileiraProjetos/>
-    </section>
-
-    <div className="pilha">{projects.map((p, i) => <DetalheProjeto key={p.id} p={p} i={i}/>)}</div>
-
     <section id="sobre" className="sobre" aria-labelledby="sobre-titulo">
      <div className="container sobre-texto revela">
       <h2 id="sobre-titulo" className="titulo">Sobre</h2>
@@ -274,6 +266,14 @@ export default function Home() {
      </div>
      <FaixaFotos/>
     </section>
+
+    <section id="projetos" className="resumo" aria-labelledby="projetos-titulo">
+     <div className="container"><h2 id="projetos-titulo" className="titulo">Projetos</h2></div>
+     <FileiraProjetos/>
+    </section>
+
+    <div className="pilha">{projects.map((p, i) => <DetalheProjeto key={p.id} p={p} i={i}/>)}</div>
+
    </div>
   </main>
 
@@ -287,12 +287,6 @@ export default function Home() {
       <li><Pilula href={CONTATOS.github} icone="github" externo>GitHub</Pilula></li>
      </ul>
     </div>
-    <nav aria-label="Atalhos" className="atalhos">
-     <a href="#topo"><Icone nome="cima" tamanho={18}/>Voltar ao topo</a>
-     <a href="#projetos">Projetos</a>
-     <a href="#sobre">Sobre</a>
-     <a href="#contato">Contatos</a>
-    </nav>
    </div>
    <p className="container rodape-final">Alan Mateus Queiroz · Fortaleza, CE · 2026
     <span className="feito-com">Feito com React, TypeScript e Vite · <a href="https://github.com/alanmateuz/alanmateuz.github.io" target="_blank" rel="noopener noreferrer">ver o código<SoLeitor> (abre em nova aba)</SoLeitor></a></span></p>
