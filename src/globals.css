@@ -861,3 +861,11 @@ b, strong { font-weight: 400; }
 }
 .faixa { margin-top: 72px; } @media (max-width: 640px) { .faixa { margin-top: 48px; } }
 @media (max-width: 700px) { .etapa { grid-template-columns: 36px minmax(0, 1fr); gap: 14px; } .etapa-num { width: 36px; height: 36px; font-size: var(--t-legenda); } .etapa-corpo h4 { margin-top: 4px; } }
+/* Celular/janela estreita: nome e botões no centro, texto em bloco justificado (formato de caixa) */
+@media (max-width: 900px) {
+  .hero-texto { text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .hero-nome { text-align: center; white-space: normal; }
+  .hero-sub { text-align: justify; text-align-last: center; hyphens: auto; -webkit-hyphens: auto; max-width: 44ch; margin-inline: auto; }
+  .hero-acoes { justify-content: center; width: 100%; }
+}
+@media (max-width: 900px) { .hero-sub { text-align-last: left; } }
