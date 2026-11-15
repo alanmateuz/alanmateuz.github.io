@@ -20,8 +20,8 @@
 .titulo { font-size: var(--t-titulo); font-weight: 600; letter-spacing: -.02em; line-height: 1.12; }
 :root, [data-tema='escuro'] {
   color-scheme: dark;
-  --fundo: #1c1c1e;
-  --folha: #131313;
+  --fundo: #131313;
+  --folha: var(--fundo);
   --superficie: #1f1f22;
   --superficie-2: #2c2c30;
   --borda: #34343a;
@@ -588,7 +588,6 @@ b, strong { font-weight: 400; }
 @media (max-width: 900px) { .vitrine { height: 260px; margin-top: 8px; } .vitrine-cel { left: 60%; top: 14%; width: 26%; } }
 
 /* Abertura v3: cabe numa tela de notebook, telas coladas em perspectiva, fundo único */
-:root, [data-tema='escuro'] { --folha: var(--fundo); }
 .hero { min-height: 100svh; display: flex; flex-direction: column; padding: 80px 0 28px; box-sizing: border-box; }
 .hero-centro { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); grid-template-rows: 1fr auto; align-items: center; gap: 0 40px; }
 .hero-texto { align-self: center; }
@@ -878,7 +877,6 @@ b, strong { font-weight: 400; }
 }
 
 /* Fundo escuro: o cinza mais escuro de antes */
-:root, [data-tema='escuro'] { --fundo: #131313; --folha: #131313; }
 
 /* Quadrados dos projetos: só a marca, na cor de cada projeto; sem zoom na imagem */
 .quadrado-marca { position: relative; display: grid; place-items: center; overflow: hidden; }
