@@ -919,3 +919,24 @@ b, strong { font-weight: 400; }
 .galeria:has(.fluxo.ativo) .fluxo:not(.ativo) .midia-caixa { opacity: .5; filter: saturate(.7); }
 .fluxo .midia-caixa { transition: opacity .5s var(--suave), filter .5s var(--suave); }
 [data-parado='sim'] .galeria .fluxo .midia-caixa { opacity: 1 !important; filter: none !important; }
+
+/* Destaque de quem está animando: pulinho e sombra, sem apagar os outros */
+.galeria:has(.fluxo.ativo) .fluxo:not(.ativo) .midia-caixa { opacity: 1; filter: none; }
+.fluxo.ativo { transform: translateY(-10px); }
+.fluxo.ativo .midia-caixa { box-shadow: 0 30px 60px -22px rgba(0, 0, 0, .75); }
+
+/* Landing page inteira rolando de cima a baixo, como alguém navegando */
+.midia-pagina .midia-caixa { aspect-ratio: 16 / 9 !important; overflow: hidden; container-type: size; transition: transform .5s var(--suave), box-shadow .5s var(--suave); }
+.midia-pagina .midia-caixa img { width: 100%; height: auto !important; object-fit: initial; display: block; will-change: transform; }
+.midia-pagina.ativo .midia-caixa { transform: translateY(-8px); box-shadow: 0 30px 60px -22px rgba(0, 0, 0, .75); }
+.midia-pagina.ativo .midia-caixa img { animation: navega 11s cubic-bezier(.45, 0, .25, 1) both; }
+@keyframes navega {
+  0%, 8% { transform: translateY(0); }
+  82%, 90% { transform: translateY(calc(-100% + 100cqh)); }
+  100% { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) { .midia-pagina.ativo .midia-caixa img { animation: none; } .fluxo.ativo, .midia-pagina.ativo .midia-caixa { transform: none; } }
+[data-parado='sim'] .midia-pagina .midia-caixa img { animation: none !important; }
+.midia-tela.midia-pagina[data-seq].ativo .midia-caixa > img { animation: navega 11s cubic-bezier(.45, 0, .25, 1) both; }
+@media (prefers-reduced-motion: reduce) { .midia-tela.midia-pagina[data-seq].ativo .midia-caixa > img { animation: none; } }
+[data-parado='sim'] .midia-tela.midia-pagina[data-seq].ativo .midia-caixa > img { animation: none; }

@@ -87,8 +87,8 @@ function Imagem({item, nome}: {item: ItemGaleria; nome: string}) {
    <figcaption>{item.legenda}</figcaption>
   </figure>;
  }
- const anima = Boolean(item.toques || item.rolar);
- return <figure className={`midia midia-${item.tipo} ${item.rolar ? 'rola' : ''}`} {...(anima ? {'data-seq': ''} : {})}>
+ const anima = Boolean(item.toques || item.rolar || item.pagina);
+ return <figure className={`midia midia-${item.tipo} ${item.rolar ? 'rola' : ''} ${item.pagina ? 'midia-pagina' : ''}`} {...(anima ? {'data-seq': ''} : {})} {...(item.pagina ? {'data-dur': '11000'} : {})}>
   <Inclina className="midia-caixa">
    <img src={`./assets/${item.img}.webp`} alt={`${nome}: ${item.legenda}`} loading="lazy" decoding="async"/>
    {item.toques?.map(([x, y], i) => <span key={i} className="toque" aria-hidden="true" style={{left: `${x}%`, top: `${y}%`, ['--n' as string]: i}}/>)}

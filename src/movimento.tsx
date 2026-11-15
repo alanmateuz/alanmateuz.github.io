@@ -243,7 +243,7 @@ export function useTocaFluxos(ref: React.RefObject<HTMLElement | null>) {
      for (const el of itens) {
       while (pausado || !podeMover()) await espera(400, meu.signal);
       if (el.tocar) await el.tocar(meu.signal);
-      else { el.classList.add('ativo'); await espera(2600, meu.signal); el.classList.remove('ativo'); }
+      else { el.classList.add('ativo'); try { await espera(Number(el.dataset.dur) || 2600, meu.signal); } finally { el.classList.remove('ativo'); } }
       await espera(350, meu.signal);
      }
     }
@@ -252,7 +252,7 @@ export function useTocaFluxos(ref: React.RefObject<HTMLElement | null>) {
   const io = new IntersectionObserver(([e]) => {
    if (e.isIntersecting && !visivel) { visivel = true; rodar(); }
    else if (!e.isIntersecting && visivel) { visivel = false; ctrl?.abort(); }
-  }, {threshold: 0.3});
+  }, {threshold: 0, rootMargin: '0px 0px -20% 0px'}); // começa assim que a galeria entra na tela
   io.observe(raiz);
   const pausa = () => { pausado = true; }, segue = () => { pausado = false; };
   raiz.addEventListener('pointerenter', pausa); raiz.addEventListener('pointerleave', segue);

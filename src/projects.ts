@@ -5,7 +5,7 @@ export type CasoDesign = {problema:string;dores:string[];publico:string;marca:st
 /** toques: pontos (em % da tela) onde o "dedo" toca, em ordem; rolar: a tela desliza como se rolasse. */
 /** Um passo do fluxo animado: tela, rolagem (desce até o fim) e toque (x,y em % da tela visível). */
 export type Passo = {img:string;rolar?:boolean;toque?:[number,number][]};
-export type ItemGaleria = {fluxo?:Passo[];img:string;legenda:string;tipo:'tela'|'celular'|'foto';largo?:boolean;toques?:[number,number][];rolar?:boolean};
+export type ItemGaleria = {pagina?:boolean;fluxo?:Passo[];img:string;legenda:string;tipo:'tela'|'celular'|'foto';largo?:boolean;toques?:[number,number][];rolar?:boolean};
 export type Acoes = {app?:string;prototipo?:{rotulo:string;url:string}[];design?:boolean;pitch?:number};
 /** Logos de parceiros (PNG branco, fundo transparente), mostrados ao lado do título. */
 /** img = PNG branco; ou texto = logo redesenhado em texto (nítido em qualquer tamanho). */
@@ -45,7 +45,7 @@ export const projects:Projeto[] = [
    {img:'fluxo/r-anuncio',legenda:'Conversar com quem vende',tipo:'celular',fluxo:[{img:'r-anuncio',toque:[[72,92]]},{img:'r-mensagens',rolar:true}]},
    {img:'fluxo/r-pagamento',legenda:'Pagar e combinar a entrega',tipo:'celular',fluxo:[{img:'r-pagamento',rolar:true,toque:[[50,86]]},{img:'r-concluida'}]},
    {img:'fluxo/r-revisao',legenda:'Anunciar um material',tipo:'celular',fluxo:[{img:'r-revisao',rolar:true,toque:[[50,89]]}]},
-   {img:'reuse-landing',legenda:'Landing page',tipo:'tela',largo:true}],
+   {img:'reuse-landing-inteira',legenda:'Landing page',tipo:'tela',largo:true,pagina:true}],
   design:{
    problema:'Materiais de estudo em bom estado ficam parados enquanto outros estudantes do mesmo campus precisam deles.',
    dores:['Material em bom estado fica parado em casa depois que a disciplina acaba.','Comprar tudo novo pesa no bolso de quem está começando o curso.','Vender em grupos de mensagem é bagunçado: o anúncio some no meio da conversa.'],
