@@ -110,3 +110,45 @@ function contato() {
 }
 
 export const ICONES: Record<string, () => THREE.Group> = {safra, alui, reuse, sobre, contato};
+
+/** Alui: a arara azul mascote do app, em 3D (cabeça grande, olhos com aro amarelo, bico escuro, topete). */
+function arara() {
+ const g = new THREE.Group();
+ const azul = new THREE.MeshPhysicalMaterial({color: '#1d4dff', emissive: '#0b2bd6', emissiveIntensity: 0.35, roughness: 0.35, clearcoat: 0.6});
+ const azulEscuro = new THREE.MeshStandardMaterial({color: '#1235b8', emissive: '#0a1f80', emissiveIntensity: 0.3, roughness: 0.4});
+ const branco = new THREE.MeshStandardMaterial({color: '#ffffff', emissive: '#ffffff', emissiveIntensity: 0.15, roughness: 0.3});
+ const preto = new THREE.MeshStandardMaterial({color: '#111318', roughness: 0.2});
+ const amarelo = new THREE.MeshStandardMaterial({color: '#ffd23a', emissive: '#ffb800', emissiveIntensity: 0.35, roughness: 0.35});
+ const cinza = new THREE.MeshStandardMaterial({color: '#3a3f4b', roughness: 0.45});
+ // Corpo e cabeça
+ const corpo = new THREE.Mesh(new THREE.SphereGeometry(0.62, 40, 28), azul); corpo.scale.set(0.95, 1.1, 0.9); corpo.position.y = -0.55; g.add(corpo);
+ const cabeca = new THREE.Mesh(new THREE.SphereGeometry(0.72, 48, 32), azul); cabeca.position.y = 0.35; g.add(cabeca);
+ // Topete: três penas inclinadas para trás
+ for (let i = 0; i < 3; i++) {
+  const pena = new THREE.Mesh(new THREE.ConeGeometry(0.11, 0.55, 16), azulEscuro);
+  pena.position.set((i - 1) * 0.15, 1.05, -0.12); pena.rotation.set(-0.55, 0, (i - 1) * -0.35); g.add(pena);
+ }
+ // Olhos: aro amarelo, branco grande e pupila
+ for (const lado of [-1, 1]) {
+  const aro = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.05, 12, 32), amarelo); aro.position.set(lado * 0.3, 0.48, 0.6); aro.rotation.y = lado * 0.35; g.add(aro);
+  const olho = new THREE.Mesh(new THREE.SphereGeometry(0.19, 24, 16), branco); olho.position.set(lado * 0.3, 0.48, 0.58); g.add(olho);
+  const pupila = new THREE.Mesh(new THREE.SphereGeometry(0.1, 20, 14), preto); pupila.position.set(lado * 0.28, 0.48, 0.74); g.add(pupila);
+  const reflexo = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 8), branco); reflexo.position.set(lado * 0.25 + 0.04, 0.53, 0.83); g.add(reflexo);
+ }
+ // Bico curvo escuro com a parte de baixo mais clara
+ const bico = new THREE.Mesh(new THREE.SphereGeometry(0.24, 24, 16), cinza); bico.scale.set(1, 1.2, 1.05); bico.position.set(0, 0.16, 0.66); g.add(bico);
+ const ponta = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.24, 16), cinza); ponta.position.set(0, -0.06, 0.78); ponta.rotation.x = Math.PI - 0.5; g.add(ponta);
+ const boca = new THREE.Mesh(new THREE.SphereGeometry(0.13, 16, 12), preto); boca.scale.set(1.2, 0.5, 0.6); boca.position.set(0, 0.0, 0.66); g.add(boca);
+ // Asas e cauda
+ for (const lado of [-1, 1]) {
+  const asa = new THREE.Mesh(new THREE.SphereGeometry(0.34, 24, 16), azulEscuro); asa.scale.set(0.45, 1, 0.8); asa.position.set(lado * 0.56, -0.55, 0); asa.rotation.z = lado * 0.25; g.add(asa);
+ }
+ const cauda = new THREE.Mesh(new THREE.ConeGeometry(0.18, 0.7, 16), azulEscuro); cauda.position.set(0, -1.15, -0.35); cauda.rotation.x = 2.6; g.add(cauda);
+ // Patinhas amarelas
+ for (const lado of [-1, 1]) {
+  const pe = new THREE.Mesh(new THREE.SphereGeometry(0.1, 12, 8), amarelo); pe.scale.set(1.3, 0.6, 1.4); pe.position.set(lado * 0.2, -1.2, 0.18); g.add(pe);
+ }
+ g.scale.setScalar(0.85);
+ return g;
+}
+ICONES.alui = arara;

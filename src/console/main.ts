@@ -7,6 +7,7 @@ import * as THREE from 'three';
 import './console.css';
 import {projects, type Projeto} from '../projects';
 import {som} from './som';
+import {ICONES} from './icones';
 
 const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = <T extends HTMLElement>(s: string, r: ParentNode = document) => r.querySelector(s) as T;
@@ -85,14 +86,13 @@ const orbesCubos = fazerOrbes(3, 0.8); cubos.add(orbesCubos.g);
 
 /* ---------- Cartão de memória: um "save" por projeto ---------- */
 const saves = new THREE.Group(); saves.visible = false; cena.add(saves);
-const carregador = new THREE.TextureLoader();
-const CAPAS: Record<string, string> = {safra: 'safra-capa', alui: 'alui-slide-1', reuse: 'reuse-landing'};
-type Save = {p: Projeto; malha: THREE.Mesh; brilho: THREE.Sprite; base: THREE.Vector3};
+type Save = {p: Projeto; malha: THREE.Group; brilho: THREE.Sprite; base: THREE.Vector3};
 const listaSaves: Save[] = projects.map((p, i) => {
- const tex = carregador.load(`../assets/${CAPAS[p.id] || p.image}.webp`); tex.colorSpace = THREE.SRGBColorSpace;
- const malha = new THREE.Mesh(new THREE.PlaneGeometry(2.1, 1.18), new THREE.MeshBasicMaterial({map: tex, side: THREE.DoubleSide, transparent: true}));
+ const malha = (ICONES[p.id] || ICONES.sobre)();
  const base = new THREE.Vector3((i - (projects.length - 1) / 2) * 2.7, 0.9, 0);
  malha.position.copy(base);
+ // materiais próprios por save, para poder apagar os não escolhidos
+ malha.traverse((o) => { const mesh = o as THREE.Mesh; if (mesh.material) { mesh.material = (mesh.material as THREE.Material).clone(); (mesh.material as THREE.Material).transparent = true; } });
  const brilho = new THREE.Sprite(matBrilho(0)); brilho.scale.set(2.8, 1.4, 1);
  saves.add(malha, brilho);
  return {p, malha, brilho, base};
@@ -228,8 +228,9 @@ function saveSobPonteiro(e: MouseEvent) {
  if (estado !== 'cartao') return -1;
  ponteiro.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
  raio.setFromCamera(ponteiro, camera);
- const hit = raio.intersectObjects(listaSaves.map((s) => s.malha))[0];
- return hit ? listaSaves.findIndex((s) => s.malha === hit.object) : -1;
+ const hit = raio.intersectObjects(listaSaves.map((s) => s.malha), true)[0];
+ if (!hit) return -1;
+ return listaSaves.findIndex((s) => { let o: THREE.Object3D | null = hit.object; while (o) { if (o === s.malha) return true; o = o.parent; } return false; });
 }
 canvas.addEventListener('pointermove', (e) => { const i = saveSobPonteiro(e); canvas.style.cursor = i >= 0 ? 'pointer' : ''; if (i >= 0 && i !== sel) escolher(i); });
 canvas.addEventListener('click', (e) => { const i = saveSobPonteiro(e); if (i >= 0) { escolher(i, false); confirmar(); } });
@@ -282,14 +283,16 @@ function quadro() {
   const alvo = aberto ? v3.set(estreita ? 0 : -2.4, estreita ? 2.2 : 0.2, 1.2) : s.base;
   s.malha.position.lerp(alvo, 0.1);
   if (ativo && !semMovimento) s.malha.position.y += Math.sin(t * 2) * 0.004;
-  const tam = aberto ? (estreita ? 1.25 : 1.5) : ativo ? (estreita ? 0.78 : 1.1) : (estreita ? 0.6 : 0.9);
-  s.malha.scale.lerp(new THREE.Vector3(tam, tam, 1), 0.12);
-  s.malha.rotation.y += ((ativo && !semMovimento ? Math.sin(t * 1.2) * 0.25 : 0) - s.malha.rotation.y) * 0.08;
-  const m = s.malha.material as THREE.MeshBasicMaterial;
-  m.opacity += ((estado === 'save' && !aberto ? 0.12 : ativo ? 1 : 0.55) - m.opacity) * 0.12;
+  const tam = aberto ? (estreita ? 1.0 : 1.2) : ativo ? (estreita ? 0.72 : 1.05) : (estreita ? 0.55 : 0.82);
+  s.malha.scale.lerp(new THREE.Vector3(tam, tam, tam), 0.12);
+  // Balança de um lado para o outro, sempre de frente (nunca de costas)
+  const giro = semMovimento ? 0 : (ativo ? Math.sin(t * 0.9) * 0.6 : Math.sin(t * 0.5 + i) * 0.2);
+  s.malha.rotation.y += (giro - s.malha.rotation.y) * 0.08;
+  const alvoOp = estado === 'save' && !aberto ? 0.08 : ativo ? 1 : 0.5;
+  s.malha.traverse((o) => { const mat = (o as THREE.Mesh).material as THREE.Material | undefined; if (mat) mat.opacity += (alvoOp * (mat.userData.op ??= mat.opacity) - mat.opacity) * 0.12; });
   const mb = s.brilho.material as THREE.SpriteMaterial;
   mb.opacity += (((estado === 'cartao' && ativo) ? 0.9 : 0) - mb.opacity) * 0.15;
-  s.brilho.position.set(s.malha.position.x, s.malha.position.y - 0.78 * s.malha.scale.y, -0.1);
+  s.brilho.position.set(s.malha.position.x, s.malha.position.y - 1.25 * s.malha.scale.y, -0.1);
  });
  renderer.render(cena, camera);
  requestAnimationFrame(quadro);
