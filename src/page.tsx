@@ -191,6 +191,15 @@ export default function Home() {
  useEffect(() => { document.querySelector('meta[name="theme-color"]')?.setAttribute('content', tema === 'escuro' ? '#1c1c1e' : '#ffffff'); }, [tema]);
  const [rolou, setRolou] = useState(false);
  const abertura = useRef<HTMLElement>(null);
+ // O nome no topo só aparece depois que a abertura sai da tela
+ const [passouAbertura, setPassouAbertura] = useState(false);
+ useEffect(() => {
+  const el = abertura.current?.querySelector('.hero-nome');
+  if (!el) return;
+  const io = new IntersectionObserver(([e]) => setPassouAbertura(!e.isIntersecting && e.boundingClientRect.top < 0), {rootMargin: '-56px 0px 0px 0px'});
+  io.observe(el);
+  return () => io.disconnect();
+ }, []);
  usePilha('.projeto');
  useRevela();
  useAberturaRolagem(abertura);
@@ -204,7 +213,7 @@ export default function Home() {
  return <>
   <a className="pular" href="#projetos">Pular para os projetos</a>
   <header className={`topo ${rolou ? 'topo-rolou' : ''}`} id="topo">
-   <a href="#conteudo" className="topo-nome">Alan Mateus Queiroz</a>
+   <a href="#conteudo" className={`topo-nome ${passouAbertura ? 'visivel' : ''}`} aria-hidden={!passouAbertura} tabIndex={passouAbertura ? 0 : -1}>Alan Mateus Queiroz</a>
    <nav aria-label="Seções" className="topo-links">
     <a href="#projetos">Projetos</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a>
    </nav>
@@ -232,9 +241,10 @@ export default function Home() {
       </ul>
      </div>
      <div className="vitrine" aria-hidden="true">
-      <Inclina className="vitrine-tela"><img src="./assets/safra-capa.webp" alt=""/></Inclina>
-      <Inclina className="vitrine-cel vitrine-cel-1"><img src="./assets/fluxo/s1-inicio.webp" alt=""/></Inclina>
-      <Inclina className="vitrine-cel vitrine-cel-2"><img src="./assets/fluxo/r-home.webp" alt=""/></Inclina>
+      <div className="vitrine-palco">
+       <div className="vitrine-tela"><img src="./assets/safra-capa.webp" alt=""/></div>
+       <div className="vitrine-cel"><img src="./assets/fluxo/r-home.webp" alt=""/></div>
+      </div>
      </div>
      <div className="prova">
       <p>Projetos para</p>
