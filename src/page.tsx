@@ -21,16 +21,10 @@ function useSalvo<T extends string>(chave: string, padrao: T, atributo: string) 
  return [valor, setValor] as const;
 }
 
-/* Tema: segue o do sistema (claro/escuro) até a pessoa escolher no botão; a escolha fica salva */
+/* Tema: começa sempre no escuro; só muda para o claro se a pessoa apertar o botão (a escolha fica salva) */
 function useTema() {
  const [tema, setTemaEstado] = useState<'escuro' | 'claro'>(() => (document.documentElement.dataset.tema as 'escuro' | 'claro') || 'escuro');
  useEffect(() => { document.documentElement.dataset.tema = tema; }, [tema]);
- useEffect(() => {
-  const mq = matchMedia('(prefers-color-scheme: light)');
-  const mudou = () => { let manual = null; try { manual = localStorage.getItem('tema-manual'); } catch { /* sem armazenamento */ } if (!manual) setTemaEstado(mq.matches ? 'claro' : 'escuro'); };
-  mq.addEventListener('change', mudou);
-  return () => mq.removeEventListener('change', mudou);
- }, []);
  const escolher = (t: 'escuro' | 'claro') => { setTemaEstado(t); try { localStorage.setItem('tema-manual', t); } catch { /* navegação privada */ } };
  return [tema, escolher] as const;
 }
