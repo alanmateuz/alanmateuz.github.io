@@ -235,10 +235,6 @@ export default function Home() {
        <a className="botao-cheio" href="#projetos">Ver projetos <Icone nome="seta" tamanho={18}/></a>
        <a className="botao-linha" href="#contato">Fale comigo <Icone nome="mail" tamanho={18}/></a>
       </div>
-      <ul className="hero-redes" aria-label="Redes">
-       <li><a href={CONTATOS.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub (abre em nova aba)"><Icone nome="github" tamanho={22}/></a></li>
-       <li><a href={CONTATOS.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (abre em nova aba)"><Icone nome="linkedin" tamanho={22}/></a></li>
-      </ul>
      </div>
      <div className="vitrine" aria-hidden="true">
       <div className="vitrine-palco">

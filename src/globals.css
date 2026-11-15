@@ -656,3 +656,32 @@ b, strong { font-weight: 400; }
 .vitrine-tela { left: -8%; width: 98%; }
 .vitrine::after { inset: 0 auto 0 -12%; width: 30%; background: linear-gradient(90deg, var(--fundo) 0%, var(--fundo) 30%, color-mix(in oklab, var(--fundo) 60%, transparent) 65%, transparent 100%); }
 @media (max-width: 900px) { .vitrine-tela { left: -4%; width: 100%; } .vitrine::after { inset: 0 auto 0 -10%; width: 26%; } }
+
+/* Abertura v5: tela do Safra no trapézio (borda direita ~1,5x a esquerda), cantos menores */
+.vitrine { height: clamp(340px, 36vw, 500px); margin-right: calc(-1 * var(--lateral)); }
+.vitrine-tela { left: -2%; top: 50%; width: 92%; border-radius: 10px; transform-origin: 50% 50%; transform: translateY(-50%) perspective(900px) rotateY(-34deg); }
+.vitrine::after { inset: 0 auto 0 -10%; width: 26%; }
+@media (max-width: 900px) { .vitrine { margin-right: calc(-1 * var(--margem)); height: 64vw; } .vitrine-tela { left: -2%; width: 94%; top: 50%; } }
+
+/* Brilho na cor de cada projeto em volta do card */
+.projeto-card { --brilho: var(--cor); box-shadow: 0 0 0 1px color-mix(in oklab, var(--brilho) 45%, transparent), 0 0 48px -6px color-mix(in oklab, var(--brilho) 55%, transparent), 0 0 120px -10px color-mix(in oklab, var(--brilho) 30%, transparent); }
+#safra .projeto-card { --brilho: #3d6bff; }
+#alui .projeto-card { --brilho: #ff7a1f; }
+#reuse .projeto-card { --brilho: #3b57ff; }
+[data-tema='claro'] .projeto-card { box-shadow: 0 20px 60px -24px color-mix(in oklab, var(--brilho) 60%, transparent); }
+
+/* Sobre mais perto do topo e linha antes de Projetos */
+.sobre { padding: 56px 0 56px; }
+.faixa { margin-top: 40px; }
+.resumo { padding-top: 0; }
+.resumo > .container:first-child { padding-top: 56px; border-top: 0; position: relative; }
+.resumo > .container:first-child::before { content: ''; position: absolute; top: 0; left: var(--margem); right: var(--margem); height: 1px; background: var(--borda); }
+.vitrine { height: clamp(360px, 38vw, 540px); }
+.vitrine-tela { left: -14%; width: 118%; transform: translateY(-50%) perspective(1000px) rotateY(-34deg); }
+.vitrine::after { inset: 0 auto 0 -12%; width: 30%; }
+.sobre { padding-bottom: 32px; }
+.resumo > .container:first-child { padding-top: 48px; }
+.faixa-pausa { margin-top: 16px; }
+@media (max-width: 900px) { .vitrine { height: 66vw; } .vitrine-tela { left: -8%; width: 106%; } }
+.projeto-card { box-shadow: 0 0 70px -24px color-mix(in oklab, var(--brilho) 45%, transparent); }
+[data-tema='claro'] .projeto-card { box-shadow: 0 20px 60px -30px color-mix(in oklab, var(--brilho) 45%, transparent); }
