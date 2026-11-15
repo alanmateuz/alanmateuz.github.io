@@ -130,7 +130,7 @@ function FileiraProjetos() {
   <ul ref={trilho} className="fileira-trilho" onScroll={medir} tabIndex={0} aria-label="Lista de projetos. Role para o lado para ver todos.">
    {projects.map((p) => <li key={p.id} className="quadrado" style={{['--cor' as string]: p.cor}}>
     <a href={`#${p.id}`}>
-     <Inclina className={`quadrado-imagem capa-${p.capa}`} forca={6}><img src={`./assets/${p.image}.webp`} alt="" loading="lazy" decoding="async"/></Inclina>
+     <span className={`quadrado-imagem quadrado-marca marca-${p.id}`}><img src={`./assets/marca-${p.id}.webp`} alt="" loading="lazy" decoding="async"/>{p.id === 'reuse' && <span className="marca-nome" aria-hidden="true">ReUse</span>}</span>
      <span className="quadrado-texto"><span className="quadrado-nome">{p.name}</span><span className="quadrado-resumo">{p.summary}</span></span>
     </a>
    </li>)}
@@ -324,7 +324,7 @@ export default function Home() {
      <div className="hero-texto">
       <p className="hero-rotulo">Portfólio · 2026</p>
       <h1 id="nome" className="hero-nome">{['Alan', 'Mateus', 'Queiroz'].map((w, i) => <span key={w}>{i > 0 && ' '}<span className="palavra" style={{['--i' as string]: i}}>{w}</span></span>)}</h1>
-      <p className="hero-sub">Estudo Análise e Desenvolvimento de Sistemas na UNIFOR e sou bolsista pesquisador na M. Dias Branco. Gosto de pegar um problema da sala de aula, do campus ou de uma empresa e transformar em algo que as pessoas usam de verdade, como o Safra, que saiu de um hackathon e virou piloto na M. Dias Branco.</p>
+      <p className="hero-sub">Estudo Análise e Desenvolvimento de Sistemas na Unifor e sou bolsista pesquisador na M. Dias Branco. Trabalho entre o design e o código: entendo o problema, desenho a experiência e construo a solução. Foi assim com o Safra, que nasceu num hackathon e hoje está sendo implementado na M. Dias Branco.</p>
       <div className="hero-acoes">
        <a className="botao-cheio" href="#projetos">Ver projetos <Icone nome="seta" tamanho={18}/></a>
        <a className="botao-linha" href="#contato">Fale comigo <Icone nome="mail" tamanho={18}/></a>
@@ -352,8 +352,8 @@ export default function Home() {
     <section id="sobre" className="sobre" aria-labelledby="sobre-titulo">
      <div className="container sobre-texto revela">
       <h2 id="sobre-titulo" className="titulo">Sobre</h2>
-      <p>Sou estudante de Análise e Desenvolvimento de Sistemas na UNIFOR e estou construindo minha carreira em tecnologia. Tenho interesse em desenvolvimento de software, automação de processos, inteligência artificial e produtos digitais. Minha trajetória combina estudos, pesquisa aplicada e colaboração em iniciativas de inovação.</p>
-      <p>Atualmente, atuo como bolsista pesquisador na M. Dias Branco. Gosto de compreender desafios, aprender continuamente e contribuir para a criação de soluções úteis e bem estruturadas. Quero crescer na área de tecnologia e contribuir especialmente em desenvolvimento de software, automação, produtos digitais e inteligência artificial.</p>
+      <p>Sou o Alan, estudante de Análise e Desenvolvimento de Sistemas na Unifor, em Fortaleza. Gosto de projetos que começam com perguntas simples, como quem vai usar isso e o que atrapalha essa pessoa hoje, e terminam em algo que funciona de verdade.</p>
+      <p>Hoje sou bolsista pesquisador na M. Dias Branco. Nos hackathons e desafios de inovação de que participei, assumi tanto o design quanto o desenvolvimento: coordenar a equipe, desenhar as telas no Figma, prototipar e construir. Quero seguir crescendo em produtos digitais, unindo UX, desenvolvimento de software, automação e inteligência artificial.</p>
      </div>
      <FaixaFotos/>
     </section>
