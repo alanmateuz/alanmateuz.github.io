@@ -794,3 +794,20 @@ b, strong { font-weight: 400; }
   100% { transform: translate3d(calc(var(--w) * -3.432), 0, calc(var(--w) * -2.492)) rotateY(-36deg); opacity: 0; }
 }
 .esteira-capa { animation-name: esteira-v4; }
+
+/* Card virado deixa de grudar: a página rola normalmente pelo estudo de caso */
+.projeto.aberto { position: relative; top: 0 !important; }
+.projeto-virador { overflow: visible; }
+.projeto-frente, .projeto-verso { transition: transform 1s cubic-bezier(.32, .72, 0, 1); will-change: transform; }
+
+/* Abertura: cabe em notebooks baixos, logos sempre visíveis */
+.vitrine { height: clamp(280px, min(36vw, 46vh), 520px); }
+.esteira-capa { --w: clamp(240px, min(36vw, 62vh), 640px); }
+.hero { padding-top: 72px; padding-bottom: 20px; }
+@media (max-height: 760px) and (min-width: 901px) {
+  .hero-nome { font-size: clamp(2rem, 3.2vw, 2.75rem); }
+  .hero-sub { margin-top: 12px; line-height: 1.45; }
+  .hero-acoes { margin-top: 20px; }
+  .prova { margin-top: 8px; padding-top: 16px; }
+  .prova img, .prova .logo-texto { height: 30px; }
+}

@@ -142,15 +142,48 @@ function DetalheProjeto({p, i}: {p: Projeto; i: number}) {
  const [virado, setVirado] = useState(false);
  // Na metade do giro, o lado visível passa a definir a altura do card (uma rolagem só, a da página)
  const [lado, setLado] = useState<'frente' | 'verso'>('frente');
- useEffect(() => { const t = setTimeout(() => setLado(virado ? 'verso' : 'frente'), podeMover() ? 420 : 0); return () => clearTimeout(t); }, [virado]);
+ const virador = useRef<HTMLDivElement>(null);
+ // Enquanto aberto, o card não gruda na tela; só volta a grudar depois que a animação termina
+ const [aberto, setAberto] = useState(false);
+ useEffect(() => {
+  const novo = virado ? 'verso' : 'frente';
+  if (novo === lado) return;
+  const el = virador.current;
+  const trocar = () => {
+   // Troca o lado que define a altura e anima a altura, sem pulo
+   const antes = el?.offsetHeight ?? 0;
+   if (el && podeMover()) el.style.height = antes + 'px';
+   setLado(novo);
+   requestAnimationFrame(() => {
+    if (!el || !podeMover()) return;
+    el.style.height = '';
+    const depois = el.offsetHeight;
+    if (Math.abs(depois - antes) > 2) el.animate([{height: antes + 'px'}, {height: depois + 'px'}], {duration: 520, easing: 'cubic-bezier(.32, .72, 0, 1)'});
+   });
+   if (novo === 'frente') setTimeout(() => setAberto(false), podeMover() ? 700 : 0);
+  };
+  const t = setTimeout(trocar, podeMover() ? 380 : 0);
+  return () => clearTimeout(t);
+ }, [virado]);
  const verso = useRef<HTMLDivElement>(null);
  const frente = useRef<HTMLDivElement>(null);
  const virar = (v: boolean) => {
+  const sec = frente.current?.closest('.projeto') as HTMLElement | null;
+  // Ao voltar, primeiro sobe até o topo do card; depois ele gira
+  if (!v && sec && sec.getBoundingClientRect().top < -40 && podeMover()) {
+   sec.scrollIntoView({behavior: 'smooth', block: 'start'});
+   setTimeout(() => virar2(v), 650);
+   return;
+  }
+  virar2(v);
+ };
+ const virar2 = (v: boolean) => {
+  if (v) setAberto(true);
   setVirado(v);
   // Depois do giro, o foco vai para o lado que ficou visível
   setTimeout(() => {
-   if (v) verso.current?.querySelector<HTMLElement>('.verso-titulo')?.focus();
-   else frente.current?.querySelector<HTMLElement>('[data-acao="design"]')?.focus();
+   if (v) verso.current?.querySelector<HTMLElement>('.verso-titulo')?.focus({preventScroll: true});
+   else frente.current?.querySelector<HTMLElement>('[data-acao="design"]')?.focus({preventScroll: true});
   }, 60);
   if (v) frente.current?.closest('.projeto')?.scrollIntoView({behavior: podeMover() ? 'smooth' : 'auto', block: 'start'});
  };
@@ -159,8 +192,8 @@ function DetalheProjeto({p, i}: {p: Projeto; i: number}) {
   const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') virar(false); };
   addEventListener('keydown', esc); return () => removeEventListener('keydown', esc);
  }, [virado]);
- return <section id={p.id} className="projeto" style={{['--cor' as string]: p.cor, zIndex: i + 1}} aria-labelledby={`${p.id}-titulo`}>
-  <div className={`projeto-virador ${virado ? 'virado' : ''} lado-${lado}`}>
+ return <section id={p.id} className={`projeto ${aberto ? 'aberto' : ''}`} style={{['--cor' as string]: p.cor, zIndex: i + 1}} aria-labelledby={`${p.id}-titulo`}>
+  <div ref={virador} className={`projeto-virador ${virado ? 'virado' : ''} lado-${lado}`}>
   <div ref={frente} className="projeto-card projeto-frente" inert={virado}>
    <div className="projeto-cabeca">
     <div>
