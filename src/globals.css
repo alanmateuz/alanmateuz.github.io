@@ -1109,7 +1109,8 @@ b, strong { font-weight: 400; }
 .dv-f-quadrado { position: absolute; top: -96px; right: -72px; width: clamp(220px, 30vw, 330px); aspect-ratio: 1; border-radius: 26%; background: #6B58FF; display: grid; place-items: center; }
 .dv-f-quadrado svg { width: 34%; height: 34%; transform: translate(-14%, 14%); }
 .dv-f-circulo { position: absolute; top: clamp(250px, 30vw, 330px); right: -90px; width: clamp(150px, 20vw, 220px); aspect-ratio: 1; border-radius: 50%; background: #FF5C9A; }
-.dv-f-nota { position: absolute; bottom: -80px; left: -56px; width: clamp(150px, 18vw, 200px); height: auto; transform: rotate(9deg); }
+.dv-f-nota { position: absolute; top: clamp(110px, 13vw, 150px); right: clamp(150px, 19vw, 220px); width: clamp(130px, 15vw, 180px); height: auto; transform: rotate(-8deg); z-index: 0; }
+.dv-f-quadrado { z-index: 1; } .dv-f-circulo { z-index: 1; }
 .dv-hero { min-height: clamp(300px, 36vw, 400px); display: flex; align-items: center; }
 .dv-hero-texto { max-width: 560px; display: grid; justify-items: start; gap: 12px; padding: 8px 0 0; }
 .dv-logo { width: clamp(150px, 22vw, 210px); height: auto; }
@@ -1124,7 +1125,7 @@ b, strong { font-weight: 400; }
  .dv-hero { min-height: 0; padding-top: 150px; }
  .dv-f-quadrado { top: -70px; right: -50px; width: 190px; }
  .dv-f-circulo { top: 40px; right: auto; left: -60px; width: 120px; }
- .dv-f-nota { width: 110px; bottom: -50px; left: -36px; }
+ .dv-f-nota { width: 100px; top: 50px; right: 110px; }
 }
 .dv-vitrine { margin-top: 12px; display: grid; gap: 14px; }
 .dv-abas { display: flex; flex-wrap: wrap; gap: 8px; }
