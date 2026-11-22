@@ -204,7 +204,9 @@ function Galeria({p}: {p: Projeto}) {
    Todos dividem a mesma perspectiva, então a transição continua em 3D enquanto troca de card. */
 function FileiraProjetos() {
  // O Safra (projeto principal) fica no meio, com um projeto de cada lado
- const base = [projects[1], projects[0], ...projects.slice(2)].filter(Boolean);
+ // Ordem do carrossel: Draftin, Safra no meio, ReUse do outro lado; os demais depois
+ const ordem = ['draftin', 'safra', 'reuse'];
+ const base = [...ordem.map((id) => projects.find((p) => p.id === id)), ...projects.filter((p) => !ordem.includes(p.id))].filter(Boolean) as Projeto[];
  const lista = base;
  const [ativo, setAtivo] = useState(Math.floor((lista.length - 1) / 2));
  const ir = (i: number) => setAtivo(Math.max(0, Math.min(lista.length - 1, i)));
