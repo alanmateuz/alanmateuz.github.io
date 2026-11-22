@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import {flushSync} from 'react-dom';
 import {somCarta} from './som';
-import {projects, type ItemGaleria, type Projeto} from './projects';
+import {projects, type Destaque, type ItemGaleria, type Projeto} from './projects';
 import {AcoesProjeto, Caso, Icone, SoLeitor} from './project-actions';
 import {podeMover, Inclina, usePilha, useRevela, useAberturaRolagem, TelaFluxo, useTocaFluxos} from './movimento';
 
@@ -130,6 +130,69 @@ function Imagem({item, nome}: {item: ItemGaleria; nome: string}) {
  </figure>;
 }
 
+/* Destaque do card: o desafio e os ganhos em evidência */
+function DestaqueCard({d}: {d: Destaque}) {
+ return <div className="destaque revela">
+  <div className="destaque-desafio"><p className="destaque-rotulo">O desafio</p><p className="destaque-frase">{d.desafio}</p></div>
+  <ul className="destaque-numeros" aria-label="Ganhos">{d.numeros.map((n) => <li key={n.valor}><b>{n.valor}</b><span>{n.rotulo}</span></li>)}</ul>
+ </div>;
+}
+
+/* Draftin: apresentação com a identidade do app (formas da marca, telas que trocam e a equipe de agentes) */
+const DV_TELAS = [
+ {img: 'draftin-quadro', rotulo: 'Quadro', texto: 'Seções viram as etapas do projeto, e cada bloco mostra qual agente o criou.'},
+ {img: 'draftin-chat', rotulo: 'Chat', texto: 'A biblioteca do quadro fica ao lado da conversa; o que o Pen cria abre ali mesmo.'},
+ {img: 'draftin-ias', rotulo: 'IAs', texto: 'Cada agente escolhe a sua IA: Claude, ChatGPT, Gemini ou um modelo no computador.'},
+ {img: 'draftin-detalhe', rotulo: 'Sites e Figma', texto: 'Protótipos do Figma e sites de verdade dentro do quadro, lado a lado.'},
+ {img: 'draftin-claro', rotulo: 'Do seu jeito', texto: 'Fundo claro ou escuro, cor de destaque e barras que você move para onde quiser.'},
+];
+const DV_AGENTES = [
+ {id: 'master', nome: 'Pen', papel: 'Coordena a equipe e cria qualquer bloco', cor: '#8B7CFF'},
+ {id: 'aud', nome: 'Auditor', papel: 'Revisa acessibilidade, HIG e Material', cor: '#22C3A6'},
+ {id: 'pesq', nome: 'Pesquisador', papel: 'Traz referências e concorrentes', cor: '#3B8BFF'},
+ {id: 'copy', nome: 'Microcopy', papel: 'Escreve e revisa os textos', cor: '#FF7A45'},
+ {id: 'ui', nome: 'Designer de UI', papel: 'Monta telas e variações', cor: '#FF5C9A'},
+];
+function VitrineDraftin({p}: {p: Projeto}) {
+ const [t, setT] = useState(0);
+ const abas = useRef<HTMLDivElement>(null);
+ const ir = (i: number) => { const n = (i + DV_TELAS.length) % DV_TELAS.length; setT(n); abas.current?.querySelectorAll<HTMLButtonElement>('button')[n]?.focus(); };
+ return <div className="dv">
+  <div className="dv-hero">
+   <svg className="dv-formas" viewBox="0 0 640 440" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+    <rect x="360" y="-120" width="330" height="330" rx="92" fill="#6B58FF"/>
+    <path d="M540 28l21 54 54 21-54 21-21 54-21-54-54-21 54-21z" fill="#fff"/>
+    <g transform="rotate(8 330 380)"><path d="M250 270h200v150l-56 56H250z" fill="#FFC23D"/><path d="M394 476v-56h56z" fill="#E6A51F"/></g>
+    <circle cx="640" cy="360" r="120" fill="#FF5C9A"/>
+   </svg>
+   <div className="dv-hero-texto">
+    <img className="dv-logo" src="./assets/marca-draftin.webp" alt="Draftin"/>
+    {p.selo && <p className="selo"><span aria-hidden="true"/>{p.selo}</p>}
+    <p className="dv-titulo">Seu quadro.<br/>Sua equipe de IA.</p>
+    <p className="dv-sub">Um quadro de design em que agentes de IA criam e editam os blocos com você, do briefing ao wireframe.</p>
+   </div>
+  </div>
+  <div className="dv-desafio revela"><p className="destaque-rotulo">O desafio</p><p className="destaque-frase">Como fazer a IA trabalhar dentro do processo de UX, com o contexto do projeto inteiro, em vez de numa aba separada?</p></div>
+  <ul className="destaque-numeros dv-numeros revela" aria-label="Em números">{[['5', 'agentes com papéis diferentes'], ['8', 'IAs para escolher, por agente'], ['21', 'tipos de bloco no quadro']].map(([v, r]) => <li key={r}><b>{v}</b><span>{r}</span></li>)}</ul>
+  <div className="dv-vitrine revela">
+   <div ref={abas} className="dv-abas" role="tablist" aria-label="Telas do Draftin">
+    {DV_TELAS.map((x, i) => <button key={x.img} type="button" role="tab" id={`dv-aba-${i}`} aria-selected={i === t} aria-controls="dv-painel" tabIndex={i === t ? 0 : -1} className={i === t ? 'on' : ''} onClick={() => setT(i)}
+     onKeyDown={(e) => { if (e.key === 'ArrowRight') { e.preventDefault(); ir(t + 1); } if (e.key === 'ArrowLeft') { e.preventDefault(); ir(t - 1); } }}>{x.rotulo}</button>)}
+   </div>
+   <figure id="dv-painel" className="dv-tela" role="tabpanel" aria-labelledby={`dv-aba-${t}`}>
+    <div className="dv-janela"><span className="dv-pontos" aria-hidden="true"><i/><i/><i/></span>
+     <div className="dv-imagens">{DV_TELAS.map((x, i) => <img key={x.img} className={i === t ? 'on' : ''} src={`./assets/${x.img}.webp`} alt={i === t ? `Draftin: ${x.texto}` : ''} aria-hidden={i !== t || undefined} loading="lazy" decoding="async"/>)}</div>
+    </div>
+    <figcaption>{DV_TELAS[t].texto}</figcaption>
+   </figure>
+  </div>
+  <div className="dv-equipe revela"><p className="destaque-rotulo">A equipe de IA</p>
+   <ul>{DV_AGENTES.map((a) => <li key={a.id} style={{['--ag' as string]: a.cor}}><img src={`./assets/agentes/${a.id}.svg`} alt="" width="56" height="56"/><b>{a.nome}</b><span>{a.papel}</span></li>)}</ul>
+  </div>
+  <div className="projeto-texto revela"><p>{p.description}</p><p>{p.role}</p></div>
+ </div>;
+}
+
 function Galeria({p}: {p: Projeto}) {
  const celulares = p.galeria.filter((g) => g.tipo === 'celular').length;
  const ref = useRef<HTMLDivElement>(null);
@@ -164,7 +227,7 @@ function FileiraProjetos() {
       transform: `translateX(calc(var(--card) * ${x.toFixed(3)})) translateZ(calc(var(--card) * ${z.toFixed(3)})) rotateY(${ang}deg)`}}>
      <a href={`#${p.id}`} tabIndex={a > 1 ? -1 : 0} onFocus={() => ir(n)} onClick={(e) => { if (o !== 0) { e.preventDefault(); ir(n); } }}>
       <span className={`quadrado-imagem quadrado-marca marca-${p.id}`}><img src={`./assets/marca-${p.id}.webp`} alt="" loading="lazy" decoding="async"/></span>
-      <span className="quadrado-texto"><span className="quadrado-nome">{p.name}</span><span className="quadrado-resumo">{p.summary}</span></span>
+      <span className="quadrado-texto"><span className="quadrado-nome">{p.name}{p.selo && <span className="quadrado-selo">Protótipo</span>}</span><span className="quadrado-resumo">{p.summary}</span></span>
      </a>
     </li>;
    })}
@@ -257,8 +320,9 @@ function DetalheProjeto({p, i}: {p: Projeto; i: number}) {
   <div ref={frente} className="projeto-card projeto-frente" inert={virado}>
    <div className="projeto-cabeca">
     <div>
-     <h2 id={`${p.id}-titulo`} className="titulo">{p.name}</h2>
-     <p className="stack">{p.tags.join(' · ')}</p>
+     <h2 id={`${p.id}-titulo`} className={p.vitrine ? 'sr-only' : 'titulo'}>{p.name}</h2>
+     {p.selo && !p.vitrine && <p className="selo"><span aria-hidden="true"/>{p.selo}</p>}
+     {!p.vitrine && <p className="stack">{p.tags.join(' · ')}</p>}
     </div>
     {p.logos && <ul className="logos" aria-label="Parceiros">{p.logos.map((l) => <li key={l.nome}>{l.texto
      ? <svg className="logo-texto" viewBox="0 0 240 48" role="img" aria-label={l.nome}>
@@ -267,11 +331,13 @@ function DetalheProjeto({p, i}: {p: Projeto; i: number}) {
       </svg>
      : <img src={`./assets/${l.img}.png`} alt={l.nome}/>}</li>)}</ul>}
    </div>
+   {p.vitrine ? <VitrineDraftin p={p}/> : <>
+   {p.destaque && <DestaqueCard d={p.destaque}/>}
    <div className="projeto-texto revela">
     <p>{p.description}</p>
     <p>{p.role}</p>
    </div>
-   <Galeria p={p}/>
+   <Galeria p={p}/></>}
    <AcoesProjeto id={p.id} nome={p.name} acoes={p.acoes} caso={p.design} onDesign={p.design ? () => virar(true) : undefined}/>
   </div>
   {p.design && <div ref={verso} className="projeto-card projeto-verso" inert={!virado} aria-hidden={!virado}>

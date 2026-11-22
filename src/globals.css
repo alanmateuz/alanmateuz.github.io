@@ -1078,3 +1078,54 @@ b, strong { font-weight: 400; }
   .cf-palco { -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%); }
 }
 .pilha .projeto + .projeto::before { left: -64px; right: -64px; }
+
+/* ---------- Selo de estágio (ex.: protótipo) ---------- */
+.selo { display: inline-flex; align-items: center; gap: 8px; margin: 10px 0 2px; padding: 5px 12px 5px 10px; border-radius: 999px; font-size: .875rem; font-weight: 600; color: color-mix(in oklab, var(--cor) 55%, #fff); background: color-mix(in oklab, var(--cor) 16%, transparent); border: 1px solid color-mix(in oklab, var(--cor) 45%, transparent); }
+[data-tema='claro'] .selo { color: color-mix(in oklab, var(--cor) 80%, #000); }
+.selo span { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.quadrado-selo { margin-left: 8px; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; vertical-align: 3px; color: #fff; background: color-mix(in oklab, var(--cor) 75%, #000); }
+.marca-draftin { background: radial-gradient(circle at 30% 30%, #2a2733 0%, #1b1a1f 55%, #121114 100%); }
+.marca-draftin img { position: relative; max-width: 64%; max-height: 40%; }
+
+/* ---------- Destaque: o desafio e os ganhos ---------- */
+.destaque { margin-top: 28px; display: grid; gap: 14px; }
+.destaque-desafio, .dv-desafio { padding: 22px 24px; border-radius: var(--raio-m); background: color-mix(in oklab, var(--cor) 14%, transparent); border: 1px solid color-mix(in oklab, var(--cor) 35%, transparent); }
+.destaque-rotulo { font-size: .8125rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: color-mix(in oklab, var(--cor) 55%, var(--texto)); margin-bottom: 8px; }
+.destaque-frase { font-size: clamp(1.15rem, 2.2vw, 1.5rem); line-height: 1.35; font-weight: 600; letter-spacing: -.01em; color: var(--texto); }
+.destaque-numeros { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; list-style: none; padding: 0; margin: 0; }
+.destaque-numeros li { padding: 18px 20px; border-radius: var(--raio-m); background: var(--superficie-2); display: grid; gap: 4px; }
+.destaque-numeros b { font-size: clamp(1.6rem, 3.4vw, 2.25rem); font-weight: 700; letter-spacing: -.02em; color: color-mix(in oklab, var(--cor) 50%, var(--texto)); line-height: 1.1; }
+.destaque-numeros span { font-size: var(--t-legenda); color: var(--texto-2); line-height: 1.4; }
+
+/* ---------- Draftin: apresentação com a identidade do app ---------- */
+.dv { display: grid; gap: 16px; margin-top: 4px; }
+.dv-hero { position: relative; overflow: hidden; border-radius: var(--raio-m); background: #161514; min-height: clamp(320px, 42vw, 440px); display: flex; align-items: center; color: #F5F4EF; }
+.dv-formas { position: absolute; right: 0; top: 0; height: 100%; width: min(62%, 640px); }
+.dv-hero-texto { position: relative; padding: clamp(24px, 5vw, 56px); max-width: 560px; display: grid; justify-items: start; gap: 12px; }
+.dv-logo { width: clamp(150px, 22vw, 210px); height: auto; }
+.dv-hero .selo { color: #c9c1ff; margin: 0; }
+.dv-titulo { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 700; line-height: 1.04; letter-spacing: -.035em; color: #F5F4EF; margin-top: 6px; }
+.dv-sub { font-size: var(--t-corpo); line-height: 1.5; color: #B3B0A8; max-width: 440px; }
+@media (max-width: 720px) { .dv-hero { flex-direction: column; align-items: stretch; min-height: 0; } .dv-formas { position: relative; order: 2; width: 100%; height: 150px; } }
+.dv-vitrine { margin-top: 12px; display: grid; gap: 14px; }
+.dv-abas { display: flex; flex-wrap: wrap; gap: 8px; }
+.dv-abas button { min-height: 44px; padding: 0 16px; border-radius: 999px; font: inherit; font-size: .95rem; font-weight: 600; color: var(--texto-2); background: var(--superficie-2); border: 1px solid transparent; cursor: pointer; transition: background .25s var(--mola), color .25s var(--mola); }
+.dv-abas button:hover { color: var(--texto); }
+.dv-abas button.on { color: #fff; background: var(--cor); }
+.dv-abas button:focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
+.dv-tela { margin: 0; display: grid; gap: 10px; }
+.dv-janela { border-radius: 14px; background: #1E1D1B; border: 1px solid #34343a; padding: 0 0 2px; overflow: hidden; box-shadow: 0 30px 70px -30px rgba(0, 0, 0, .7); }
+.dv-pontos { display: flex; gap: 6px; padding: 10px 12px; }
+.dv-pontos i { width: 10px; height: 10px; border-radius: 50%; background: #3F3C38; }
+.dv-pontos i:nth-child(1) { background: #FF5C9A; } .dv-pontos i:nth-child(2) { background: #FFC23D; } .dv-pontos i:nth-child(3) { background: #6B58FF; }
+.dv-imagens { position: relative; aspect-ratio: 16 / 10; }
+.dv-imagens img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top left; opacity: 0; transform: scale(1.015); transition: opacity .45s var(--mola), transform .6s var(--mola); }
+.dv-imagens img.on { opacity: 1; transform: none; }
+.dv-tela figcaption { font-size: var(--t-legenda); color: var(--texto-2); }
+.dv-equipe { margin-top: 12px; }
+.dv-equipe ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.dv-equipe li { padding: 18px; border-radius: var(--raio-m); background: color-mix(in oklab, var(--ag) 12%, var(--superficie-2)); border: 1px solid color-mix(in oklab, var(--ag) 30%, transparent); display: grid; gap: 6px; justify-items: start; }
+.dv-equipe img { width: 56px; height: 56px; }
+.dv-equipe b { font-size: 1.05rem; color: var(--texto); }
+.dv-equipe span { font-size: var(--t-legenda); line-height: 1.4; color: var(--texto-2); }
+@media (prefers-reduced-motion: reduce) { .dv-imagens img { transition: none; transform: none; } }
