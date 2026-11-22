@@ -226,7 +226,7 @@ function FileiraProjetos() {
      style={{['--cor' as string]: p.cor, zIndex: 10 - a, opacity: a > 1 ? 0 : 1, visibility: a > 1 ? "hidden" : undefined,
       transform: `translateX(calc(var(--card) * ${x.toFixed(3)})) translateZ(calc(var(--card) * ${z.toFixed(3)})) rotateY(${ang}deg)`}}>
      <a href={`#${p.id}`} tabIndex={a > 1 ? -1 : 0} onFocus={() => ir(n)} onClick={(e) => { if (o !== 0) { e.preventDefault(); ir(n); } }}>
-      <span className={`quadrado-imagem quadrado-marca marca-${p.id}`}>{p.id === 'draftin' && <><span className="mf mf-q"/><span className="mf mf-n"/><span className="mf mf-c"/></>}<img src={`./assets/marca-${p.id}.webp`} alt="" loading="lazy" decoding="async"/></span>
+      <span className={`quadrado-imagem quadrado-marca marca-${p.id}`}>{p.id === 'draftin' && <><span className="mf mf-n"/><span className="mf mf-q"/><span className="mf mf-c"/></>}<img src={`./assets/marca-${p.id}${p.id === 'draftin' ? '-nome' : ''}.webp`} alt="" loading="lazy" decoding="async"/></span>
       <span className="quadrado-texto"><span className="quadrado-nome">{p.name}{p.selo && <span className="quadrado-selo">Protótipo</span>}</span><span className="quadrado-resumo">{p.summary}</span></span>
      </a>
     </li>;

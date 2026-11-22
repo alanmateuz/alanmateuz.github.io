@@ -1084,14 +1084,14 @@ b, strong { font-weight: 400; }
 [data-tema='claro'] .selo { color: color-mix(in oklab, var(--cor) 80%, #000); }
 .selo span { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
 .quadrado-selo { margin-left: 8px; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; vertical-align: 3px; color: #fff; background: color-mix(in oklab, var(--cor) 75%, #000); }
-.marca-draftin { background: #161514; }
-.marca-draftin img { position: relative; z-index: 1; max-width: 50%; max-height: 26%; }
+.marca-draftin { background: #161514; justify-content: start !important; justify-items: start !important; padding-left: 9%; }
+.marca-draftin img { position: relative; z-index: 3; width: 46% !important; max-width: none !important; max-height: none !important; }
 .marca-draftin .mf { position: absolute; display: block; }
-.marca-draftin .mf-q { width: 28%; aspect-ratio: 1; border-radius: 26%; background: #6B58FF; top: -12%; right: -8%; transform: rotate(-10deg); }
+.marca-draftin .mf-q { width: 34%; aspect-ratio: 1; border-radius: 26%; background: #6B58FF; top: -14%; right: -9%; transform: rotate(-10deg); z-index: 2; }
 .marca-draftin .mf-q::after { content: ''; position: absolute; left: 22%; bottom: 24%; width: 30%; height: 30%; background: #fff; clip-path: polygon(50% 0, 64% 36%, 100% 50%, 64% 64%, 50% 100%, 36% 64%, 0 50%, 36% 36%); }
-.marca-draftin .mf-n { width: 20%; aspect-ratio: 1; background: #FFC23D; bottom: -9%; left: -4%; transform: rotate(14deg); clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%); }
+.marca-draftin .mf-n { width: 22%; aspect-ratio: 1; background: #FFC23D; top: 40%; right: 19%; transform: rotate(14deg); z-index: 1; clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%); }
 .marca-draftin .mf-n::after { content: ''; position: absolute; right: 0; bottom: 0; width: 30%; height: 30%; background: #E6A51F; clip-path: polygon(0 0, 100% 0, 0 100%); }
-.marca-draftin .mf-c { width: 20%; aspect-ratio: 1; border-radius: 50%; background: #FF5C9A; bottom: -10%; right: -5%; }
+.marca-draftin .mf-c { width: 24%; aspect-ratio: 1; border-radius: 50%; background: #FF5C9A; bottom: -14%; right: -6%; z-index: 2; }
 
 /* ---------- Destaque: o desafio e os ganhos ---------- */
 .destaque { margin-top: 28px; display: grid; gap: 14px; }
@@ -1112,7 +1112,7 @@ b, strong { font-weight: 400; }
 .dv > * { min-width: 0; }
 .dv > :not(.dv-formas) { position: relative; z-index: 1; }
 .dv-formas { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-.dv-f-quadrado { position: absolute; top: -90px; right: -64px; width: clamp(220px, 28vw, 310px); aspect-ratio: 1; border-radius: 26%; background: #6B58FF; display: grid; place-items: center; transform: rotate(-10deg); }
+.dv-f-quadrado { position: absolute; top: -96px; right: -70px; width: clamp(240px, 31vw, 350px); aspect-ratio: 1; border-radius: 26%; background: #6B58FF; display: grid; place-items: center; transform: rotate(-10deg); }
 .dv-f-quadrado svg { width: 34%; height: 34%; transform: translate(-14%, 14%); }
 .dv-f-circulo { position: absolute; top: clamp(250px, 30vw, 330px); right: -90px; width: clamp(150px, 20vw, 220px); aspect-ratio: 1; border-radius: 50%; background: #FF5C9A; }
 .dv-f-nota { position: absolute; top: 190px; right: 230px; width: 190px; height: auto; transform: rotate(14deg); z-index: 0; }
