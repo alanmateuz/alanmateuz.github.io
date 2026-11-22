@@ -160,7 +160,7 @@ function VitrineDraftin({p}: {p: Projeto}) {
  return <div className="dv">
   {/* formas da marca, cortadas pelas bordas do próprio card */}
   {/* formas da marca numa imagem só, presa ao canto do card: mudam de tamanho juntas e nunca entram no texto */}
-  <img className="dv-formas-img" src="./assets/draftin-formas.svg" alt="" aria-hidden="true"/>
+  <img className="dv-formas-img" src="./assets/draftin-formas.svg?v=3" alt="" aria-hidden="true"/>
   <div className="dv-hero">
    <div className="dv-hero-texto">
     <img className="dv-logo" src="./assets/marca-draftin.webp" alt="Draftin"/>

@@ -1104,7 +1104,8 @@ b, strong { font-weight: 400; }
 .destaque-numeros span { font-size: var(--t-legenda); color: var(--texto-2); line-height: 1.4; }
 
 /* ---------- Draftin: o card inteiro na identidade do app ---------- */
-#draftin .projeto-frente { position: relative; overflow: hidden; background: #161514; border: 1px solid #3a3833;
+#draftin .projeto-virador:not(.lado-verso) .projeto-frente { position: relative; }
+#draftin .projeto-frente { overflow: hidden; background: #161514; border: 1px solid #3a3833;
   --texto: #F5F4EF; --texto-2: #B3B0A8; --texto-3: #8f8c85; --superficie-2: #1F1E1C; --borda: #34322e; color: #F5F4EF; }
 #draftin .projeto-frente > * { position: relative; z-index: 1; }
 #draftin .projeto-frente > .dv { position: static; }
