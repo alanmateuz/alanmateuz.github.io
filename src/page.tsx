@@ -159,11 +159,8 @@ function VitrineDraftin({p}: {p: Projeto}) {
  const ir = (i: number) => { const n = (i + DV_TELAS.length) % DV_TELAS.length; setT(n); abas.current?.querySelectorAll<HTMLButtonElement>('button')[n]?.focus(); };
  return <div className="dv">
   {/* formas da marca, cortadas pelas bordas do próprio card */}
-  <div className="dv-formas" aria-hidden="true">
-   <span className="dv-f-quadrado"><svg viewBox="0 0 24 24"><path d="M12 2l2.8 7.2L22 12l-7.2 2.8L12 22l-2.8-7.2L2 12l7.2-2.8z" fill="#fff"/></svg></span>
-   <span className="dv-f-circulo"/>
-   <svg className="dv-f-nota" viewBox="0 0 200 200"><path d="M0 0h200v140l-60 60H0z" fill="#FFC23D"/><path d="M140 200v-60h60z" fill="#E6A51F"/></svg>
-  </div>
+  {/* formas da marca numa imagem só, presa ao canto do card: mudam de tamanho juntas e nunca entram no texto */}
+  <img className="dv-formas-img" src="./assets/draftin-formas.svg" alt="" aria-hidden="true"/>
   <div className="dv-hero">
    <div className="dv-hero-texto">
     <img className="dv-logo" src="./assets/marca-draftin.webp" alt="Draftin"/>

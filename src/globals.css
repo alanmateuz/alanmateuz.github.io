@@ -1110,15 +1110,10 @@ b, strong { font-weight: 400; }
 #draftin .projeto-frente > .dv { position: static; }
 .dv { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
 .dv > * { min-width: 0; }
-.dv > :not(.dv-formas) { position: relative; z-index: 1; }
-.dv-formas { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-.dv-f-quadrado { position: absolute; top: -96px; right: -70px; width: clamp(240px, 31vw, 350px); aspect-ratio: 1; border-radius: 26%; background: #6B58FF; display: grid; place-items: center; transform: rotate(-10deg); }
-.dv-f-quadrado svg { width: 34%; height: 34%; transform: translate(-14%, 14%); }
-.dv-f-circulo { position: absolute; top: clamp(250px, 30vw, 330px); right: -90px; width: clamp(150px, 20vw, 220px); aspect-ratio: 1; border-radius: 50%; background: #FF5C9A; }
-.dv-f-nota { position: absolute; top: 190px; right: 230px; width: 190px; height: auto; transform: rotate(14deg); z-index: 0; }
-.dv-f-quadrado { z-index: 1; } .dv-f-circulo { z-index: 2; }
-.dv-hero { min-height: clamp(300px, 36vw, 400px); display: flex; align-items: center; }
-.dv-hero-texto { max-width: 560px; display: grid; justify-items: start; gap: 12px; padding: 8px 0 0; }
+.dv > :not(.dv-formas-img) { position: relative; z-index: 1; }
+.dv-formas-img { position: absolute; top: 0; right: 0; width: min(46%, 540px); height: auto; z-index: 0; pointer-events: none; }
+.dv-hero { min-height: min(36vw, 450px); display: flex; align-items: center; }
+.dv-hero-texto { max-width: min(560px, 52%); display: grid; justify-items: start; gap: 12px; padding: 8px 0 0; }
 .dv-logo { width: clamp(150px, 22vw, 210px); height: auto; }
 .dv-hero .selo { color: #c9c1ff; margin: 0; }
 .dv-titulo { font-size: clamp(2.1rem, 5.4vw, 3.6rem); font-weight: 700; line-height: 1.03; letter-spacing: -.035em; color: #F5F4EF; margin-top: 6px; }
@@ -1127,12 +1122,7 @@ b, strong { font-weight: 400; }
 #draftin .destaque-rotulo { color: #b3a8ff; }
 #draftin .destaque-numeros li { background: #1F1E1C; border: 1px solid #2e2c29; }
 #draftin .destaque-numeros b { color: #c9c1ff; }
-@media (max-width: 720px) {
- .dv-hero { min-height: 0; padding-top: 150px; }
- .dv-f-quadrado { top: -60px; right: -44px; width: 170px; }
- .dv-f-circulo { top: 40px; right: auto; left: -60px; width: 120px; }
- .dv-f-nota { width: 96px; top: 60px; right: 150px; }
-}
+@media (max-width: 720px) { .dv-formas-img { width: 64%; } .dv-hero { min-height: 0; padding-top: 58%; } .dv-hero-texto { max-width: none; } }
 .dv-vitrine { margin-top: 12px; display: grid; gap: 14px; }
 .dv-abas { display: flex; flex-wrap: wrap; gap: 8px; }
 .dv-abas button { min-height: 44px; padding: 0 16px; border-radius: 999px; font: inherit; font-size: .95rem; font-weight: 600; color: #B3B0A8; background: #1F1E1C; border: 1px solid #2e2c29; cursor: pointer; transition: background .25s var(--mola), color .25s var(--mola); }

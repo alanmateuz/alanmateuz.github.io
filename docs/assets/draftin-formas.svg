@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 460">
+  <!-- formas da marca Draftin, presas ao canto de cima à direita do card (os cortes coincidem com as bordas) -->
+  <g transform="rotate(14 205 262)">
+    <path d="M120 180h170v120l-50 50H120z" fill="#FFC23D"/>
+    <path d="M240 350v-50h50z" fill="#E6A51F"/>
+  </g>
+  <g transform="rotate(-10 420 90)">
+    <rect x="270" y="-70" width="310" height="310" rx="82" fill="#6B58FF"/>
+    <path d="M420 34l17 44 44 17-44 17-17 44-17-44-44-17 44-17z" fill="#fff"/>
+  </g>
+  <circle cx="545" cy="345" r="100" fill="#FF5C9A"/>
+</svg>
