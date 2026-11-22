@@ -158,13 +158,13 @@ function VitrineDraftin({p}: {p: Projeto}) {
  const abas = useRef<HTMLDivElement>(null);
  const ir = (i: number) => { const n = (i + DV_TELAS.length) % DV_TELAS.length; setT(n); abas.current?.querySelectorAll<HTMLButtonElement>('button')[n]?.focus(); };
  return <div className="dv">
+  {/* formas da marca, cortadas pelas bordas do próprio card */}
+  <div className="dv-formas" aria-hidden="true">
+   <span className="dv-f-quadrado"><svg viewBox="0 0 24 24"><path d="M12 2l2.8 7.2L22 12l-7.2 2.8L12 22l-2.8-7.2L2 12l7.2-2.8z" fill="#fff"/></svg></span>
+   <span className="dv-f-circulo"/>
+   <svg className="dv-f-nota" viewBox="0 0 200 200"><path d="M0 0h200v140l-60 60H0z" fill="#FFC23D"/><path d="M140 200v-60h60z" fill="#E6A51F"/></svg>
+  </div>
   <div className="dv-hero">
-   <svg className="dv-formas" viewBox="0 0 640 440" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
-    <rect x="360" y="-120" width="330" height="330" rx="92" fill="#6B58FF"/>
-    <path d="M540 28l21 54 54 21-54 21-21 54-21-54-54-21 54-21z" fill="#fff"/>
-    <g transform="rotate(8 330 380)"><path d="M250 270h200v150l-56 56H250z" fill="#FFC23D"/><path d="M394 476v-56h56z" fill="#E6A51F"/></g>
-    <circle cx="640" cy="360" r="120" fill="#FF5C9A"/>
-   </svg>
    <div className="dv-hero-texto">
     <img className="dv-logo" src="./assets/marca-draftin.webp" alt="Draftin"/>
     {p.selo && <p className="selo"><span aria-hidden="true"/>{p.selo}</p>}

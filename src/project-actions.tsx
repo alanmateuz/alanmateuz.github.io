@@ -9,6 +9,7 @@ const caminhos: Record<string, ReactNode> = {
  linkedin: <><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></>,
  sol: <><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></>,
  lua: <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>,
+ github: <><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></>,
  figma: <><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5Z"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2Z"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0Z"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0Z"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5Z"/></>,
  design: <><path d="M13 7 8.7 2.7a2.4 2.4 0 0 0-3.4 0L2.7 5.3a2.4 2.4 0 0 0 0 3.4L7 13"/><path d="m8 6 2-2M18 16l2-2"/><path d="m17 11 4.3 4.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L11 17"/><path d="M21.2 6.8a2.8 2.8 0 0 0-4-4L3.8 16.2a2 2 0 0 0-.5.8L2 21.4a.5.5 0 0 0 .6.6l4.4-1.3a2 2 0 0 0 .8-.5Z"/><path d="m15 5 4 4"/></>,
  pitch: <><path d="M9.5 18.5h5M10.5 21.5h3"/><path d="M12 6.5a5 5 0 0 0-3 9c.6.5 1 1.2 1 2h4c0-.8.4-1.5 1-2a5 5 0 0 0-3-9Z"/><path d="M12 1.5V3M4.6 4.1l1.1 1.1M19.4 4.1l-1.1 1.1M2 11.5h1.5M20.5 11.5H22"/></>,
@@ -112,7 +113,7 @@ export function AcoesProjeto({id, nome, acoes, caso, onDesign}: {id: string; nom
  const pitch = useJanela();
  return <div className="acoes">
   {acoes.app && <Acao icone="app" rotulo="Abrir o app" href={acoes.app}/>}
-  {acoes.prototipo?.map((p) => <Acao key={p.url} icone={/landing/i.test(p.rotulo) ? 'web' : 'figma'} rotulo={p.rotulo} href={p.url}/>)}
+  {acoes.prototipo?.map((p) => <Acao key={p.url} icone={/github\.com/i.test(p.url) ? 'github' : /landing/i.test(p.rotulo) ? 'web' : 'figma'} rotulo={p.rotulo} href={p.url}/>)}
   {acoes.design && caso && <Acao icone="design" rotulo="Ver design" onClick={onDesign ?? design.abrir} abreJanela={!onDesign}/>}
   {acoes.pitch && <Acao icone="pitch" rotulo="Ver pitch" onClick={pitch.abrir}/>}
   {caso && !onDesign && <Janela j={design} titulo={nome} rotulo="Estudo de caso · design"><Caso nome={nome} caso={caso}/></Janela>}
