@@ -696,7 +696,7 @@ b, strong { font-weight: 400; }
 .esteira { position: absolute; inset: 0; transform-style: preserve-3d; animation: aparece-esteira 1.2s var(--suave) .3s both; }
 @keyframes aparece-esteira { from { opacity: 0; } }
 .esteira-capa { --w: clamp(240px, 30vw, 520px); position: absolute; right: 10%; top: 50%; width: var(--w); aspect-ratio: 16 / 9; margin-top: calc(var(--w) * -.28125); border-radius: 10px; overflow: hidden; background: #fff; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .7);
-  animation: esteira 42s linear infinite; animation-delay: calc(var(--i) * -7s); will-change: transform; }
+  animation: esteira 42s linear infinite; animation-delay: calc(var(--i) * -5.25s); /* 8 capas espaçadas por igual em 42s */ will-change: transform; }
 .esteira-capa img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
 @keyframes esteira {
   0% { transform: translate3d(calc(var(--w) * .95), 0, calc(var(--w) * .64)) rotateY(-34deg); opacity: 0; }

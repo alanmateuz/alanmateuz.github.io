@@ -448,7 +448,7 @@ export default function Home() {
      </div>
      <div className="vitrine" aria-hidden="true">
       <div className="esteira">
-       {['safra-capa', 'alui-slide-1', 'reuse-landing', 'safra-capa', 'alui-slide-1', 'reuse-landing'].map((img, i) =>
+       {['draftin-capa', 'safra-capa', 'alui-slide-1', 'reuse-landing', 'draftin-capa', 'safra-capa', 'alui-slide-1', 'reuse-landing'].map((img, i) =>
         <div key={i} className="esteira-capa" style={{['--i' as string]: i}}><img src={`./assets/${img}.webp`} alt=""/></div>)}
       </div>
      </div>
