@@ -1173,3 +1173,14 @@ b, strong { font-weight: 400; }
 /* Apta: marca (ícone + nome) sobre a folha branca */
 .marca-apta { background: #fff; }
 .marca-apta img { max-width: 72%; max-height: 64%; }
+
+/* Apta: azul da marca com pauta de caderno e a margem vermelha, como a folha do app */
+#apta .projeto-card {
+  background-color: #1f56d1;
+  background-image: linear-gradient(90deg, transparent 34px, rgba(227, 72, 74, .75) 34px 36px, transparent 36px),
+    repeating-linear-gradient(transparent 0 35px, rgba(255, 255, 255, .09) 35px 36px);
+  --texto: #ffffff; --texto-2: rgba(255, 255, 255, .88); --texto-3: rgba(255, 255, 255, .74);
+  --cor-texto: #ffd2ce; --cor: #ffd2ce; --borda: rgba(255, 255, 255, .24); --superficie-2: rgba(255, 255, 255, .14);
+}
+#apta .projeto-card { --brilho: #5b8cff; }
+[data-contraste='sim'] #apta .projeto-card { background: var(--superficie); --texto: inherit; }
