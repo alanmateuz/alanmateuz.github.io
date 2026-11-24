@@ -24,8 +24,8 @@ export const projects:Projeto[] = [
   cor:'#1F56D1',capa:'tela',acoes:{app:'https://aptaprovas.vercel.app',prototipo:[{rotulo:'Ver protótipo no Figma',url:'https://www.figma.com/design/ImEvA2G2WumGeMYAhYSeoZ/Apta?node-id=40-266'},{rotulo:'Ver código no GitHub',url:'https://github.com/alanmateuz/Apta-provas'}],design:true},
   galeria:[
    {img:'fluxo/ap-inicio',legenda:'Criar a prova em 5 etapas',tipo:'celular',fluxo:[{img:'ap-inicio',toque:[[80,33]]},{img:'ap-turma',toque:[[50,92]]},{img:'ap-formato',toque:[[50,92]]},{img:'ap-questoes',toque:[[50,92]]},{img:'ap-adaptadas',toque:[[50,92]]},{img:'ap-criando'}]},
-   {img:'fluxo/ap-prova-escuro',legenda:'Conferir e refazer uma questão (modo escuro)',tipo:'celular',fluxo:[{img:'ap-prova-escuro',toque:[[72,84]]},{img:'ap-refazer-escuro',toque:[[37,62],[50,88]]}]},
-   {img:'fluxo/ap-versoes',legenda:'Uma prova, várias versões adaptadas',tipo:'celular',fluxo:[{img:'ap-versoes',toque:[[50,58],[50,92]]}]},
+   {img:'fluxo/ap-prova',legenda:'Conferir e refazer uma questão',tipo:'celular',fluxo:[{img:'ap-prova',toque:[[72,84]]},{img:'ap-refazer',toque:[[37,62],[50,88]]}]},
+   {img:'fluxo/ap-prova',legenda:'Uma prova, várias versões adaptadas',tipo:'celular',fluxo:[{img:'ap-prova',toque:[[50,36]]},{img:'ap-versoes',toque:[[50,58],[50,92]]},{img:'ap-exportar',toque:[[50,92]]}]},
    {img:'fluxo/ap-banco-escuro',legenda:'Importar questões do livro (modo escuro)',tipo:'celular',fluxo:[{img:'ap-banco-escuro',toque:[[89,11]]},{img:'ap-banco-add-escuro',toque:[[50,88]]},{img:'ap-camera-escuro',toque:[[50,92]]}]}],
   design:{
    problema:'Na semana de provas, a professora monta a prova de cada turma, prepara uma versão adaptada para os alunos que precisam e escreve o gabarito. Esse trabalho costuma ser feito à mão, no Word, muitas vezes fora do horário de aula. As ferramentas com IA ajudam a redigir, mas erram respostas e não indicam o que já foi conferido.',

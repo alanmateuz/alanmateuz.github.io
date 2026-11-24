@@ -1184,3 +1184,15 @@ b, strong { font-weight: 400; }
 }
 #apta .projeto-card { --brilho: #5b8cff; }
 [data-contraste='sim'] #apta .projeto-card { background: var(--superficie); --texto: inherit; }
+
+/* Apta: folha de caderno (branca, pauta azul e margem vermelha) com texto preto */
+#apta .projeto-card {
+  background-color: #ffffff;
+  background-image: linear-gradient(90deg, transparent 34px, rgba(227, 72, 74, .7) 34px 36px, transparent 36px),
+    repeating-linear-gradient(transparent 0 35px, #dbe6f6 35px 36px);
+  --texto: #111318; --texto-2: rgba(17, 19, 24, .82); --texto-3: rgba(17, 19, 24, .66);
+  --cor-texto: #1f56d1; --cor: #1f56d1; --borda: rgba(17, 19, 24, .14); --superficie-2: rgba(31, 86, 209, .08);
+  --brilho: #5b8cff;
+}
+#apta .projeto-card .destaque-desafio, #apta .projeto-card .destaque > div { background-color: rgba(255, 255, 255, .86); }
+#apta .selo { color: #1a47b0; background: rgba(31, 86, 209, .1); border-color: rgba(31, 86, 209, .35); }
