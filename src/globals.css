@@ -1169,3 +1169,7 @@ b, strong { font-weight: 400; }
 .dv-equipe span { font-size: .9rem; line-height: 1.4; color: #B3B0A8; }
 @media (max-width: 900px) { .dv-equipe ul { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(150px, 1fr); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; } .dv-equipe li { scroll-snap-align: start; } }
 @media (prefers-reduced-motion: reduce) { .dv-imagens img { transition: none; transform: none; } }
+
+/* Apta: marca (ícone + nome) sobre a folha branca */
+.marca-apta { background: #fff; }
+.marca-apta img { max-width: 72%; max-height: 64%; }

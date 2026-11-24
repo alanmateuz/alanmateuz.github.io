@@ -203,9 +203,8 @@ function Galeria({p}: {p: Projeto}) {
 /* Projetos em "coverflow": o card ativo fica de frente, os dos lados giram com a borda de fora indo para longe.
    Todos dividem a mesma perspectiva, então a transição continua em 3D enquanto troca de card. */
 function FileiraProjetos() {
- // O Safra (projeto principal) fica no meio, com um projeto de cada lado
- // Ordem do carrossel: Draftin, Safra no meio, ReUse do outro lado; os demais depois
- const ordem = ['draftin', 'safra', 'reuse'];
+ // O Apta (projeto da entrevista da Academy) fica no meio, com o Safra de um lado e o ReUse do outro
+ const ordem = ['draftin', 'safra', 'apta', 'reuse'];
  const base = [...ordem.map((id) => projects.find((p) => p.id === id)), ...projects.filter((p) => !ordem.includes(p.id))].filter(Boolean) as Projeto[];
  const lista = base;
  const [ativo, setAtivo] = useState(Math.floor((lista.length - 1) / 2));
@@ -448,7 +447,7 @@ export default function Home() {
      </div>
      <div className="vitrine" aria-hidden="true">
       <div className="esteira">
-       {['draftin-capa', 'safra-capa', 'alui-slide-1', 'reuse-landing', 'draftin-capa', 'safra-capa', 'alui-slide-1', 'reuse-landing'].map((img, i) =>
+       {['apta-capa', 'draftin-capa', 'safra-capa', 'alui-slide-1', 'apta-capa', 'draftin-capa', 'safra-capa', 'reuse-landing'].map((img, i) =>
         <div key={i} className="esteira-capa" style={{['--i' as string]: i}}><img src={`./assets/${img}.webp`} alt=""/></div>)}
       </div>
      </div>
